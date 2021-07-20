@@ -3,6 +3,7 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import React, { useEffect } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../styles/theme";
+import BottomNav from "../components/bottomNav";
 
 //_app only has access to React DOM tree
 //_document can access entire DOM
@@ -28,6 +29,7 @@ function MyApp({ Component, pageProps }) {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Component {...pageProps} />
+        <BottomNav />
       </ThemeProvider>
     </React.Fragment>
   );

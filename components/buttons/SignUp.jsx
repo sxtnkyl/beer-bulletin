@@ -1,11 +1,11 @@
-import * as S from "@material-ui/core";
+import * as C from "@material-ui/core";
 import Link from "next/link";
 
-const SignUp = ({ innerText, hrefLink = "" }) => {
+const SignUp = ({ innerText = "Sign In", hrefLink = "/Auth" }) => {
   return (
-    <S.Button>
+    <C.Button>
       <Link href={hrefLink}>{innerText}</Link>
-    </S.Button>
+    </C.Button>
   );
 };
 

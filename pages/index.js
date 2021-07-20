@@ -3,6 +3,8 @@ import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 
+import BottomNav from "../components/bottomNav/index";
+
 export default function Home() {
   return (
     <Container maxWidth="sm">
