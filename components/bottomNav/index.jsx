@@ -5,6 +5,7 @@ import ChatIcon from "@material-ui/icons/Chat";
 import PageviewIcon from "@material-ui/icons/Pageview";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import Link from "./BotNavButton";
+import CreatePostButton from "../buttons/CreatePostButton";
 
 const BottomNav = () => {
   let paths = [
@@ -14,12 +15,7 @@ const BottomNav = () => {
     "UserProfile",
   ];
   //tab routes left to right
-  let tabs = [
-    "Users Bulletins",
-    "Current Chats",
-    "Search Bulletins",
-    "User Profile",
-  ];
+  let tabs = ["Bulletins", "Chats", "Search", "Profile"];
 
   let icons = [
     <AssignmentIndIcon />,
@@ -36,11 +32,12 @@ const BottomNav = () => {
   };
 
   let tabButtons = tabs.map((tab, i) => (
-    <Link href={paths[i]} label={tab} value={i} icon={icons[i]} />
+    <Link href={paths[i]} label={tab} value={i} icon={icons[i]} key={i} />
   ));
 
   return (
     <C.BottomNavigation value={activeTab} onChange={handleChange}>
+      <CreatePostButton />
       {tabButtons}
     </C.BottomNavigation>
   );

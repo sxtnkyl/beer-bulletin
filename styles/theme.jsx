@@ -24,19 +24,19 @@ let theme = createTheme({
         },
         "#__next": {
           height: "100%",
+          display: "flex",
+          flexDirection: "column",
         },
       },
     },
     MuiBottomNavigation: {
-      root: { zIndex: 100, width: "100%", position: "fixed", bottom: 0 },
+      root: { zIndex: 100, width: "100%", flex: "0 0 10%" },
     },
     MuiContainer: {
       root: {
-        height: "100%",
+        overflowY: "auto",
+        flexGrow: "1",
         background: "white",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
       },
     },
   },

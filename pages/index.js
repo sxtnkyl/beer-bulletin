@@ -6,11 +6,12 @@ import Box from "@material-ui/core/Box";
 export default function Home() {
   return (
     <Container maxWidth="sm">
-      <Box>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Next.js example
-        </Typography>
-      </Box>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Next.js Home Page
+      </Typography>
     </Container>
   );
 }
+
+//add some rendering logic to assess auth state and redirect
+//maybe make / route splash page?
