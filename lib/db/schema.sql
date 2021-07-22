@@ -1,11 +1,10 @@
-DROP DATABASE IF EXISTS beer_bulletin_Users;
-DROP DATABASE IF EXISTS beer_bulletin_Chats;
-DROP DATABASE IF EXISTS beer_bulletin_Trades;
-DROP DATABASE IF EXISTS beer_bulletin_Beers;
+DROP DATABASE IF EXISTS beer_bulletin;
 
-CREATE DATABASE beer_bulletin_Users;
-CREATE DATABASE beer_bulletin_Chats;
-CREATE DATABASE beer_bulletin_Trades;
-CREATE DATABASE beer_bulletin_Beers;
+CREATE DATABASE beer_bulletin;
+
+CREATE TABLE beer_bulletin_Users;
+CREATE TABLE beer_bulletin_Chats;
+CREATE TABLE beer_bulletin_Trades;
+CREATE TABLE beer_bulletin_Beers;
 
 -- populate with data
