@@ -15,3 +15,10 @@ export default function Home() {
 
 //add some rendering logic to assess auth state and redirect
 //maybe make / route splash page?
+
+// export async function getStaticProps(context) {
+
+//   return {
+//     props: {}, // will be passed to the page component as props
+//   }
+// }
