@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../styles/theme";
 import BottomNav from "../components/bottomNav";
+import Layout from "../components/Layout";
 
 //_app only has access to React DOM tree
 //_document can access entire DOM
@@ -28,8 +29,9 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Component {...pageProps} />
-        <BottomNav />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ThemeProvider>
     </React.Fragment>
   );

@@ -36,7 +36,11 @@ const BottomNav = () => {
   ));
 
   return (
-    <C.BottomNavigation value={activeTab} onChange={handleChange}>
+    <C.BottomNavigation
+      value={activeTab}
+      onChange={handleChange}
+      component="nav"
+    >
       <CreatePostButton />
       {tabButtons}
     </C.BottomNavigation>
