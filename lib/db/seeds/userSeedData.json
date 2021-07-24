@@ -1,0 +1,34 @@
+[
+  {
+    "username": "Sal",
+    "email": "sal@hotmail.com",
+    "password": 12345678,
+    "firstName": "Sal",
+    "lastName": "Huddin",
+    "numOfTrades": 0
+  },
+  {
+    "username": "tomIsCool69",
+    "email": "tom@hotmail.com",
+    "password": 12345678,
+    "firstName": "Tom",
+    "lastName": "Martin",
+    "numOfTrades": 0
+  },
+  {
+    "username": "CindyChan123",
+    "email": "cindy@hotmail.com",
+    "password": 12345678,
+    "firstName": "Cindy",
+    "lastName": "Thomas",
+    "numOfTrades": 0
+  },
+  {
+    "username": "daGuy123",
+    "email": "dg123@hotmail.com",
+    "password": 12345678,
+    "firstName": "Rick",
+    "lastName": "Flake",
+    "numOfTrades": 0
+  }
+]
