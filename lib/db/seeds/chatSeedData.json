@@ -22,5 +22,17 @@
     "participant_id": 2,
     "resolved": false,
     "trade_id": 2
+  },
+  {
+    "user_id": 3,
+    "participant_id": 4,
+    "resolved": false,
+    "trade_id": 3
+  },
+  {
+    "user_id": 3,
+    "participant_id": 2,
+    "resolved": false,
+    "trade_id": 3
   }
 ]

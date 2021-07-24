@@ -12,5 +12,12 @@
     "content": "Seriously a fine beer",
     "currentOffers": "",
     "open": true
+  },
+  {
+    "user_id": 3,
+    "title": "The Best Lager",
+    "content": "Seriously a fine beer",
+    "currentOffers": "",
+    "open": true
   }
 ]
