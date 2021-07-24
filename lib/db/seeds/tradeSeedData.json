@@ -4,15 +4,13 @@
     "title": "Good Ale",
     "content": "Seriously a fine beer",
     "currentOffers": "",
-    "open": true,
-    "chats": []
+    "open": true
   },
   {
     "user_id": 3,
     "title": "The Best IPA",
     "content": "Seriously a fine beer",
     "currentOffers": "",
-    "open": true,
-    "chats": []
+    "open": true
   }
 ]
