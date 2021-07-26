@@ -32,7 +32,7 @@ const BottomNav = () => {
   };
 
   let tabButtons = tabs.map((tab, i) => (
-    <Link href={paths[i]} label={tab} value={i} icon={icons[i]} key={i} />
+    <Link href={`/${paths[i]}`} label={tab} value={i} icon={icons[i]} key={i} />
   ));
 
   return (

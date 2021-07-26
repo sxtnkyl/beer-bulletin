@@ -2,20 +2,25 @@ import * as C from "@material-ui/core";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import theme from "../../styles/theme";
 
+//TODO: add logic to render if session
+
 const useStyles = C.makeStyles((theme) => ({
   createPostBtn: {
     position: "absolute",
     top: "-110%",
     right: "5%",
-    background: "blue",
   },
 }));
 const CreatePostButton = () => {
   const classes = useStyles();
   return (
-    <C.IconButton className={classes.createPostBtn} aria-label="create post">
+    <C.Fab
+      className={classes.createPostBtn}
+      size="medium"
+      aria-label="create post"
+    >
       <AddCircleIcon />
-    </C.IconButton>
+    </C.Fab>
   );
 };
 
