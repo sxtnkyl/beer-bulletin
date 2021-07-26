@@ -30,7 +30,12 @@ let theme = createTheme({
       },
     },
     MuiBottomNavigation: {
-      root: { zIndex: 100, width: "100%", flex: "0 0 10%" },
+      root: {
+        zIndex: 100,
+        width: "100%",
+        flex: "0 0 10%",
+        position: "relative",
+      },
     },
     MuiContainer: {
       root: {

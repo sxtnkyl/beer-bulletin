@@ -1,7 +1,5 @@
-import PageContainer from "../../components/PageContainer";
-
 const UsersBulletins = () => {
-  return <PageContainer>im the user's bulletins</PageContainer>;
+  return <>im the user's bulletins</>;
 };
 
 export default UsersBulletins;
