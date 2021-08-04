@@ -4,7 +4,6 @@ import { SvgIcon } from "@material-ui/core";
 
 const ScalableIcon = ({ icon }) => {
   return (
-    // the className is required!!!
     <SvgIcon>
       <svg
         width="24"
