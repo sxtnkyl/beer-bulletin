@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      {!session && <Header scroll={scrollTrigger} />}
+      {/* {!session && <Header scroll={scrollTrigger} />} */}
       <C.Container
         ref={(node) => {
           if (node) {
