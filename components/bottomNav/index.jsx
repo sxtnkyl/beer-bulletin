@@ -6,10 +6,10 @@ import PageviewIcon from "@material-ui/icons/Pageview";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import Link from "./BotNavButton";
 import CreatePostButton from "../buttons/CreatePostButton";
-import { useSession } from "next-auth/client";
+// import { useSession } from "next-auth/client";
 
 const BottomNav = () => {
-  const [session, loading] = useSession();
+  // const [session, loading] = useSession();
 
   let paths = [
     "UsersBulletins",
@@ -44,7 +44,7 @@ const BottomNav = () => {
       onChange={handleChange}
       component="nav"
     >
-      {session && <CreatePostButton />}
+      {/* {session && <CreatePostButton />} */}
       {tabButtons}
     </C.BottomNavigation>
   );
