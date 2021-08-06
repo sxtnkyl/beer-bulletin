@@ -3,11 +3,11 @@ import BottomNav from "./bottomNav";
 import Header from "./header";
 import * as C from "@material-ui/core";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
-import { useSession } from "next-auth/client";
+// import { useSession } from "next-auth/client";
 //https://nextjs.org/docs/basic-features/layouts
 
 const Layout = ({ children }) => {
-  const [session, loading] = useSession();
+  // const [session, loading] = useSession();
 
   const [scrollEl, setScrollEl] = useState(undefined);
   const scrollTrigger = useScrollTrigger({

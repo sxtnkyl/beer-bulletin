@@ -81,7 +81,7 @@ const Landing = () => {
         <C.Button
           color="primary"
           fullWidth={false}
-          variant="default"
+          variant="contained"
           startIcon={<ScalableIcon icon={faGithubAlt} />}
         >
           KS
