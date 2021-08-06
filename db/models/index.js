@@ -1,56 +1,21 @@
-'use strict';
+const Chat = require("./Chat");
+const User = require("./User");
+const Trade = require("./Trade");
 
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.js')[env];
-const db = {};
-
-/* Custom handler for reading current working directory */
-const models = process.cwd() + '/db/models/' || __dirname;
-
-let sequelize;
-
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(
-    config.database,
-    config.username,
-    config.password,
-    config,
-    {
-      pool: {
-        max: 5,
-        min: 0,
-        acuire: 30000,
-        idle: 10000,
-      },
-    },
-  );
-}
-/* fs.readdirSync(__dirname) */
-fs.readdirSync(models)
-  .filter(file => {
-    return (
-      file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
-    );
-  })
-  .forEach(file => {
-    /* const model = sequelize["import"](path.join(__dirname, file)); */
-    const model = sequelize['import'](path.join(models, file));
-    db[model.name] = model;
-  });
-
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
+User.hasMany(Trade, {
+  // Define the third table needed to store the foreign keys
+  foreignKey: "user_id",
+  // Define an alias for when data is retrieved
+  as: "user_trades",
 });
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+Trade.hasMany(Chat, {
+  foreignKey: "trade_id",
+});
 
-module.exports = db;
+Chat.belongsTo(User, {
+  foreignKey: "participant_id",
+  as: "participant",
+});
+
+module.exports = { Chat, Trade, User };
