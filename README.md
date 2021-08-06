@@ -10,6 +10,27 @@ npm run dev
 yarn dev
 ```
 
+Then, Fill out all fields in .envExample, and rename the file to .env
+# Recommended Fields
+```
+DB_USER='root'
+DB_PASS=YOURPASSWORDFORSQL
+DB_PORT=3306
+DB_NAME=beer_bulletin
+JWT_KEY=""
+DB_HOST=localhost
+```
+
+Then, to seed the DB, create a DB in your SQL manager of choice with the same name that you placed above in DB_Name,
+run the command
+```
+DROP DATABASE IF EXISTS beer_bulletin
+CREATE DATABASE beer_bulletin;
+```
+Make sure this name matches DB_name in env.
+
+
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
