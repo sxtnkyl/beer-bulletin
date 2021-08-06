@@ -1,3 +1,6 @@
+const Sequelize = require("sequelize");
+const sequelize = require("../config/connection");
+
 const Chat = require("./Chat");
 const User = require("./User");
 const Trade = require("./Trade");
@@ -18,4 +21,12 @@ Chat.belongsTo(User, {
   as: "participant",
 });
 
-module.exports = { Chat, Trade, User };
+const db = {
+  users: User,
+  chats: Chat,
+  trades: Trade,
+  sequelize: sequelize,
+  Sequelize: Sequelize,
+};
+
+module.exports = db;
