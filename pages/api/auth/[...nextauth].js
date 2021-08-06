@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 const { User } = require("../../../lib/models/User");
 
-export default NextAuth({
+const config = NextAuth({
   //TODO: decide cookies or JWT persist
   //only use cookies secure flag in prod (with https)
   cookie: {
@@ -27,12 +27,12 @@ export default NextAuth({
     }),
     Providers.Credentials({
       // The name to display on the sign in form (e.g. 'Sign in with...')
-      name: 'Credentials',
+      name: "Credentials",
       // The credentials is used to generate a suitable form on the sign in page.
       // You can specify whatever fields you are expecting to be submitted
       credentials: {
         username: { label: "Username", type: "text", placeholder: "jsmith" },
-        password: {  label: "Password", type: "password" }
+        password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
         // You need to provide your own logic here that takes the credentials
@@ -46,25 +46,25 @@ export default NextAuth({
             password: req.body.password,
           },
         });
-        const user = await res.json()
-        
+        const user = await res.json();
+
         // If no error and we have user data, return it
         if (res.ok && user) {
-          return user
+          return user;
         }
         // Return null if user data could not be retrieved
-        return null
-      }
+        return null;
+      },
     }),
   ],
 
   //Not sure on difference of adapter and database Options
-  adapter: Adapters.TypeORM.Adapter(({
-    type: 'mysql',
-    database: ':memory:',
+  adapter: Adapters.TypeORM.Adapter({
+    type: "mysql",
+    database: ":memory:",
     // database: 'mysql://nextauth:password@127.0.0.1:3306/nextauth?synchronise=true',
-    synchronize: true
-  })),
+    synchronize: true,
+  }),
 
   //Custom pages instead of Next's built-in components
   // pages: {
@@ -85,4 +85,4 @@ export default NextAuth({
     database: process.env.DB_NAME,
   },
 });
-export default (req, res) => NextAuth(req, res, configuration)
+export default (req, res) => NextAuth(req, res, config);

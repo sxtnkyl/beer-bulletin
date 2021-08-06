@@ -1,7 +1,5 @@
-import PageContainer from "../components/PageContainer";
-
 const ErrorPage = () => {
-  return <PageContainer>OOPS! Ran into an error!</PageContainer>;
+  return <>OOPS! Ran into an error!</>;
 };
 
 export default ErrorPage;
