@@ -7,16 +7,17 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "node lib/db/seeds/seed.js" 
+    "seed": "node lib/db/seeds/seed.js"
   },
   "dependencies": {
     "@material-ui/core": "^4.12.1",
     "@material-ui/icons": "^4.11.2",
     "axios": "^0.21.1",
-    "express": "^4.17.1",
+    "bcryptjs": "^2.4.3",
     "mysql2": "^2.2.5",
     "next": "11.0.1",
     "next-auth": "^3.27.3",
+    "next-connect": "^0.10.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.11.1",
