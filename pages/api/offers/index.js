@@ -8,26 +8,27 @@ const handler = nextConnect()
   // Get method
   .get(async (req, res) => {
     const {
-      query: { nextPage },
+      // query: { nextPage },
+      query,
       method,
       body,
     } = req;
 
-    const chats = await models.chats.findAndCountAll({
+    const offers = await models.offers.findAndCountAll({
       order: [
         // Will escape title and validate DESC against a list of valid direction parameters
         ["id", "DESC"],
       ],
-      offset: nextPage ? +nextPage : 0,
-      limit: 5,
+      // offset: nextPage ? +nextPage : 0,
+      // limit: 5,
     });
 
     res.statusCode = 200;
     res.json({
       status: "success",
-      data: chats.rows,
-      total: chats.count,
-      nextPage: +nextPage + 5,
+      data: offers.rows,
+      total: offers.count,
+      // nextPage: +nextPage + 5,
     });
   })
   // ============  METHODS BELOW NEED ATTENTION/UPDATES (copied from /users/index.js) ================ //
