@@ -11,15 +11,12 @@ Chat.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    user_id: {
+    host_id: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     participant_id: {
       type: DataTypes.INTEGER,
-    },
-    resolved: {
-      type: DataTypes.BOOLEAN,
     },
     trade_id: {
       type: DataTypes.INTEGER,
@@ -27,6 +24,9 @@ Chat.init(
       references: {
         model: "trade",
       },
+    },
+    resolved: {
+      type: DataTypes.BOOLEAN,
     },
     // chat_log: {},
   },

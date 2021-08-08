@@ -1,38 +1,58 @@
 [
   {
-    "user_id": 2,
-    "participant_id": 1,
+    "id": 1,
+    "host_id": 1,
+    "participant_id": 2,
     "resolved": false,
     "trade_id": 1
   },
   {
-    "user_id": 3,
+    "id": 2,
+    "host_id": 1,
+    "participant_id": 4,
+    "resolved": false,
+    "trade_id": 1
+  },
+  {
+    "id": 3,
+    "host_id": 2,
+    "participant_id": 3,
+    "resolved": false,
+    "trade_id": 2
+  },
+  {
+    "id": 4,
+    "host_id": 2,
+    "participant_id": 1,
+    "resolved": true,
+    "trade_id": 3
+  },
+  {
+    "id": 5,
+    "host_id": 2,
+    "participant_id": 3,
+    "resolved": true,
+    "trade_id": 3
+  },
+  {
+    "id": 6,
+    "host_id": 3,
     "participant_id": 1,
     "resolved": false,
-    "trade_id": 2
+    "trade_id": 4
   },
   {
-    "user_id": 3,
-    "participant_id": 4,
-    "resolved": false,
-    "trade_id": 2
-  },
-  {
-    "user_id": 3,
+    "id": 7,
+    "host_id": 3,
     "participant_id": 2,
     "resolved": false,
-    "trade_id": 2
+    "trade_id": 4
   },
   {
-    "user_id": 3,
+    "id": 8,
+    "host_id": 3,
     "participant_id": 4,
     "resolved": false,
-    "trade_id": 3
-  },
-  {
-    "user_id": 3,
-    "participant_id": 2,
-    "resolved": false,
-    "trade_id": 3
+    "trade_id": 4
   }
 ]
