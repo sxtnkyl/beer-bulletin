@@ -13,13 +13,7 @@ const handler = nextConnect()
       body,
     } = req;
 
-    const users = await models.users.findAndCountAll({
-      include: [
-        {
-          model: models.trades,
-          as: "user_trades",
-        },
-      ],
+    const chats = await models.chats.findAndCountAll({
       order: [
         // Will escape title and validate DESC against a list of valid direction parameters
         ["id", "DESC"],
@@ -31,12 +25,13 @@ const handler = nextConnect()
     res.statusCode = 200;
     res.json({
       status: "success",
-      data: users.rows,
-      total: users.count,
+      data: chats.rows,
+      total: chats.count,
       nextPage: +nextPage + 5,
     });
   })
-  // ============  METHODS BELOW NEED ATTENTION/UPDATES ================ //
+  // ============  METHODS BELOW NEED ATTENTION/UPDATES (copied from /users/index.js) ================ //
+
   // Post method
   .post(async (req, res) => {
     const { body } = req;
