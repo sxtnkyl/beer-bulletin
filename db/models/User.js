@@ -36,30 +36,27 @@ User.init(
         len: [8],
       },
     },
-    firstName: {
+    first_name: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    lastName: {
+    last_name: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    numOfTrades: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    prefDark: {
+    // Do we need a column for this? this could be obtained through a join-and-count query
+    // num_trades: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: true,
+    // },
+    pref_dark: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
     },
-    profilePic: {
+    profile_pic: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    // chats: {
-    //   type: DataTypes.ARRAY,
-    //   allowNull: true,
-    // },
   },
   {
     hooks: {

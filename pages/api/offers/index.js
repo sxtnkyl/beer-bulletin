@@ -14,14 +14,14 @@ const handler = nextConnect()
       body,
     } = req;
 
-    const users = await models.users.findAndCountAll({
-      // include: [
-      //   {
-      //     model: models.trades,
-      //     as: "user_trades",
-      //     include: [{ model: models.offers }],
-      //   },
-      // ],
+    const offers = await models.offers.findAndCountAll({
+      include: [
+        {
+          model: models.users,
+          as: "participant",
+          attributes: ["id", "username"],
+        },
+      ],
       order: [
         // Will escape title and validate DESC against a list of valid direction parameters
         ["id", "DESC"],
@@ -33,12 +33,13 @@ const handler = nextConnect()
     res.statusCode = 200;
     res.json({
       status: "success",
-      data: users.rows,
-      total: users.count,
+      data: offers.rows,
+      total: offers.count,
       // nextPage: +nextPage + 5,
     });
   })
-  // ============  METHODS BELOW NEED ATTENTION/UPDATES ================ //
+  // ============  METHODS BELOW NEED ATTENTION/UPDATES (copied from /users/index.js) ================ //
+
   // Post method
   .post(async (req, res) => {
     const { body } = req;

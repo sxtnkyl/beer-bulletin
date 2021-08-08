@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../config/connection");
 
-const Chat = require("./Chat");
+const Offer = require("./Offer");
 const User = require("./User");
 const Trade = require("./Trade");
 
@@ -12,18 +12,18 @@ User.hasMany(Trade, {
   as: "user_trades",
 });
 
-Trade.hasMany(Chat, {
+Trade.hasMany(Offer, {
   foreignKey: "trade_id",
 });
 
-Chat.belongsTo(User, {
+Offer.belongsTo(User, {
   foreignKey: "participant_id",
   as: "participant",
 });
 
 const db = {
   users: User,
-  chats: Chat,
+  offers: Offer,
   trades: Trade,
   sequelize: sequelize,
   Sequelize: Sequelize,

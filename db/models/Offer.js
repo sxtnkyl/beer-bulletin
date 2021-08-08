@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
 
-class Chat extends Model {}
+class Offer extends Model {}
 
-Chat.init(
+Offer.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -11,15 +11,12 @@ Chat.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    user_id: {
+    host_id: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     participant_id: {
       type: DataTypes.INTEGER,
-    },
-    resolved: {
-      type: DataTypes.BOOLEAN,
     },
     trade_id: {
       type: DataTypes.INTEGER,
@@ -28,15 +25,18 @@ Chat.init(
         model: "trade",
       },
     },
-    // chatLog: {},
+    resolved: {
+      type: DataTypes.BOOLEAN,
+    },
+    // chat_log: {},
   },
   {
     sequelize,
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: "chat",
+    modelName: "offer",
   }
 );
 
-module.exports = Chat;
+module.exports = Offer;
