@@ -20,22 +20,21 @@ Trade.init(
         // maybe no bad words? lol
       },
     },
+    // SHOULD THIS HAVE A LENGTH LIMIT??
     content: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       validate: {
         len: [250],
       },
     },
-    currentOffers: {
+    // how is this going to look/be formatted?
+    current_offers: {
       type: DataTypes.STRING,
       allowNull: true,
     },
     open: {
       type: DataTypes.BOOLEAN,
     },
-    // chats: {
-    //   type: DataTypes.ARRAY,
-    // },
   },
   {
     sequelize,

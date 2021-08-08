@@ -28,7 +28,7 @@ Chat.init(
         model: "trade",
       },
     },
-    // chatLog: {},
+    // chat_log: {},
   },
   {
     sequelize,
