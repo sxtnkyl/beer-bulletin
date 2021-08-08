@@ -15,12 +15,13 @@ const handler = nextConnect()
     } = req;
 
     const users = await models.users.findAndCountAll({
-      include: [
-        {
-          model: models.trades,
-          as: "user_trades",
-        },
-      ],
+      // include: [
+      //   {
+      //     model: models.trades,
+      //     as: "user_trades",
+      //     include: [{ model: models.offers }],
+      //   },
+      // ],
       order: [
         // Will escape title and validate DESC against a list of valid direction parameters
         ["id", "DESC"],
