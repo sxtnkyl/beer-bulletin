@@ -7,9 +7,10 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import Link from "./BotNavButton";
 import CreatePostButton from "../buttons/CreatePostButton";
 import { useSession } from "next-auth/client";
+import theme from "../../styles/theme";
 
-const BottomNav = () => {
-  const [session, loading] = useSession();
+const BottomNav = ({ scroll }) => {
+  // const [session, loading] = useSession();
 
   let paths = [
     "UsersBulletins",
@@ -39,14 +40,20 @@ const BottomNav = () => {
   ));
 
   return (
+    // <C.Paper elevation={6}>
     <C.BottomNavigation
       value={activeTab}
       onChange={handleChange}
-      component="nav"
+      component={C.Paper}
+      elevation={scroll ? 10 : 2}
+      style={{
+        background: scroll ? "transparent" : theme.palette.primary.main,
+      }}
     >
-      {session && <CreatePostButton />}
+      {/* {session && <CreatePostButton />} */}
       {tabButtons}
     </C.BottomNavigation>
+    // </C.Paper>
   );
 };
 
