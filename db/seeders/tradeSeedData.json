@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "user_id": 1,
+    "title": "Darkness Stout",
+    "content": "Heavy as hell, fine as wine...",
+    "current_offers": "",
+    "open": true
+  },
+  {
+    "id": 2,
+    "user_id": 2,
+    "title": "Fruity IPA",
+    "content": "Hints of orange and pomegranate, strong but mildly hoppy ",
+    "current_offers": "",
+    "open": true
+  },
+  {
+    "id": 3,
+    "user_id": 2,
+    "title": "The Best Lager",
+    "content": "Seriously a fine beer, waay better than Yuengling...",
+    "current_offers": "",
+    "open": false
+  },
+  {
+    "id": 4,
+    "user_id": 3,
+    "title": "Good Summer Ale",
+    "content": "Excellent summer ale with a refreshing finish",
+    "current_offers": "",
+    "open": true
+  }
+]

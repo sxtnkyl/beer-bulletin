@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "username": "Sal",
+    "email": "sal@hotmail.com",
+    "password": 12345678,
+    "first_name": "Sal",
+    "last_name": "Huddin",
+    "pref_dark": false,
+    "profile_pic": "https://beerbulletinspace.nyc3.digitaloceanspaces.com/71.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKANBEZNAIRZRF5YRQPA%2F20210810%2Fnyc3%2Fs3%2Faws4_request&X-Amz-Date=20210810T004836Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=7b17199defdcb50c54512c9b43696e8084480e87f0eec26482559cd3a4930d92"
+  },
+  {
+    "id": 2,
+    "username": "tomIsCool69",
+    "email": "tom@hotmail.com",
+    "password": 12345678,
+    "first_name": "Tom",
+    "last_name": "Martin",
+    "pref_dark": true,
+    "profile_pic": "https://beerbulletinspace.nyc3.digitaloceanspaces.com/75.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKANBEZNAIRZRF5YRQPA%2F20210810%2Fnyc3%2Fs3%2Faws4_request&X-Amz-Date=20210810T004913Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=5bbaa88f736780ac32fb47d15bfa325c2c4e128c9374bec938ab566480477a06"
+  },
+  {
+    "id": 3,
+    "username": "CindyChan123",
+    "email": "cindy@hotmail.com",
+    "password": 12345678,
+    "first_name": "Cindy",
+    "last_name": "Thomas",
+    "pref_dark": true,
+    "profile_pic": "https://beerbulletinspace.nyc3.digitaloceanspaces.com/m71.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKANBEZNAIRZRF5YRQPA%2F20210810%2Fnyc3%2Fs3%2Faws4_request&X-Amz-Date=20210810T004936Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=8aa4f7034833b92753f083a3b7670faf0782df1610544974e863e5a37903d0c9"
+  },
+  {
+    "id": 4,
+    "username": "daGuy123",
+    "email": "dg123@hotmail.com",
+    "password": 12345678,
+    "first_name": "Rick",
+    "last_name": "Flake",
+    "pref_dark": false,
+    "profile_pic": "https://beerbulletinspace.nyc3.digitaloceanspaces.com/w75.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKANBEZNAIRZRF5YRQPA%2F20210810%2Fnyc3%2Fs3%2Faws4_request&X-Amz-Date=20210810T004948Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=00d74065ee5d4a1ce2b32c0ffa8522d759554c1f8c3f5df64767542c456962c9"
+  }
+]
