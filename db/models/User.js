@@ -54,7 +54,7 @@ User.init(
       allowNull: true,
     },
     profile_pic: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
   },
