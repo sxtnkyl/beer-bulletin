@@ -8,13 +8,6 @@ const handler = nextConnect()
   .use(middleware)
   // Get method
   .get(async (req, res) => {
-    const {
-      // query: { nextPage },
-      query,
-      method,
-      body,
-    } = req;
-
     const users = await models.users.findAndCountAll({
       attributes: [
         "id",
@@ -69,10 +62,9 @@ const handler = nextConnect()
         message: `Database error, please try again later.`,
       });
     }
-
     return res.status(200).json({
       status: "success",
-      message: "done",
+      message: `New User created with ID = ${newUser.dataValues.id}`,
       data: newUser,
     });
   });

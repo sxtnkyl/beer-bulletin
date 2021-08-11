@@ -48,11 +48,14 @@ const handler = nextConnect()
       ],
       group: ["User.id", "offers_made.id"],
     });
+    if (!user) {
+      return res.status(400).json({
+        status: "failed",
+        message: `No user found with ID = ${userId}`,
+      });
+    }
     res.statusCode = 200;
     return res.json({ status: "success", data: user });
-  })
-  .post(async (req, res) => {})
-  .put(async (req, res) => {})
-  .patch(async (req, res) => {});
+  });
 
 export default handler;

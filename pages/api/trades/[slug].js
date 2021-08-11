@@ -18,8 +18,46 @@ const handler = nextConnect()
     res.statusCode = 200;
     return res.json({ status: "success", data: trade });
   })
-  .post(async (req, res) => {})
-  .put(async (req, res) => {})
-  .patch(async (req, res) => {});
+  .put(async (req, res) => {
+    const { slug } = req.query;
+    const tradeID = slug;
+    const tradeData = await models.trades.update(req.body, {
+      where: {
+        id: tradeID,
+      },
+    });
+    if (tradeData[0] === 0) {
+      return res.status(400).json({
+        status: "failed",
+        message: `No new data or no trade found with ID = ${tradeID}`,
+      });
+    }
+
+    return res.status(200).json({
+      status: "success",
+      message: `Updated Trade ID = ${tradeID}`,
+    });
+  })
+  .delete(async (req, res) => {
+    const { slug } = req.query;
+    const tradeID = slug;
+    const tradeData = await models.trades.destroy({
+      where: {
+        id: tradeID,
+      },
+    });
+
+    if (!tradeData) {
+      return res.status(400).json({
+        status: "failed",
+        message: `No trade found with ID = ${tradeID}`,
+      });
+    }
+
+    return res.status(200).json({
+      status: "success",
+      message: `Deleted Trade ID = ${tradeID}`,
+    });
+  });
 
 export default handler;

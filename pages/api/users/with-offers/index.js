@@ -62,12 +62,7 @@ const handler = nextConnect()
     res.json({
       status: "success",
       data: users,
-      // nextPage: +nextPage + 5,
     });
-  })
-  // Patch method
-  .patch(async (req, res) => {
-    throw new Error("Throws me around! Error can be caught and handled.");
   });
 
 export default handler;

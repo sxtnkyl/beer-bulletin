@@ -49,7 +49,6 @@ const handler = nextConnect()
         id: userId,
       },
     });
-    console.log(userData);
     if (userData[0] === 0) {
       return res.status(400).json({
         status: "failed",

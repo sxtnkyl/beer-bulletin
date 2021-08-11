@@ -23,9 +23,10 @@ Trade.init(
     // SHOULD THIS HAVE A LENGTH LIMIT??
     content: {
       type: DataTypes.TEXT,
-      validate: {
-        len: [250],
-      },
+      // THISS MEANS IT HAS TO BE AT LEAST 250, find new way...
+      // validate: {
+      //   len: [250],
+      // },
     },
     // how is this going to look/be formatted?
     current_offers: {
