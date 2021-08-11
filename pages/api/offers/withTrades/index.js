@@ -1,6 +1,6 @@
 import nextConnect from "next-connect";
-const models = require("../../../db/models/index");
-import middleware from "../../../middleware/auth";
+const models = require("../../../../db/models/index");
+import middleware from "../../../../middleware/auth";
 
 const handler = nextConnect()
   // Middleware
@@ -15,6 +15,20 @@ const handler = nextConnect()
     } = req;
 
     const offers = await models.offers.findAndCountAll({
+      attributes: ["id", "resolved"],
+      include: [
+        {
+          model: models.users,
+          as: "host",
+          attributes: ["id", "username", "profile_pic"],
+        },
+        { model: models.trades },
+        {
+          model: models.users,
+          as: "participant",
+          attributes: ["id", "username", "profile_pic"],
+        },
+      ],
       order: [
         // Will escape title and validate DESC against a list of valid direction parameters
         ["id", "DESC"],

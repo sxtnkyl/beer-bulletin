@@ -26,6 +26,15 @@ Offer.belongsTo(User, {
   as: "participant",
 });
 
+Offer.belongsTo(User, {
+  foreignKey: "host_id",
+  as: "host",
+});
+
+Offer.belongsTo(Trade, {
+  foreignKey: "trade_id",
+});
+
 const db = {
   users: User,
   offers: Offer,
