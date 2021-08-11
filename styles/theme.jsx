@@ -4,44 +4,74 @@ import { red } from "@material-ui/core/colors";
 let theme = createTheme({
   palette: {
     primary: {
-      main: "#556cd6",
+      main: "#06baec",
+      dark: "#1e3156",
+      contrastText: "#fafafa",
     },
     secondary: {
-      main: "#19857b",
+      main: "#f1da00",
     },
     error: {
       main: red.A400,
     },
     background: {
-      default: "brown",
+      default: "#06baec",
+      paper: "#06baec",
     },
+    text: {
+      primary: "#1e3156",
+    },
+    type: "light",
+  },
+  typography: {
+    h2: {
+      fontSize: "2.5rem",
+      fontWeight: 500,
+      lineHeight: "1.5",
+      padding: "30px 0px",
+    },
+    body1: {},
   },
   overrides: {
     MuiCssBaseline: {
       "@global": {
         "html, body": {
-          height: "100%",
+          // height: "1000px",
         },
         "#__next": {
-          height: "100%",
+          // height: "1000px",
           display: "flex",
           flexDirection: "column",
         },
+        iframe: {
+          margin: "30px 0px",
+        },
       },
+    },
+    MuiButton: {
+      contained: { width: "75%" },
     },
     MuiBottomNavigation: {
       root: {
         zIndex: 100,
         width: "100%",
         flex: "0 0 10%",
-        position: "relative",
+        position: "fixed",
+        bottom: 0,
       },
+    },
+    MuiBottomNavigationAction: {
+      label: { color: "#fafafa" },
+      root: { "&$selected": { color: "#fafafa" } },
     },
     MuiContainer: {
       root: {
-        overflowY: "auto",
+        // height: "1000px",
+        // overflowY: "auto",
         flexGrow: "1",
-        background: "white",
+        background: "none",
+        //padding bottom needs to be height of bottom nav
+        marginBottom: "56px",
       },
     },
   },
