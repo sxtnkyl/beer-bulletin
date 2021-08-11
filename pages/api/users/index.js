@@ -1,6 +1,7 @@
 import nextConnect from "next-connect";
 const models = require("../../../db/models/index");
 import middleware from "../../../middleware/auth";
+const { fn, col } = models.sequelize;
 
 const handler = nextConnect()
   // Middleware
@@ -15,13 +16,14 @@ const handler = nextConnect()
     } = req;
 
     const users = await models.users.findAndCountAll({
-      // include: [
-      //   {
-      //     model: models.trades,
-      //     as: "user_trades",
-      //     include: [{ model: models.offers }],
-      //   },
-      // ],
+      attributes: [
+        "id",
+        "username",
+        "email",
+        [fn("CONCAT", col("first_name"), " ", col("last_name")), "name"],
+        "pref_dark",
+        "profile_pic",
+      ],
       order: [
         // Will escape title and validate DESC against a list of valid direction parameters
         ["id", "DESC"],
