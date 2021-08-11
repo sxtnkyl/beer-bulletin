@@ -15,13 +15,6 @@ const handler = nextConnect()
     } = req;
 
     const offers = await models.offers.findAndCountAll({
-      include: [
-        {
-          model: models.users,
-          as: "participant",
-          attributes: ["id", "username"],
-        },
-      ],
       order: [
         // Will escape title and validate DESC against a list of valid direction parameters
         ["id", "DESC"],

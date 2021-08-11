@@ -1,6 +1,7 @@
 import nextConnect from "next-connect";
-const models = require("../../../db/models/index");
-import middleware from "../../../middleware/auth";
+const models = require("../../../../db/models/index");
+import middleware from "../../../../middleware/auth";
+const { fn, col } = models.sequelize;
 
 const handler = nextConnect()
   // Middleware
@@ -15,12 +16,20 @@ const handler = nextConnect()
     } = req;
 
     const users = await models.users.findAll({
-      attributes: ["id", "username", "profile_pic"],
+      attributes: [
+        "id",
+        "username",
+        "email",
+        [
+          fn("CONCAT", col("User.first_name"), " ", col("User.last_name")),
+          "name",
+        ],
+        "profile_pic",
+      ],
       include: [
         {
           model: models.trades,
           as: "user_trades",
-          attributes: ["id", "title"],
           include: [
             {
               model: models.offers,

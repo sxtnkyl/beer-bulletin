@@ -15,11 +15,6 @@ const handler = nextConnect()
     } = req;
 
     const trades = await models.trades.findAndCountAll({
-      include: [
-        {
-          model: models.offers,
-        },
-      ],
       order: [
         // Will escape title and validate DESC against a list of valid direction parameters
         ["id", "DESC"],

@@ -1,32 +1,35 @@
 import nextConnect from "next-connect";
-const models = require("../../../db/models/index");
-import middleware from "../../../middleware/auth";
-const { fn, col } = models.sequelize;
+const models = require("../../../../db/models/index");
+import middleware from "../../../../middleware/auth";
 
 const handler = nextConnect()
   // Middleware
   .use(middleware)
   // Get method
   .get(async (req, res) => {
-    const {
-      // query: { nextPage },
-      query,
-      method,
-      body,
-    } = req;
-
-    const users = await models.users.findAndCountAll({
-      attributes: [
-        "id",
-        "username",
-        "email",
-        [fn("CONCAT", col("first_name"), " ", col("last_name")), "name"],
-        "pref_dark",
-        "profile_pic",
-      ],
-      order: [
-        // Will escape title and validate DESC against a list of valid direction parameters
-        ["id", "DESC"],
+    const { slug } = req.query;
+    const tradeID = slug;
+    const trade = await models.trades.findOne({
+      where: {
+        id: tradeID,
+      },
+      include: [
+        {
+          model: models.users,
+          as: "host",
+          attributes: ["id", "username", "profile_pic"],
+        },
+        {
+          model: models.offers,
+          attributes: ["id", "resolved"],
+          include: [
+            {
+              model: models.users,
+              as: "participant",
+              attributes: ["id", "username", "profile_pic"],
+            },
+          ],
+        },
       ],
       // offset: nextPage ? +nextPage : 0,
       // limit: 5,
@@ -35,12 +38,11 @@ const handler = nextConnect()
     res.statusCode = 200;
     res.json({
       status: "success",
-      data: users.rows,
-      total: users.count,
-      // nextPage: +nextPage + 5,
+      data: trade,
     });
   })
-  // ============  METHODS BELOW NEED ATTENTION/UPDATES ================ //
+  // ============  METHODS BELOW NEED ATTENTION/UPDATES (copied from /users/index.js) ================ //
+
   // Post method
   .post(async (req, res) => {
     const { body } = req;

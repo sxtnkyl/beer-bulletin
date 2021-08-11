@@ -1,7 +1,6 @@
 import nextConnect from "next-connect";
-const models = require("../../../db/models/index");
-import middleware from "../../../middleware/auth";
-const { fn, col } = models.sequelize;
+const models = require("../../../../db/models/index");
+import middleware from "../../../../middleware/auth";
 
 const handler = nextConnect()
   // Middleware
@@ -15,14 +14,20 @@ const handler = nextConnect()
       body,
     } = req;
 
-    const users = await models.users.findAndCountAll({
-      attributes: [
-        "id",
-        "username",
-        "email",
-        [fn("CONCAT", col("first_name"), " ", col("last_name")), "name"],
-        "pref_dark",
-        "profile_pic",
+    const offers = await models.offers.findAndCountAll({
+      attributes: ["id", "resolved"],
+      include: [
+        {
+          model: models.users,
+          as: "host",
+          attributes: ["id", "username", "profile_pic"],
+        },
+        { model: models.trades },
+        {
+          model: models.users,
+          as: "participant",
+          attributes: ["id", "username", "profile_pic"],
+        },
       ],
       order: [
         // Will escape title and validate DESC against a list of valid direction parameters
@@ -35,12 +40,13 @@ const handler = nextConnect()
     res.statusCode = 200;
     res.json({
       status: "success",
-      data: users.rows,
-      total: users.count,
+      data: offers.rows,
+      total: offers.count,
       // nextPage: +nextPage + 5,
     });
   })
-  // ============  METHODS BELOW NEED ATTENTION/UPDATES ================ //
+  // ============  METHODS BELOW NEED ATTENTION/UPDATES (copied from /users/index.js) ================ //
+
   // Post method
   .post(async (req, res) => {
     const { body } = req;

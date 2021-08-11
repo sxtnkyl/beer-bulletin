@@ -1,5 +1,5 @@
 import nextConnect from "next-connect";
-const models = require("../../../db/models/index");
+const models = require("../../../../db/models/index");
 import middleware from "../../../../middleware/auth";
 
 const handler = nextConnect()
@@ -20,8 +20,24 @@ const handler = nextConnect()
         "email",
         "first_name",
         "last_name",
-        "pref_dark",
         "profile_pic",
+      ],
+      include: [
+        {
+          model: models.offers,
+          as: "user_offers",
+          attributes: ["id", "participant_id", "resolved"],
+          include: [
+            {
+              model: models.users,
+              as: "host",
+              attributes: ["id", "username", "profile_pic"],
+            },
+            {
+              model: models.trades,
+            },
+          ],
+        },
       ],
     });
     res.statusCode = 200;

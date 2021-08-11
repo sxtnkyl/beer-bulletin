@@ -60,19 +60,15 @@ User.init(
   },
   {
     hooks: {
-      beforeCreate: async (newUserData) => {
-        newUserData.password = await bcrypt.hash(newUserData.password, 10);
+      beforeCreate: (newUserData) => {
+        newUserData.password = bcrypt.hashSync(newUserData.password, 8);
         return newUserData;
       },
-      beforeUpdate: async (updatedUserData) => {
-        updatedUserData.password = await bcrypt.hash(
-          updatedUserData.password,
-          10
-        );
+      beforeUpdate: (updatedUserData) => {
+        updatedUserData.password = bcrypt.hashSync(updatedUserData.password, 8);
         return updatedUserData;
       },
     },
-
     sequelize,
     timestamps: false,
     freezeTableName: true,

@@ -12,7 +12,7 @@ Offer.init(
       autoIncrement: true,
     },
     host_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     participant_id: {

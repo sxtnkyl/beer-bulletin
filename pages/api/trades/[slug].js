@@ -1,30 +1,22 @@
-import nextConnect from 'next-connect';
-const models = require('../../../db/models/index');
+import nextConnect from "next-connect";
+const models = require("../../../db/models/index");
+import middleware from "../../../../middleware/auth";
 
 const handler = nextConnect()
+  .use(middleware)
   .get(async (req, res) => {
     const {
       query: { id, name },
     } = req;
     const { slug } = req.query;
-    const userId = slug;
-    const user = await models.users.findOne({
+    const tradeID = slug;
+    const trade = await models.trades.findOne({
       where: {
-        id: userId,
+        id: tradeID,
       },
-      include: [
-        {
-          model: models.posts,
-          as: 'posts',
-        },
-        {
-          model: models.jobs,
-          as: 'jobs',
-        },
-      ],
     });
     res.statusCode = 200;
-    return res.json({ status: 'success', data: user });
+    return res.json({ status: "success", data: trade });
   })
   .post(async (req, res) => {})
   .put(async (req, res) => {})
