@@ -16,6 +16,11 @@ Trade.hasMany(Offer, {
   foreignKey: "trade_id",
 });
 
+Trade.belongsTo(User, {
+  foreignKey: "user_id",
+  as: "host",
+});
+
 Offer.belongsTo(User, {
   foreignKey: "participant_id",
   as: "participant",
