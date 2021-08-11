@@ -15,7 +15,6 @@ const handler = nextConnect()
     } = req;
 
     const offers = await models.offers.findAndCountAll({
-      attributes: ["id", "resolved"],
       include: [
         {
           model: models.users,

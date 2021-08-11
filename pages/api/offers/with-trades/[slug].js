@@ -14,7 +14,6 @@ const handler = nextConnect()
       where: {
         id: offerID,
       },
-      attributes: ["id", "resolved"],
       include: [
         {
           model: models.users,
