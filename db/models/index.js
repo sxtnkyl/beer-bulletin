@@ -13,7 +13,7 @@ User.hasMany(Trade, {
 
 User.hasMany(Offer, {
   foreignKey: "participant_id",
-  as: "user_offers",
+  as: "offers_made",
 });
 
 Trade.hasMany(Offer, {

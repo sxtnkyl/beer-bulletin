@@ -21,9 +21,18 @@ const handler = nextConnect()
         "username",
         "email",
         [fn("CONCAT", col("first_name"), " ", col("last_name")), "name"],
+        [fn("COUNT", col("user_trades.id")), "num_trades"],
         "pref_dark",
         "profile_pic",
       ],
+      include: [
+        {
+          model: models.trades,
+          as: "user_trades",
+          attributes: [],
+        },
+      ],
+      group: ["User.id"],
       order: [
         // Will escape title and validate DESC against a list of valid direction parameters
         ["id", "DESC"],
@@ -31,12 +40,11 @@ const handler = nextConnect()
       // offset: nextPage ? +nextPage : 0,
       // limit: 5,
     });
-
     res.statusCode = 200;
     res.json({
       status: "success",
       data: users.rows,
-      total: users.count,
+      total: users.rows.length,
       // nextPage: +nextPage + 5,
     });
   })

@@ -1,6 +1,7 @@
 import nextConnect from "next-connect";
 const models = require("../../../db/models/index");
-import middleware from "../../../../middleware/auth";
+import middleware from "../../../middleware/auth";
+const { fn, col } = models.sequelize;
 
 const handler = nextConnect()
   .use(middleware)
@@ -20,8 +21,16 @@ const handler = nextConnect()
         "email",
         "first_name",
         "last_name",
+        [fn("COUNT", col("user_trades.id")), "num_trades"],
         "pref_dark",
         "profile_pic",
+      ],
+      include: [
+        {
+          model: models.trades,
+          as: "user_trades",
+          attributes: [],
+        },
       ],
     });
     res.statusCode = 200;

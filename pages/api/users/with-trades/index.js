@@ -15,7 +15,7 @@ const handler = nextConnect()
       body,
     } = req;
 
-    const users = await models.users.findAll({
+    const usersData = await models.users.findAll({
       attributes: [
         "id",
         "username",
@@ -52,7 +52,8 @@ const handler = nextConnect()
       // offset: nextPage ? +nextPage : 0,
       // limit: 5,
     });
-
+    const users = usersData.map((user) => user.get({ plain: true }));
+    users.map((user) => (user.num_trades = user.user_trades.length));
     res.statusCode = 200;
     res.json({
       status: "success",
