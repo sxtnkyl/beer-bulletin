@@ -24,19 +24,17 @@ const handler = nextConnect()
       ],
       include: [
         {
-          model: models.trades,
-          as: "user_trades",
+          model: models.offers,
+          as: "user_offers",
+          attributes: ["id", "participant_id", "resolved"],
           include: [
             {
-              model: models.offers,
-              attributes: ["id", "resolved"],
-              include: [
-                {
-                  model: models.users,
-                  as: "participant",
-                  attributes: ["id", "username", "profile_pic"],
-                },
-              ],
+              model: models.users,
+              as: "host",
+              attributes: ["id", "username", "profile_pic"],
+            },
+            {
+              model: models.trades,
             },
           ],
         },
