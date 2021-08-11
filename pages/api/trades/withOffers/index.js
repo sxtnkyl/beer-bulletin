@@ -16,10 +16,21 @@ const handler = nextConnect()
 
     const trades = await models.trades.findAndCountAll({
       include: [
-        { model: models.users, as: "host" },
+        {
+          model: models.users,
+          as: "host",
+          attributes: ["id", "username", "profile_pic"],
+        },
         {
           model: models.offers,
-          include: [{ model: models.users, as: "participant" }],
+          attributes: ["id", "resolved"],
+          include: [
+            {
+              model: models.users,
+              as: "participant",
+              attributes: ["id", "username", "profile_pic"],
+            },
+          ],
         },
       ],
       order: [

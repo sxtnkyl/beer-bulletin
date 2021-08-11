@@ -14,15 +14,22 @@ const handler = nextConnect()
         id: tradeID,
       },
       include: [
-        { model: models.users, as: "host" },
+        {
+          model: models.users,
+          as: "host",
+          attributes: ["id", "username", "profile_pic"],
+        },
         {
           model: models.offers,
-          include: [{ model: models.users, as: "participant" }],
+          attributes: ["id", "resolved"],
+          include: [
+            {
+              model: models.users,
+              as: "participant",
+              attributes: ["id", "username", "profile_pic"],
+            },
+          ],
         },
-      ],
-      order: [
-        // Will escape title and validate DESC against a list of valid direction parameters
-        ["id", "DESC"],
       ],
       // offset: nextPage ? +nextPage : 0,
       // limit: 5,
