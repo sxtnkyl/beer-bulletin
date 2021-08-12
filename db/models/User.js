@@ -19,7 +19,7 @@ User.init(
     username: {
       type: DataTypes.STRING,
       unique: true,
-      allowNull: true,
+      allowNull: false,
     },
     email: {
       type: DataTypes.STRING,
@@ -36,46 +36,33 @@ User.init(
         len: [8],
       },
     },
-    firstName: {
+    first_name: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    lastName: {
+    last_name: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    numOfTrades: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    prefDark: {
+    pref_dark: {
       type: DataTypes.BOOLEAN,
-      allowNull: true,
+      defaultValue: false,
     },
-    profilePic: {
-      type: DataTypes.STRING,
-      allowNull: true,
+    profile_pic: {
+      type: DataTypes.TEXT,
     },
-    // chats: {
-    //   type: DataTypes.ARRAY,
-    //   allowNull: true,
-    // },
   },
   {
     hooks: {
-      beforeCreate: async (newUserData) => {
-        newUserData.password = await bcrypt.hash(newUserData.password, 10);
+      beforeCreate: (newUserData) => {
+        newUserData.password = bcrypt.hashSync(newUserData.password, 8);
         return newUserData;
       },
-      beforeUpdate: async (updatedUserData) => {
-        updatedUserData.password = await bcrypt.hash(
-          updatedUserData.password,
-          10
-        );
+      beforeUpdate: (updatedUserData) => {
+        updatedUserData.password = bcrypt.hashSync(updatedUserData.password, 8);
         return updatedUserData;
       },
     },
-
     sequelize,
     timestamps: false,
     freezeTableName: true,

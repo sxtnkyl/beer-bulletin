@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
 import { forwardRef } from "react";
-import Tacos from "next/link";
+import NextLink from "next/link";
 import * as C from "@material-ui/core";
 
 const Link = forwardRef(({ href, as, prefetch, ...props }, ref) => {
   return (
-    <Tacos href={href} as={as} prefetch={prefetch} passHref>
+    <NextLink href={href} as={as} prefetch={prefetch} passHref>
       <C.BottomNavigationAction ref={ref} {...props} />
-    </Tacos>
+    </NextLink>
   );
 });
 
