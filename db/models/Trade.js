@@ -13,12 +13,14 @@ Trade.init(
     },
     user_id: {
       type: DataTypes.INTEGER,
+      allowNull: false,
     },
     title: {
       type: DataTypes.STRING,
-      validate: {
-        // maybe no bad words? lol
-      },
+      allowNull: false,
+      // validate: {
+      //   // maybe no bad words? lol
+      // },
     },
     // SHOULD THIS HAVE A LENGTH LIMIT??
     content: {
@@ -31,10 +33,10 @@ Trade.init(
     // how is this going to look/be formatted?
     current_offers: {
       type: DataTypes.STRING,
-      allowNull: true,
     },
     open: {
       type: DataTypes.BOOLEAN,
+      defaultValue: true,
     },
   },
   {

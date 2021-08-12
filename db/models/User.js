@@ -19,7 +19,7 @@ User.init(
     username: {
       type: DataTypes.STRING,
       unique: true,
-      allowNull: true,
+      allowNull: false,
     },
     email: {
       type: DataTypes.STRING,
@@ -46,11 +46,10 @@ User.init(
     },
     pref_dark: {
       type: DataTypes.BOOLEAN,
-      allowNull: true,
+      defaultValue: false,
     },
     profile_pic: {
       type: DataTypes.TEXT,
-      allowNull: true,
     },
   },
   {
