@@ -19,7 +19,7 @@ User.init(
     username: {
       type: DataTypes.STRING,
       unique: true,
-      allowNull: true,
+      allowNull: false,
     },
     email: {
       type: DataTypes.STRING,
@@ -44,18 +44,12 @@ User.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    // Do we need a column for this? this could be obtained through a join-and-count query
-    // num_trades: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: true,
-    // },
     pref_dark: {
       type: DataTypes.BOOLEAN,
-      allowNull: true,
+      defaultValue: false,
     },
     profile_pic: {
       type: DataTypes.TEXT,
-      allowNull: true,
     },
   },
   {

@@ -17,6 +17,7 @@ Offer.init(
     },
     participant_id: {
       type: DataTypes.INTEGER,
+      allowNull: false,
     },
     trade_id: {
       type: DataTypes.INTEGER,
@@ -27,8 +28,12 @@ Offer.init(
     },
     resolved: {
       type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
-    // chat_log: {},
+    chat_log: {
+      type: DataTypes.STRING,
+      defaultValue: null,
+    },
   },
   {
     sequelize,

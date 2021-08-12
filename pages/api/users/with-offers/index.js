@@ -24,12 +24,18 @@ const handler = nextConnect()
           fn("CONCAT", col("User.first_name"), " ", col("User.last_name")),
           "name",
         ],
+        [fn("COUNT", col("user_trades.id")), "num_trades"],
         "profile_pic",
       ],
       include: [
         {
+          model: models.trades,
+          as: "user_trades",
+          attributes: [],
+        },
+        {
           model: models.offers,
-          as: "user_offers",
+          as: "offers_made",
           attributes: ["id", "participant_id", "resolved"],
           include: [
             {
@@ -43,6 +49,7 @@ const handler = nextConnect()
           ],
         },
       ],
+      group: ["User.id", "offers_made.id"],
       order: [
         // Will escape title and validate DESC against a list of valid direction parameters
         ["id", "DESC"],
@@ -55,12 +62,7 @@ const handler = nextConnect()
     res.json({
       status: "success",
       data: users,
-      // nextPage: +nextPage + 5,
     });
-  })
-  // Patch method
-  .patch(async (req, res) => {
-    throw new Error("Throws me around! Error can be caught and handled.");
   });
 
 export default handler;
