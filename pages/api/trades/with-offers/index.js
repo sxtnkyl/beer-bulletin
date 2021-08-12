@@ -3,9 +3,7 @@ const models = require("../../../../db/models/index");
 import middleware from "../../../../middleware/auth";
 
 const handler = nextConnect()
-  // Middleware
   .use(middleware)
-  // Get method
   .get(async (req, res) => {
     const trades = await models.trades.findAll({
       include: [

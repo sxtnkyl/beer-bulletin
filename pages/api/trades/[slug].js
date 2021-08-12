@@ -15,6 +15,12 @@ const handler = nextConnect()
         id: tradeID,
       },
     });
+    if (!trade) {
+      return res.status(400).json({
+        status: "failed",
+        message: `No trade found with ID = ${tradeID}`,
+      });
+    }
     res.statusCode = 200;
     return res.json({ status: "success", data: trade });
   })
