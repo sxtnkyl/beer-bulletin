@@ -8,14 +8,7 @@ const handler = nextConnect()
   .use(middleware)
   // Get method
   .get(async (req, res) => {
-    const {
-      // query: { nextPage },
-      query,
-      method,
-      body,
-    } = req;
-
-    const users = await models.users.findAll({
+    const usersData = await models.users.findAll({
       attributes: [
         "id",
         "username",
@@ -45,24 +38,15 @@ const handler = nextConnect()
           ],
         },
       ],
-      order: [
-        // Will escape title and validate DESC against a list of valid direction parameters
-        ["id", "DESC"],
-      ],
-      // offset: nextPage ? +nextPage : 0,
-      // limit: 5,
+      order: [["id", "DESC"]],
     });
-
+    const users = usersData.map((user) => user.get({ plain: true }));
+    users.map((user) => (user.num_trades = user.user_trades.length));
     res.statusCode = 200;
     res.json({
       status: "success",
       data: users,
-      // nextPage: +nextPage + 5,
     });
-  })
-  // Patch method
-  .patch(async (req, res) => {
-    throw new Error("Throws me around! Error can be caught and handled.");
   });
 
 export default handler;

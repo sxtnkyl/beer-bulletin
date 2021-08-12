@@ -1,6 +1,7 @@
 import nextConnect from "next-connect";
 const models = require("../../../../db/models/index");
 import middleware from "../../../../middleware/auth";
+const { fn, col } = models.sequelize;
 
 const handler = nextConnect()
   .use(middleware)
@@ -10,7 +11,7 @@ const handler = nextConnect()
     // } = req;
     const { slug } = req.query;
     const userId = slug;
-    const user = await models.users.findOne({
+    const userData = await models.users.findOne({
       where: {
         id: userId,
       },
@@ -42,11 +43,16 @@ const handler = nextConnect()
         },
       ],
     });
+    if (!userData) {
+      return res.status(400).json({
+        status: "failed",
+        message: `No user found with ID = ${userId}`,
+      });
+    }
+    const user = userData.get({ plain: true });
+    user.num_trades = user.user_trades.length;
     res.statusCode = 200;
     return res.json({ status: "success", data: user });
-  })
-  .post(async (req, res) => {})
-  .put(async (req, res) => {})
-  .patch(async (req, res) => {});
+  });
 
 export default handler;

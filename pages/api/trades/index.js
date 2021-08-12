@@ -7,13 +7,6 @@ const handler = nextConnect()
   .use(middleware)
   // Get method
   .get(async (req, res) => {
-    const {
-      // query: { nextPage },
-      query,
-      method,
-      body,
-    } = req;
-
     const trades = await models.trades.findAndCountAll({
       order: [
         // Will escape title and validate DESC against a list of valid direction parameters
@@ -31,33 +24,28 @@ const handler = nextConnect()
       // nextPage: +nextPage + 5,
     });
   })
-  // ============  METHODS BELOW NEED ATTENTION/UPDATES (copied from /users/index.js) ================ //
-
-  // Post method
   .post(async (req, res) => {
     const { body } = req;
-    const { slug } = req.query;
-    const { username, email, password } = body;
-    const userId = slug;
-    const newUser = await models.users.create({
-      username,
-      email,
-      password,
-      status: 1,
+    const { user_id, title, content, current_offers, open } = body;
+    const newTrade = await models.trades.create({
+      user_id,
+      title,
+      content,
+      current_offers,
+      open,
     });
+
+    if (!newTrade) {
+      return res.status(500).json({
+        status: "failed",
+        message: `Database error, please try again later.`,
+      });
+    }
     return res.status(200).json({
       status: "success",
-      message: "done",
-      data: newUser,
+      message: `New Trade created with ID = ${newTrade.dataValues.id}`,
+      data: newTrade,
     });
-  })
-  // Put method
-  .put(async (req, res) => {
-    res.end("method - put");
-  })
-  // Patch method
-  .patch(async (req, res) => {
-    throw new Error("Throws me around! Error can be caught and handled.");
   });
 
 export default handler;

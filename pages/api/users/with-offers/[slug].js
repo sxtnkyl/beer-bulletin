@@ -1,6 +1,7 @@
 import nextConnect from "next-connect";
 const models = require("../../../../db/models/index");
 import middleware from "../../../../middleware/auth";
+const { fn, col } = models.sequelize;
 
 const handler = nextConnect()
   .use(middleware)
@@ -20,12 +21,18 @@ const handler = nextConnect()
         "email",
         "first_name",
         "last_name",
+        [fn("COUNT", col("user_trades.id")), "num_trades"],
         "profile_pic",
       ],
       include: [
         {
+          model: models.trades,
+          as: "user_trades",
+          attributes: [],
+        },
+        {
           model: models.offers,
-          as: "user_offers",
+          as: "offers_made",
           attributes: ["id", "participant_id", "resolved"],
           include: [
             {
@@ -39,12 +46,16 @@ const handler = nextConnect()
           ],
         },
       ],
+      group: ["User.id", "offers_made.id"],
     });
+    if (!user) {
+      return res.status(400).json({
+        status: "failed",
+        message: `No user found with ID = ${userId}`,
+      });
+    }
     res.statusCode = 200;
     return res.json({ status: "success", data: user });
-  })
-  .post(async (req, res) => {})
-  .put(async (req, res) => {})
-  .patch(async (req, res) => {});
+  });
 
 export default handler;
