@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import BottomNav from "./bottomNav";
-import Header from "./header";
 import * as C from "@material-ui/core";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import { motion, useTransform, useMotionValue } from "framer-motion";
 import useFramerScroll from "../util/hooks/useFramerScroll";
-import { useSession } from "next-auth/client";
 import theme from "../styles/theme";
 //https://nextjs.org/docs/basic-features/layouts
 
