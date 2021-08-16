@@ -27,6 +27,7 @@ export default function createPostForm() {
                     <hr/>
                     <form>
                     <br/>
+                    
                     <C.TextField 
                         id="post-title" 
                         label="Title" 
@@ -34,7 +35,6 @@ export default function createPostForm() {
 
                     <br/><br/>
                     
-
                     <C.TextField
                         id="outlined-multiline-static"
                         label="Describe Your Offer"
@@ -44,6 +44,7 @@ export default function createPostForm() {
                         variant="outlined"
                      />
                     <br /><br />
+
                     <C.Button variant="contained" component="label">
                        
                     Upload File
