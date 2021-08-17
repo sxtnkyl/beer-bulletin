@@ -36,10 +36,10 @@ let theme = createTheme({
     MuiCssBaseline: {
       "@global": {
         "html, body": {
-          // height: "1000px",
+          minHeight: "100vh",
         },
         "#__next": {
-          // height: "1000px",
+          minHeight: "100vh",
           display: "flex",
           flexDirection: "column",
         },
@@ -71,7 +71,7 @@ let theme = createTheme({
         flexGrow: "1",
         background: "none",
         //padding bottom needs to be height of bottom nav
-        marginBottom: "56px",
+        paddingBottom: "56px",
       },
     },
   },
