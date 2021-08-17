@@ -1,9 +1,6 @@
 import React from "react";
 import * as C from "@material-ui/core";
-import { faBeer } from "@fortawesome/free-solid-svg-icons";
 import GlassCard from "../glassCard";
-import OfferForm from "../forms/offerForm";
-import ScalableIcon from "../ScalableIcon";
 import theme from "../../styles/theme";
 
 const useStyles = C.makeStyles((theme) => ({
@@ -49,19 +46,6 @@ const SingleBulletin = ({ bulletin, user }) => {
       </C.Typography>
     </C.CardContent>
   );
-  const slider = (
-    <C.CardActions className={classes.bot}>
-      <C.Button
-        color="secondary"
-        variant="contained"
-        startIcon={open && <ScalableIcon icon={faBeer} />}
-        disabled={!open}
-        style={{ width: "auto" }}
-      >
-        {open ? "Make Offer" : "Deal Pending"}
-      </C.Button>
-    </C.CardActions>
-  );
 
   return (
     <>
@@ -72,14 +56,6 @@ const SingleBulletin = ({ bulletin, user }) => {
         <C.Divider variant="middle" />
         {infoBlock}
       </GlassCard>
-      <GlassCard>
-        <C.CardHeader title={`Offer Form`} align="right" />
-        <C.Divider variant="middle" style={{ marginBottom: "15px" }} />
-        <C.CardContent>
-          <OfferForm />
-        </C.CardContent>
-      </GlassCard>
-      {slider}
     </>
   );
 };

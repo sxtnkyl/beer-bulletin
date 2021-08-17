@@ -1,5 +1,6 @@
 //a single bulletin opened
 import * as C from "@material-ui/core";
+import OfferForm from "../../components/forms/OfferForm";
 import SingleBulletin from "../../components/search-bulletins/singleBulletin";
 import { absoluteUrl, getAppCookies } from "../../middleware/utils";
 
@@ -7,6 +8,7 @@ const BulletinDetails = (props) => {
   return (
     <C.Container>
       <SingleBulletin {...props} />
+      <OfferForm {...props} />
     </C.Container>
   );
 };

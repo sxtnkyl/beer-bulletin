@@ -47,15 +47,17 @@ const BulletinCard = (props) => {
 
   const slider = (
     <C.CardActions className={classes.bot}>
-      <C.Button
-        color="secondary"
-        variant="contained"
-        startIcon={open && <ScalableIcon icon={faBeer} />}
-        disabled={!open}
-        style={{ width: "auto" }}
-      >
-        {open ? "Make Offer" : "Deal Pending"}
-      </C.Button>
+      <Link passHref href={`/SearchBulletins/${id}`}>
+        <C.Button
+          color="secondary"
+          variant="contained"
+          startIcon={open && <ScalableIcon icon={faBeer} />}
+          disabled={!open}
+          style={{ width: "auto" }}
+        >
+          {open ? "Make Offer" : "Deal Pending"}
+        </C.Button>
+      </Link>
     </C.CardActions>
   );
 
