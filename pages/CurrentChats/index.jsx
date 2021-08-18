@@ -49,11 +49,10 @@ const CurrentChats = () => {
             <C.Grid item xs={12}>
                 <C.List className={style.messageArea}>
 
-  {/* ALTERNATE LEFT AND RIGHT MESSAGES */}  
+                {/* ALTERNATE LEFT AND RIGHT MESSAGES */}  
 
                 {/* insert messagepanel.js here */}
 
-            
 
                 </C.List>
                 <C.Divider />
