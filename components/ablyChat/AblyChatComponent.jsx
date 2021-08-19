@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useChannel } from "./AblyReactEffect";
+import { useChannel } from "../../middleware/AblyReactEffect";
 import styles from "./AblyChatComponent.module.css";
 
 const AblyChatComponent = () => {
