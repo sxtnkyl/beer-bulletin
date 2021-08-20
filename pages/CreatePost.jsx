@@ -1,9 +1,10 @@
-import PageContainer from "../components/PageContainer";
+import React from 'react';
+import CreatePostForm from "../components/forms/CreatePostForm";
 
 //wrap in auth state hook to dynamically render auth component
 //example: authStat !== "user" ? <SignUp or SignIn /> : <Logout />
 const CreatePost = () => {
-  return <PageContainer>im the create post page</PageContainer>;
+  return <CreatePostForm  />;
 };
 
 export default CreatePost;
