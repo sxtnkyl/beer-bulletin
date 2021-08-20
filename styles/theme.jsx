@@ -10,6 +10,7 @@ let theme = createTheme({
     },
     secondary: {
       main: "#f1da00",
+      contrastText: "#1e3156",
     },
     error: {
       main: red.A400,
@@ -37,6 +38,7 @@ let theme = createTheme({
       "@global": {
         "html, body": {
           minHeight: "100vh",
+          color: "#1e3156",
         },
         "#__next": {
           minHeight: "100vh",
@@ -72,6 +74,20 @@ let theme = createTheme({
         background: "none",
         //padding bottom needs to be height of bottom nav
         paddingBottom: "56px",
+      },
+    },
+    MuiToolbar: {
+      root: {
+        background: "#fafafa",
+        color: "#1e3156",
+      },
+    },
+    MuiInputBase: {
+      input: {
+        "&:-webkit-autofill": {
+          transitionDelay: "9999s",
+          transitionProperty: "background-color, color",
+        },
       },
     },
   },

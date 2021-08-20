@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as C from "@material-ui/core";
+import { absoluteUrl } from "../middleware/utils";
+import Link from "next/link";
 import theme from "../styles/theme";
 import {
   faBeer,
@@ -49,14 +51,20 @@ const Landing = () => {
           Join the Beer Bulletin community to begin connecting with fellow beer
           lovers looking to trade brews!
         </C.Typography>
-        <C.Button
-          style={{ marginBottom: "15px" }}
-          color="secondary"
-          variant="contained"
-          startIcon={<ScalableIcon icon={faBeer} />}
+        <Link
+          passHref
+          href={{ pathname: `/Auth`, query: { slug: "register" } }}
+          as="/Auth/register"
         >
-          Get Started
-        </C.Button>
+          <C.Button
+            style={{ marginBottom: "15px" }}
+            color="secondary"
+            variant="contained"
+            startIcon={<ScalableIcon icon={faBeer} />}
+          >
+            Get Started
+          </C.Button>
+        </Link>
         <C.Typography variant="body1">
           Use our platform to search for beers you can't find, see what others
           offer for your rare brew, or browse through the community.
@@ -142,14 +150,20 @@ const Landing = () => {
         <C.Typography variant="h2" className={t.sectionTitle}>
           Unlimited lifetime trades, for free!
         </C.Typography>
-        <C.Button
-          color="secondary"
-          variant="contained"
-          startIcon={<ScalableIcon icon={faBeer} />}
-          style={{ marginBottom: "15px" }}
+        <Link
+          passHref
+          href={{ pathname: `/Auth`, query: { slug: "register" } }}
+          as="/Auth/register"
         >
-          Join Now!
-        </C.Button>
+          <C.Button
+            color="secondary"
+            variant="contained"
+            startIcon={<ScalableIcon icon={faBeer} />}
+            style={{ marginBottom: "15px" }}
+          >
+            Join Now!
+          </C.Button>
+        </Link>
         <C.Typography variant="body1">
           Join the community and see what what you'll find. Better yet, what
           others can offer you!
@@ -184,3 +198,14 @@ const Landing = () => {
 };
 
 export default Landing;
+
+export async function getServerSideProps(context) {
+  const { req } = context;
+  const { origin } = absoluteUrl(req);
+
+  return {
+    props: {
+      origin,
+    },
+  };
+}

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
-import { signIn } from "next-auth/client";
 import * as C from "@material-ui/core";
 
 const Header = (props) => {
@@ -8,18 +7,30 @@ const Header = (props) => {
     <HideOnScroll {...props}>
       <C.AppBar>
         <C.Toolbar>
-          <C.Typography variant="h6">
+          <C.Typography variant="body1" align="left">
             You are not currently logged in!
           </C.Typography>
-          <C.Button
-            href={`/api/auth/signin`}
-            onClick={(e) => {
-              e.preventDefault();
-              signIn();
+          <Link
+            passHref
+            href={{
+              pathname: "/Auth",
+              query: { form: "login" },
             }}
+            // as="/Auth/login"
           >
-            Login
-          </C.Button>
+            <C.Button variant="outlined" style={{ marginLeft: "15px" }}>
+              Login
+            </C.Button>
+          </Link>
+          <Link
+            passHref
+            href={{ pathname: `/Auth`, query: { form: "register" } }}
+            as="/Auth/register"
+          >
+            <C.Button variant="outlined" style={{ marginLeft: "15px" }}>
+              Register
+            </C.Button>
+          </Link>
         </C.Toolbar>
       </C.AppBar>
     </HideOnScroll>

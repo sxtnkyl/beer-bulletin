@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import BottomNav from "./bottomNav";
+import Header from "./Header";
 import * as C from "@material-ui/core";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import { motion, useTransform, useMotionValue } from "framer-motion";
 import useFramerScroll from "../util/hooks/useFramerScroll";
 import theme from "../styles/theme";
-import { RadioButtonUncheckedRounded } from "@material-ui/icons";
 //https://nextjs.org/docs/basic-features/layouts
 
-const Layout = ({ children }) => {
-  // const [session, loading] = useSession();
+const Layout = ({ children, user }) => {
+  // console.log(user);
   const router = useRouter();
+  const checkheader = !router.pathname.includes("Auth") && !user && true;
 
   const scrollTrigger = useScrollTrigger({
     threshold: 20,
@@ -22,9 +23,9 @@ const Layout = ({ children }) => {
   useEffect(() => {
     y.set(bg);
   }, [bg, y]);
-  const yRange = router.pathname == "/Landing" ? [0, 0.5, 1] : [0, 1];
+  const yRange = router.pathname == "/" ? [0, 0.5, 1] : [0, 1];
   const gradientArr =
-    router.pathname == "/Landing"
+    router.pathname == "/"
       ? [
           `linear-gradient(180deg, #06baec 0%, #fafafa 100%)`,
           `linear-gradient(180deg, #fafafa 0%, #f1da00 100%)`,
@@ -39,7 +40,7 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      {/* {!session && <Header scroll={scrollTrigger} />} */}
+      {checkheader && <Header scroll={scrollTrigger} />}
       <C.Container
         style={{ background }}
         transition={{
