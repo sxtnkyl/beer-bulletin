@@ -7,6 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import MessagePanel from "./MessagePanel";
 import AblyChatComponent from "../../components/ablyChat/AblyChatComponent";
+import { absoluteUrl, getAppCookies } from "../../middleware/utils";
 
 const useStyles = makeStyles({
   table: {
@@ -32,12 +33,11 @@ const useStyles = makeStyles({
 });
 
 //Pass chat ID here??
-const Chat = () => {
+const Chat = (pageProps) => {
   const style = useStyles();
-
   return (
     <div>
-      <AblyChatComponent />
+      <AblyChatComponent {...pageProps} />
     </div>
   );
 };
@@ -73,3 +73,32 @@ const Chat = () => {
 */
 
 export default Chat;
+
+// ??? WHY DO WE export THIS ???
+// export async function getServerSideProps(context) {
+//   const { query, req } = context;
+//   const { nextPage } = query;
+//   const { origin } = absoluteUrl(req);
+
+//   const token = getAppCookies(req).token || "";
+//   const referer = req.headers.referer || "";
+
+//   const baseApiUrl = `${origin}/api`;
+
+//   const api = await fetch(`${baseApiUrl}/messages`, {
+//     headers: {
+//       authorization: token || "",
+//     },
+//   });
+
+//   const msgHistory = await api.json();
+
+//   return {
+//     props: {
+//       origin,
+//       referer,
+//       token,
+//       msgHistory,
+//     },
+//   };
+// }
