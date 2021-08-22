@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useChannel } from "../../middleware/AblyReactEffect";
+import { useChannel } from "../../util/hooks/AblyReactEffect";
 import styles from "./AblyChatComponent.module.css";
 
 const AblyChatComponent = () => {
@@ -37,6 +37,7 @@ const AblyChatComponent = () => {
 
   const messages = receivedMessages.map((message, index) => {
     const author = message.connectionId === ably.connection.id ? "me" : "other";
+    console.log(ably.connection);
     return (
       <span key={index} className={styles.message} data-author={author}>
         {message.data}
