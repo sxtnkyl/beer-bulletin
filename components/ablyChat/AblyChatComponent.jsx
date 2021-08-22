@@ -1,17 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useChannel } from "../../util/hooks/AblyReactEffect";
 import styles from "./AblyChatComponent.module.css";
 
-const AblyChatComponent = () => {
-  let inputBox = null;
-  let messageEnd = null;
+const AblyChatComponent = (props) => {
+  console.log("this", props);
+
+  let inputBox = useRef();
+  let messageEnd = useRef();
 
   const [messageText, setMessageText] = useState("");
   const [receivedMessages, setMessages] = useState([]);
   const messageTextIsEmpty = messageText.trim().length === 0;
 
-  // i think we will need to replace "chat-demo" with a var to control users only receiving messages from their chat
-  const [channel, ably] = useChannel("chat-demo", (message) => {
+  // info for message history entries retrieved from props
+  const channelName = "channel" + props.asPath.slice(14);
+  const userID = props.user.id;
+
+  const [channel, ably] = useChannel(channelName, (message) => {
+    // console.log("MESSAGE", message);
+    postData({
+      data: message.data,
+      channel: channelName,
+      senderID: userID,
+    });
     const history = receivedMessages.slice(-199);
     setMessages([...history, message]);
   });
@@ -19,7 +30,7 @@ const AblyChatComponent = () => {
   const sendChatMessage = (messageText) => {
     channel.publish({ name: "chat-message", data: messageText });
     setMessageText("");
-    inputBox.focus();
+    inputBox.current.focus();
   };
 
   const handleFormSubmission = (event) => {
@@ -37,7 +48,6 @@ const AblyChatComponent = () => {
 
   const messages = receivedMessages.map((message, index) => {
     const author = message.connectionId === ably.connection.id ? "me" : "other";
-    console.log(ably.connection);
     return (
       <span key={index} className={styles.message} data-author={author}>
         {message.data}
@@ -45,25 +55,59 @@ const AblyChatComponent = () => {
     );
   });
 
+  // API calls for message history
+  const getData = async () => {
+    const res = await fetch(`/api/messages/${channelName}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+
+    // Throw error with status code in case Fetch API req failed
+    if (!res.ok) {
+      throw new Error(res.status);
+    }
+    return res.json();
+  };
+  const postData = async (msgData) => {
+    const res = await fetch("/api/messages", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(msgData),
+    });
+
+    // Throw error with status code in case Fetch API req failed
+    if (!res.ok) {
+      throw new Error(res.status);
+    }
+  };
+
   useEffect(() => {
-    messageEnd.scrollIntoView({ behaviour: "smooth" });
+    messageEnd.current.scrollIntoView({ behaviour: "smooth" });
   });
+
+  useEffect(() => {
+    async function getMsgHistory() {
+      let msgHistory = await getData();
+      console.log(msgHistory);
+    }
+    getMsgHistory();
+  }, []);
 
   return (
     <div className={styles.chatHolder}>
       <div className={styles.chatText}>
         {messages}
-        <div
-          ref={(element) => {
-            messageEnd = element;
-          }}
-        ></div>
+        <div ref={messageEnd}></div>
       </div>
       <form onSubmit={handleFormSubmission} className={styles.form}>
         <textarea
-          ref={(element) => {
-            inputBox = element;
-          }}
+          ref={inputBox}
           value={messageText}
           placeholder="Type a message..."
           onChange={(e) => setMessageText(e.target.value)}

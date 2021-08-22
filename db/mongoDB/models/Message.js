@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const messageSchema = new mongoose.Schema(
   {
-    message: {
+    data: {
       type: String,
       trim: true,
       required: "Must have message body",
@@ -21,6 +21,5 @@ const messageSchema = new mongoose.Schema(
   }
 );
 
-const Message = mongoose.model("Message", messageSchema);
-
-module.exports = Message;
+export default mongoose.models.Message ||
+  mongoose.model("Message", messageSchema);
