@@ -40,7 +40,7 @@ const Layout = ({ children, user }) => {
 
   return (
     <>
-      {checkheader && <Header scroll={scrollTrigger} />}
+      {/* {checkheader && <Header scroll={scrollTrigger} />} */}
       <C.Container
         style={{ background }}
         transition={{
