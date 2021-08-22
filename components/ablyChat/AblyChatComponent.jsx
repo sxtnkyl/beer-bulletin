@@ -12,6 +12,7 @@ const AblyChatComponent = (props) => {
   const [receivedMessages, setMessages] = useState([]);
   const messageTextIsEmpty = messageText.trim().length === 0;
 
+  const [msgLoading, setMsgLoading] = useState(true);
   // info for message history entries retrieved from props
   const channelName = "channel" + props.asPath.slice(14);
   const userID = props.user.id;
@@ -23,7 +24,7 @@ const AblyChatComponent = (props) => {
       channel: channelName,
       senderID: userID,
     });
-    const history = receivedMessages.slice(-199);
+    const history = receivedMessages;
     setMessages([...history, message]);
   });
 
@@ -46,8 +47,13 @@ const AblyChatComponent = (props) => {
     event.preventDefault();
   };
 
+  let author;
   const messages = receivedMessages.map((message, index) => {
-    const author = message.connectionId === ably.connection.id ? "me" : "other";
+    if (message.connectionId) {
+      author = message.connectionId === ably.connection.id ? "me" : "other";
+    } else {
+      author = message.senderID === userID ? "me" : "other";
+    }
     return (
       <span key={index} className={styles.message} data-author={author}>
         {message.data}
@@ -95,6 +101,8 @@ const AblyChatComponent = (props) => {
     async function getMsgHistory() {
       let msgHistory = await getData();
       console.log(msgHistory);
+      setMessages(msgHistory.data);
+      setMsgLoading(false);
     }
     getMsgHistory();
   }, []);
@@ -102,7 +110,7 @@ const AblyChatComponent = (props) => {
   return (
     <div className={styles.chatHolder}>
       <div className={styles.chatText}>
-        {messages}
+        {msgLoading ? <h4>Messages Loading</h4> : messages}
         <div ref={messageEnd}></div>
       </div>
       <form onSubmit={handleFormSubmission} className={styles.form}>
