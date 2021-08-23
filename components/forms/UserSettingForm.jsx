@@ -401,7 +401,7 @@ const UserInfoForm = ({
               color="secondary"
               variant="contained"
               style={{ width: "auto" }}
-              disabled={!stateFormValid}
+              disabled={!stateFormValid || loading}
             >
               Update
             </C.Button>

@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps }) {
     <React.Fragment>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Layout {...pageProps.user}>
+        <Layout {...pageProps}>
           <Component {...pageProps} />
         </Layout>
       </ThemeProvider>

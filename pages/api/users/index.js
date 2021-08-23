@@ -41,19 +41,19 @@ const handler = nextConnect()
       username,
       email,
       password,
-      first_name,
-      last_name,
-      pref_dark,
-      profile_pic,
+      // first_name,
+      // last_name,
+      // pref_dark,
+      // profile_pic,
     } = body;
     const newUser = await models.users.create({
       username,
       email,
       password,
-      first_name,
-      last_name,
-      pref_dark,
-      profile_pic,
+      // first_name,
+      // last_name,
+      // pref_dark,
+      // profile_pic,
     });
 
     if (!newUser) {

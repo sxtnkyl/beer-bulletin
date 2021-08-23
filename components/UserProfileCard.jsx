@@ -32,7 +32,6 @@ const UserProfileCard = ({ user }) => {
         src={profile_pic}
         style={{ height: "80px", width: "80px", alignSelf: "flex-end" }}
       />
-      {/* <C.Divider variant="middle" style={{ marginBottom: "15px" }} /> */}
       <C.Typography variant="h6">{username}</C.Typography>
       <C.Typography variant="body2">
         Number of completed trades: {num_trades}
@@ -45,7 +44,7 @@ const UserProfileCard = ({ user }) => {
       <C.Typography variant="h6">
         {first_name} {last_name}
       </C.Typography>
-      <C.Typography variant="body1">{email}</C.Typography>
+      <C.Typography variant="body2">{email}</C.Typography>
     </C.CardContent>
   );
 

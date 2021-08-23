@@ -8,7 +8,7 @@ const middleware = nextConnect();
 
 /* Set restricted public access / put any api access that is restricted in here */
 // put secured or restricted routes in here V
-const restricted = ["/api/post/[slug]", "/api/job/[slug]"];
+const restricted = ["/api/post/[slug]"];
 
 /*
  * @params {request, response, callback} default Request and Response

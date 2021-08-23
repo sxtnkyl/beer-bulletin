@@ -32,7 +32,7 @@ const BottomNav = ({ scroll }) => {
   const [activeTab, setActiveTab] = useState(null);
   useEffect(() => {
     let isNavRoute = paths.findIndex((path) => router.pathname.includes(path));
-    isNavRoute == -1 && setActiveTab(null);
+    isNavRoute == -1 ? setActiveTab(null) : setActiveTab(isNavRoute);
   }, [router.pathname]);
 
   const handleChange = (event, newValue) => {

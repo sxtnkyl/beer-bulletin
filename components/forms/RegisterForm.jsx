@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Router, { useRouter } from "next/router";
 import * as C from "@material-ui/core";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
 const useStyles = C.makeStyles(() => ({
   formItem: {
@@ -53,6 +55,10 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
   const classes = useStyles();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [vis, setVis] = useState(false);
+  const toggleVis = () => {
+    setVis(!vis);
+  };
 
   const [stateFormData, setStateFormData] = useState(FORM_DATA_REGISTER);
   const [stateFormError, setStateFormError] = useState([]);
@@ -60,6 +66,7 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
   const [stateFormMessage, setStateFormMessage] = useState({});
 
   function onChangeHandler(e) {
+    setStateFormValid(false);
     const { name, value } = e.currentTarget;
 
     setStateFormData({
@@ -90,7 +97,7 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
 
       if (isValid) {
         setLoading(!loading);
-        const registerApi = await fetch(`${baseApiUrl}/auth`, {
+        const registerApi = await fetch(`${baseApiUrl}/users`, {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -258,12 +265,19 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
           onChange={onChangeHandler}
           className={classes.formItem}
           label="Password"
-          type="password"
+          type={vis ? "text" : "password"}
           id="password"
           name="password"
           placeholder="Password"
           readOnly={loading && true}
           defaultValue={stateFormData.password.value}
+          InputProps={{
+            endAdornment: (
+              <C.InputAdornment position="end" onClick={toggleVis}>
+                {vis ? <VisibilityIcon /> : <VisibilityOffIcon />}
+              </C.InputAdornment>
+            ),
+          }}
         />
         <C.FormHelperText>
           {stateFormError.password && stateFormError.password.hint}
@@ -276,7 +290,7 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
           color="secondary"
           variant="contained"
           style={{ width: "auto" }}
-          disabled={loading}
+          disabled={loading || !stateFormValid}
         >
           {!loading ? "Register" : "Loading..."}
         </C.Button>

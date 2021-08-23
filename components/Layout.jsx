@@ -10,7 +10,6 @@ import theme from "../styles/theme";
 //https://nextjs.org/docs/basic-features/layouts
 
 const Layout = ({ children, user }) => {
-  // console.log(user);
   const router = useRouter();
   const checkheader = !router.pathname.includes("Auth") && !user && true;
 
@@ -40,7 +39,7 @@ const Layout = ({ children, user }) => {
 
   return (
     <>
-      {/* {checkheader && <Header scroll={scrollTrigger} />} */}
+      {checkheader && <Header scroll={scrollTrigger} />}
       <C.Container
         style={{ background }}
         transition={{
