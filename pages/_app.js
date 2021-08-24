@@ -10,7 +10,7 @@ import { getAppCookies, verifyToken } from "../middleware/utils";
 //_document can access entire DOM
 //If using useContext, wrap here
 function MyApp({ Component, pageProps }) {
-  console.log(pageProps);
+  // console.log(pageProps);
   useEffect(() => {
     // MUI: Remove the server-side injected CSS.
     const jssStyles = document.querySelector("#jss-server-side");

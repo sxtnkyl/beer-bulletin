@@ -23,13 +23,30 @@ export async function getServerSideProps(context) {
   const referer = req.headers.referer || "";
   const baseApiUrl = `${origin}/api`;
 
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/Auth?form=login",
+        permanent: false,
+      },
+    };
+  }
+
   let bulletin = {};
   let user = {};
 
-  const tradeData = await fetch(`${baseApiUrl}/trades/${query.id}`);
+  const tradeData = await fetch(`${baseApiUrl}/trades/${query.id}`, {
+    headers: {
+      authorization: token || "",
+    },
+  });
   bulletin = await tradeData.json();
 
-  const userData = await fetch(`${baseApiUrl}/users/${bulletin.data.user_id}`);
+  const userData = await fetch(`${baseApiUrl}/users/${bulletin.data.user_id}`, {
+    headers: {
+      authorization: token || "",
+    },
+  });
   user = await userData.json();
 
   return {
