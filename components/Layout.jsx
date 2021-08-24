@@ -10,7 +10,6 @@ import theme from "../styles/theme";
 //https://nextjs.org/docs/basic-features/layouts
 
 const Layout = ({ children, user }) => {
-  // console.log(user);
   const router = useRouter();
   const checkheader = !router.pathname.includes("Auth") && !user && true;
 

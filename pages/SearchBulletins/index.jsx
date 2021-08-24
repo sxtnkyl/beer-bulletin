@@ -42,16 +42,9 @@ export async function getServerSideProps(context) {
   // const nextPageUrl = !isNaN(nextPage) ? `?nextPage=${nextPage}` : '';
   const baseApiUrl = `${origin}/api`;
 
-  // const tradesApi = await fetch(`${baseApiUrl}/trades${nextPageUrl}`, {
-  //   headers: {
-  //     authorization: token || '',
-  //   },
+  // const tradesApi = await fetch(`${baseApiUrl}/trades${nextPageUrl}`
   // });
-  const api = await fetch(`${baseApiUrl}/trades`, {
-    headers: {
-      authorization: token || "",
-    },
-  });
+  const api = await fetch(`${baseApiUrl}/trades`);
 
   const trades = await api.json();
 

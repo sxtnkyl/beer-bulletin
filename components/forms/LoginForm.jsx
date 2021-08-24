@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Router, { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import * as C from "@material-ui/core";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
 const useStyles = C.makeStyles(() => ({
   formItem: {
@@ -43,6 +45,10 @@ const LoginForm = ({ origin, referer, baseApiUrl }) => {
   const classes = useStyles();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [vis, setVis] = useState(false);
+  const toggleVis = () => {
+    setVis(!vis);
+  };
 
   const [stateFormData, setStateFormData] = useState(FORM_DATA_LOGIN);
   const [stateFormError, setStateFormError] = useState([]);
@@ -51,6 +57,7 @@ const LoginForm = ({ origin, referer, baseApiUrl }) => {
   const [stateFormValid, setStateFormValid] = useState(false);
 
   function onChangeHandler(e) {
+    setStateFormValid(false);
     const { name, value } = e.currentTarget;
 
     setStateFormData({
@@ -224,13 +231,20 @@ const LoginForm = ({ origin, referer, baseApiUrl }) => {
         <C.TextField
           className={classes.formItem}
           label="Password"
-          type="password"
+          type={vis ? "text" : "password"}
           id="password"
           name="password"
           placeholder="Password"
           onChange={onChangeHandler}
           readOnly={loading && true}
           value={stateFormData.email.password}
+          InputProps={{
+            endAdornment: (
+              <C.InputAdornment position="end" onClick={toggleVis}>
+                {vis ? <VisibilityIcon /> : <VisibilityOffIcon />}
+              </C.InputAdornment>
+            ),
+          }}
         />
         <C.FormHelperText>
           {stateFormError.password && stateFormError.password.hint}
@@ -243,7 +257,7 @@ const LoginForm = ({ origin, referer, baseApiUrl }) => {
           color="secondary"
           variant="contained"
           style={{ width: "auto" }}
-          disabled={loading}
+          disabled={loading || !stateFormValid}
         >
           {!loading ? "Login" : "Loading..."}
         </C.Button>

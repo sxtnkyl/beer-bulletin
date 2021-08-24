@@ -6,11 +6,11 @@ import PageviewIcon from "@material-ui/icons/Pageview";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import Link from "./BotNavButton";
 import CreatePostButton from "../buttons/CreatePostButton";
-import { useSession } from "next-auth/client";
+import { useRouter } from "next/router";
 import theme from "../../styles/theme";
 
 const BottomNav = ({ scroll }) => {
-  // const [session, loading] = useSession();
+  const router = useRouter();
 
   let paths = [
     "UsersBulletins",
@@ -29,7 +29,11 @@ const BottomNav = ({ scroll }) => {
   ];
 
   //index in tabs arr
-  const [activeTab, setActiveTab] = useState(2);
+  const [activeTab, setActiveTab] = useState(null);
+  useEffect(() => {
+    let isNavRoute = paths.findIndex((path) => router.pathname.includes(path));
+    isNavRoute == -1 ? setActiveTab(null) : setActiveTab(isNavRoute);
+  }, [router.pathname]);
 
   const handleChange = (event, newValue) => {
     setActiveTab(newValue);
