@@ -2,12 +2,13 @@
 // domain.com/CurrentChats/:id
 
 import React, { useState, useEffect } from "react";
-import * as C from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import MessagePanel from "./MessagePanel";
 import AblyChatComponent from "../../components/ablyChat/AblyChatComponent";
 import { absoluteUrl, getAppCookies } from "../../middleware/utils";
+import BeerPongGame from "../../components/beerPong/BeerPongGame";
 
 const useStyles = makeStyles({
   table: {
@@ -35,9 +36,12 @@ const useStyles = makeStyles({
 //Pass chat ID here??
 const Chat = (pageProps) => {
   const style = useStyles();
+  const [gameMode, setGameMode] = useState(false);
   return (
     <div>
       <AblyChatComponent {...pageProps} />
+      <Button onClick={() => setGameMode(!gameMode)}>Beer Pong</Button>
+      {gameMode ? <BeerPongGame /> : null}
     </div>
   );
 };

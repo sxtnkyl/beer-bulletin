@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Ammo Three</title>
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="/beerPong/three.min.js"></script>
+    <script src="/beerPong/enable3d.ammoPhysics.0.23.0.min.js"></script>
+    <script src="/beerPong/GLTFLoader.js"></script>
+    <script>
+      // global variable declarations
+      const { AmmoPhysics, PhysicsLoader } = ENABLE3D;
+      let mouseCoords = new THREE.Vector2();
+      let camera, renderer, physics;
+      let ballObject = null,
+        ballObjectp2 = null,
+        createBallObj,
+        createBallObjp2,
+        ballTTL = new THREE.Clock(false),
+        ballTTLp2 = new THREE.Clock(false);
+      let touchList = [];
+
+      let isPlayerOne = true;
+
+      // function for rendering a Three.js scene with ammo.js for physics
+      const MainScene = () => {
+        //
+        // ------ Graphics section ------
+
+        const scene = new THREE.Scene();
+
+        // possibly find a better scene background?
+        scene.background = new THREE.Color(0xc6c6c6);
+
+        // setup for renderer specs
+        renderer = new THREE.WebGLRenderer({
+          antialias: true,
+          alpha: true,
+        });
+        renderer.shadowMap.enabled = true;
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        const DPR = window.devicePixelRatio;
+        renderer.setPixelRatio(Math.min(2, DPR));
+        document.body.appendChild(renderer.domElement);
+
+        //       GAMMA CONTROL
+        renderer.outputEncoding = THREE.GammaEncoding;
+        renderer.gammaFactor = 2.5;
+
+        // setup for camera
+        camera = new THREE.PerspectiveCamera(
+          50,
+          window.innerWidth / window.innerHeight,
+          0.1,
+          1000
+        );
+        // adjust this to change the perspective
+        isPlayerOne
+          ? camera.position.set(55, 35, 0)
+          : camera.position.set(-55, 35, 0);
+        camera.lookAt(0, 2, 0);
+
+        //Add hemisphere light
+        let hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.1);
+        hemiLight.color.setHSL(0.6, 0.6, 0.6);
+        hemiLight.groundColor.setHSL(0.1, 1, 0.4);
+        hemiLight.position.set(0, 50, 0);
+        scene.add(hemiLight);
+
+        //Add directional light
+        let dirLight = new THREE.DirectionalLight(0xffffff, 1);
+        dirLight.color.setHSL(0.1, 1, 0.95);
+        dirLight.position.set(3, 5, 3);
+        dirLight.position.multiplyScalar(100);
+        scene.add(dirLight);
+
+        dirLight.castShadow = true;
+        dirLight.shadow.mapSize.width = 2048;
+        dirLight.shadow.mapSize.height = 2048;
+
+        let d = 50;
+        dirLight.shadow.camera.left = -d;
+        dirLight.shadow.camera.right = d;
+        dirLight.shadow.camera.top = d;
+        dirLight.shadow.camera.bottom = -d;
+
+        dirLight.shadow.camera.far = 13500;
+        dirLight.shadow.camera.near = 0.1;
+
+        //=================================
+
+        // ------ Physics section ------
+        // NOTE: setBounciness for cup, ball, and ground may need fine-tuning for optimal physics
+        const physics = new AmmoPhysics(scene);
+
+        // function for ball creation assigned to global var so it can be accessed in handleTouchEnd() that is outside this MainScene() function
+        createBallObj = () => {
+          ballObject = physics.add.sphere(
+            { name: "ball", x: 19, y: 1.4, radius: 0.7, mass: 20 },
+            { lambert: { color: "white" } }
+          );
+          ballObject.body.setGravity(0, -60, 0);
+          ballObject.body.setBounciness(1);
+          ballObject.body.on.collision((otherObject, event) => {
+            if (
+              !["table", "root", "ground", "ball", "ball2"].includes(
+                otherObject.name
+              )
+            ) {
+              otherObject.refCup.traverse((child) => {
+                if (child.isMesh) {
+                  child.material = new THREE.MeshStandardMaterial({
+                    color: 0x17ff00,
+                  });
+                }
+              });
+
+              setTimeout(() => {
+                physics.destroy(otherObject.refCup);
+                scene.remove(otherObject.refCup);
+                physics.destroy(otherObject);
+                scene.remove(otherObject);
+                physics.destroy(ballObject);
+                scene.remove(ballObject);
+              }, 750);
+            }
+          });
+        };
+
+        createBallObjp2 = () => {
+          ballObjectp2 = physics.add.sphere(
+            { name: "ball2", x: -19, y: 1.4, radius: 0.7, mass: 20 },
+            { lambert: { color: "yellow" } }
+          );
+          ballObjectp2.body.setGravity(0, -60, 0);
+          ballObjectp2.body.setBounciness(1);
+          ballObjectp2.body.on.collision((otherObject, event) => {
+            if (
+              !["table", "root", "ground", "ball2", "ball"].includes(
+                otherObject.name
+              )
+            ) {
+              otherObject.refCup.traverse((child) => {
+                if (child.isMesh) {
+                  child.material = new THREE.MeshStandardMaterial({
+                    color: 0x17ff00,
+                  });
+                }
+              });
+
+              setTimeout(() => {
+                physics.destroy(otherObject.refCup);
+                scene.remove(otherObject.refCup);
+                physics.destroy(otherObject);
+                scene.remove(otherObject);
+                physics.destroy(ballObjectp2);
+                scene.remove(ballObjectp2);
+              }, 750);
+            }
+          });
+        };
+
+        function createCup(pos_x, pos_y, pos_z, cupNum, fileName) {
+          new THREE.GLTFLoader().loadAsync(fileName).then((gltf) => {
+            const Pcup = gltf.scene.children[0];
+            Pcup.position.x = pos_x;
+            Pcup.position.y = pos_y;
+            Pcup.position.z = pos_z;
+            Pcup.scale.x = 10;
+            Pcup.scale.y = 10;
+            Pcup.scale.z = 10;
+
+            Pcup.traverse((child) => {
+              if (child.isMesh) {
+                child.castShadow = true;
+                // receiveShadow adds unpleasant appearance to cups so it's disabled
+                // child.receiveShadow = true;
+              }
+            });
+            scene.add(Pcup);
+            physics.add.existing(Pcup, {
+              mass: 5000,
+              shape: "concave",
+            });
+            let sensor = physics.add.cylinder(
+              {
+                name: cupNum,
+                x: pos_x,
+                y: pos_y - 2.2,
+                z: pos_z + 2.5,
+                height: 0.01,
+                radiusSegments: 30,
+                radiusTop: 1.2,
+                radiusBottom: 1.2,
+                mass: 20,
+              },
+              { lambert: { color: "blue", transparent: true, opacity: 0 } }
+            );
+            sensor.body.setCollisionFlags(5);
+            sensor.body.setBounciness(0.2);
+            sensor.refCup = Pcup;
+
+            Pcup.body.setBounciness(0.4);
+          });
+        }
+
+        // player 1 red cups created in triangle pattern
+        createCup(-35, 3, -7.05, "sixRed", "/beerPong/pCupRed.glb");
+        createCup(-35, 3, -2.5, "fiveRed", "/beerPong/pCupRed.glb");
+        createCup(-35, 3, 2.05, "fourRed", "/beerPong/pCupRed.glb");
+        createCup(-31.05, 3, -4.75, "threeRed", "/beerPong/pCupRed.glb");
+        createCup(-31.05, 3, -0.25, "twoRed", "/beerPong/pCupRed.glb");
+        createCup(-27.1, 3, -2.5, "oneRed", "/beerPong/pCupRed.glb");
+
+        // player 2 blue cups created in triangle pattern
+        createCup(35, 3, -7.05, "sixBlue", "/beerPong/pCupBlue.glb");
+        createCup(35, 3, -2.5, "fiveBlue", "/beerPong/pCupBlue.glb");
+        createCup(35, 3, 2.05, "fourBlue", "/beerPong/pCupBlue.glb");
+        createCup(31.05, 3, -4.75, "threeBlue", "/beerPong/pCupBlue.glb");
+        createCup(31.05, 3, -0.25, "twoBlue", "/beerPong/pCupBlue.glb");
+        createCup(27.1, 3, -2.5, "oneBlue", "/beerPong/pCupBlue.glb");
+
+        // starting balls created
+        createBallObj();
+        createBallObjp2();
+
+        // static table
+        let table = physics.add.ground(
+          { name: "table", width: 80, height: 24 },
+          { lambert: { color: "cadetblue" } }
+        );
+        table.body.setBounciness(0.9);
+
+        // static ground
+        let ground = physics.add.ground(
+          { name: "ground", width: 120, height: 100, y: -22 },
+          { lambert: { color: "brown" } }
+        );
+
+        //==================================
+
+        // NEED WAY TO STOP PLAYER FROM RE-SHOOTING WHILE BALL IN MOTION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // ALSO SOMETIMES BALL CAN'T BE SHOT AFTER SCORING ????
+        //==================================
+
+        const clock = new THREE.Clock();
+
+        const animate = () => {
+          physics.update(clock.getDelta() * 1000);
+          physics.updateDebugger();
+          checkBallPos(physics, scene);
+          checkBallPosP2(physics, scene);
+          renderer.render(scene, camera);
+
+          requestAnimationFrame(animate);
+        };
+        requestAnimationFrame(animate);
+        initInput();
+      };
+
+      function checkBallPos(physics, scene) {
+        if (ballObject.position.y <= -19) {
+          physics.destroy(ballObject);
+          scene.remove(ballObject);
+          ballTTL.stop();
+          ballTTL.elapsedTime = 0;
+          createBallObj();
+        }
+        if (ballTTL.getElapsedTime() > 4.25) {
+          // CONSIDER NOT DESTROYING BALLS AFTER ELAPSED TIME ????????
+          if (ballObject) {
+            physics.destroy(ballObject);
+            scene.remove(ballObject);
+          }
+          ballTTL.stop();
+          ballTTL.elapsedTime = 0;
+          createBallObj();
+        }
+      }
+
+      function checkBallPosP2(physics, scene) {
+        if (ballObjectp2.position.y <= -19) {
+          physics.destroy(ballObjectp2);
+          scene.remove(ballObjectp2);
+          ballTTLp2.stop();
+          ballTTLp2.elapsedTime = 0;
+          createBallObjp2();
+        }
+        if (ballTTLp2.getElapsedTime() > 4.25) {
+          // CONSIDER NOT DESTROYING BALLS AFTER ELAPSED TIME ????????
+          if (ballObjectp2) {
+            physics.destroy(ballObjectp2);
+            scene.remove(ballObjectp2);
+          }
+          ballTTLp2.stop();
+          ballTTLp2.elapsedTime = 0;
+          createBallObjp2();
+        }
+      }
+
+      function initInput() {
+        window.addEventListener("resize", onWindowResize, false);
+
+        // mouse controls
+        document
+          .querySelector("body")
+          .addEventListener("mousedown", handleMouseDown);
+        document
+          .querySelector("body")
+          .addEventListener("mouseup", () => handleMouseUp(event, isPlayerOne));
+
+        // touch controls
+        document
+          .querySelector("body")
+          .addEventListener("touchstart", handleTouchList, { passive: false });
+        document
+          .querySelector("body")
+          .addEventListener("touchmove", handleTouchList, { passive: false });
+
+        // 2nd param for handleTouchEnd is true to control p1 ball and false for p2 ball
+        document
+          .querySelector("body")
+          .addEventListener(
+            "touchend",
+            () => handleTouchEnd(event, isPlayerOne),
+            {
+              passive: false,
+            }
+          );
+      }
+
+      function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      }
+
+      function handleMouseDown(e) {
+        mouseCoords.set(e.screenX, e.screenY);
+      }
+
+      function handleMouseUp(e, playerOne) {
+        let mouseEnd = new THREE.Vector2(e.screenX, e.screenY);
+
+        let touchLength = mouseCoords.distanceTo(mouseEnd);
+
+        if (playerOne) {
+          // force multiplyers may need fine-tuning
+          ballObject.body.applyForce(
+            -touchLength * 2.5, // was 1.5
+            touchLength * 3.3, // was 1.9
+            mouseCoords.x - mouseEnd.x
+          );
+
+          touchList = [];
+          ballTTL.start();
+        } else {
+          // force multiplyers may need fine-tuning
+          ballObjectp2.body.applyForce(
+            touchLength * 2.5, // was 1.5
+            touchLength * 3.3, // was 1.9
+            mouseEnd.x - mouseCoords.x
+          );
+
+          touchList = [];
+          ballTTLp2.start();
+        }
+      }
+
+      function handleTouchList(e) {
+        e.preventDefault();
+        touchList.push(e.touches[0]);
+      }
+
+      function handleTouchEnd(e, playerOne) {
+        e.preventDefault();
+        let startTouch = new THREE.Vector2(
+          touchList[0].screenX,
+          touchList[0].screenY
+        );
+        let lastTouchItem = touchList.pop();
+        let endTouch = new THREE.Vector2(
+          lastTouchItem.screenX,
+          lastTouchItem.screenY
+        );
+
+        let touchLength = startTouch.distanceTo(endTouch);
+
+        if (playerOne) {
+          // force multiplyers may need fine-tuning
+          ballObject.body.applyForce(
+            -touchLength * 2.5, // was 1.5
+            touchLength * 3.3, // was 1.9
+            startTouch.x - endTouch.x
+          );
+
+          touchList = [];
+          ballTTL.start();
+        } else {
+          // force multiplyers may need fine-tuning
+          ballObjectp2.body.applyForce(
+            touchLength * 2.5, // was 1.5
+            touchLength * 3.3, // was 1.9
+            endTouch.x - startTouch.x
+          );
+
+          touchList = [];
+          ballTTLp2.start();
+        }
+      }
+
+      // =====================================
+      // enable3D's physics loader
+      PhysicsLoader("/beerPong/ammo", () => MainScene());
+    </script>
+  </body>
+</html>
