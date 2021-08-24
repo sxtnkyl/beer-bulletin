@@ -35,20 +35,12 @@ const OfferCard = (props) => {
   const handleToggle = () => {};
 
   const infoBlock = (
-    <Link
-      passHref
-      href={{
-        pathname: `/UsersBulletins/${trade.id}`,
-        query: { type: toggleOffers ? "offer" : "bulletin" },
-      }}
-    >
-      <C.CardActionArea className={classes.stretch}>
-        <C.CardContent className={classes.content}>
-          <C.Typography variant="h6">{content}</C.Typography>
-          <C.Typography variant="body2">{host.username}</C.Typography>
-        </C.CardContent>
-      </C.CardActionArea>
-    </Link>
+    <C.CardActionArea className={classes.stretch}>
+      <C.CardContent className={classes.content}>
+        <C.Typography variant="h6">{content}</C.Typography>
+        <C.Typography variant="body2">{host.username}</C.Typography>
+      </C.CardContent>
+    </C.CardActionArea>
   );
 
   const slider = (

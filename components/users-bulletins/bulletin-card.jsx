@@ -42,6 +42,8 @@ const BulletinCard = (props) => {
 
   const handleToggle = () => {};
 
+  const handleDelete = () => {};
+
   const infoBlock = (
     <Link
       passHref
@@ -74,7 +76,12 @@ const BulletinCard = (props) => {
           View Offers
         </C.Button>
       </Link>
-      <C.Button size="small" variant="outlined" style={{ width: "auto" }}>
+      <C.Button
+        size="small"
+        variant="outlined"
+        style={{ width: "auto" }}
+        onClick={handleDelete}
+      >
         Delete Bulletin
       </C.Button>
     </C.CardActions>

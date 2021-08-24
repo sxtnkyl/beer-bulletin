@@ -63,6 +63,7 @@ const handler = nextConnect()
     return res.status(200).json({
       status: "success",
       message: `Deleted Trade ID = ${tradeID}`,
+      from: `User: ${req.user}`,
     });
   });
 

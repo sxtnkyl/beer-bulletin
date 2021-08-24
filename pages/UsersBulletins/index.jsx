@@ -56,7 +56,7 @@ const UsersBulletins = ({ bulletins, offers, user }) => {
         </C.Button>
       </div>
 
-      <C.Typography variant="body1">
+      <C.Typography variant="body1" style={{ textAlign: "center" }}>
         {toggleOffers ? openoffers : opentrades}
       </C.Typography>
       {toggleOffers ? makeOffersList : makeBulletinList}
