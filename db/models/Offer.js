@@ -30,6 +30,9 @@ Offer.init(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    endpoint: {
+      type: DataTypes.STRING,
+    },
     offer_money: {
       type: DataTypes.INTEGER,
     },
