@@ -19,7 +19,7 @@ const useStyles = C.makeStyles(() => ({
   },
 }));
 
-const UsersBulletins = ({ bulletins, offers, user }) => {
+const UsersBulletins = ({ bulletins, offers, user, baseApiUrl }) => {
   const { user_trades } = bulletins.data;
   const { offers_made } = offers.data;
   const classes = useStyles();
@@ -30,7 +30,13 @@ const UsersBulletins = ({ bulletins, offers, user }) => {
   };
 
   const makeBulletinList = user_trades.map((trade) => (
-    <BulletinCard key={trade.id} {...trade} {...toggleOffers} />
+    <BulletinCard
+      key={trade.id}
+      {...trade}
+      {...toggleOffers}
+      baseApiUrl={baseApiUrl}
+      user={user}
+    />
   ));
 
   const makeOffersList = offers_made.map((offer) => (
@@ -110,6 +116,7 @@ export async function getServerSideProps(context) {
       token,
       bulletins,
       offers,
+      baseApiUrl,
     },
   };
 }

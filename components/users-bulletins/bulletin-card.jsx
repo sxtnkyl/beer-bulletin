@@ -1,7 +1,7 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import * as C from "@material-ui/core";
-import { faBeer } from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import GlassCard from "../glassCard";
 import ScalableIcon from "../ScalableIcon";
 import theme from "../../styles/theme";
@@ -11,6 +11,7 @@ const useStyles = C.makeStyles((theme) => ({
     display: "flex",
     flex: "1 1 auto",
     alignItems: "stretch",
+    textAlign: "center",
   },
   content: {
     display: "flex",
@@ -37,30 +38,86 @@ const BulletinCard = (props) => {
     current_offers,
     offers,
     open,
+    baseApiUrl,
+    user,
   } = props;
   const classes = useStyles();
 
-  const handleToggle = () => {};
+  const [edit, setEdit] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState({
+    id,
+    user_id,
+    title,
+    content,
+    current_offers,
+    open,
+  });
+  const [deleteMessage, setDeleteMessage] = useState("");
 
-  const handleDelete = () => {};
+  const handleChange = (e) => {
+    const { name, value } = e.currentTarget;
+    setData({
+      ...data,
+      [name]: value,
+    });
+  };
+  const toggleEdit = () => {
+    setEdit(!edit);
+  };
+  const handleEditSubmit = async () => {
+    // setLoading(!loading)
+    const formUpdate = { ...data };
+    console.log(formUpdate);
+    // const editBulletin = await fetch(`${baseApiUrl}/trades/${id}`, {
+    //   method: "PUT",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //     authorization: token || "",
+    //   },
+    //   body: JSON.stringify(data),
+    // }).catch((error) => {
+    //   console.error("Error:", error);
+    // });
+
+    // const editRes = await editBulletin.json();
+    // setLoading(false)
+  };
+
+  const handleDelete = async () => {
+    // setLoading(!loading)
+    // const deleteBulletin = await fetch(`${baseApiUrl}/trades/${id}`, {
+    //   method: "DELETE",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //     authorization: token || "",
+    //   },
+    //   body: JSON.stringify(data),
+    // }).catch((error) => {
+    //   console.error("Error:", error);
+    // });
+    // const deleteRes = await deleteBulletin.json();
+    // setDeleteMessage("Successfully Deleted!");
+    // setLoading(false)
+  };
 
   const infoBlock = (
-    <Link
-      passHref
-      href={{
-        pathname: `/UsersBulletins/${id}`,
-        query: { type: toggleOffers ? "offer" : "bulletin" },
-      }}
-    >
-      <C.CardActionArea className={classes.stretch}>
-        <C.CardContent className={classes.content}>
-          <C.Typography variant="h6">{content}</C.Typography>
-          <C.Typography variant="body2">
-            Number of Current Offers: {offers.length}
-          </C.Typography>
-        </C.CardContent>
-      </C.CardActionArea>
-    </Link>
+    <C.CardActionArea className={classes.stretch}>
+      <C.CardContent className={classes.content}>
+        {!edit ? (
+          <C.Typography variant="body1">{content}</C.Typography>
+        ) : (
+          <C.TextField
+            placeholder={content}
+            onChange={handleChange}
+            name="content"
+            value={data.content}
+          />
+        )}
+      </C.CardContent>
+    </C.CardActionArea>
   );
 
   const slider = (
@@ -77,6 +134,7 @@ const BulletinCard = (props) => {
         </C.Button>
       </Link>
       <C.Button
+        disabled={loading}
         size="small"
         variant="outlined"
         style={{ width: "auto" }}
@@ -88,12 +146,54 @@ const BulletinCard = (props) => {
   );
 
   return (
-    <GlassCard>
-      <C.CardHeader title={title} align="right" />
-      <C.Divider variant="middle" />
-      {infoBlock}
-      {slider}
-    </GlassCard>
+    <>
+      {deleteMessage ? (
+        deleteMessage
+      ) : (
+        <GlassCard>
+          <C.CardHeader
+            title={
+              !edit ? (
+                <C.Typography variant="h6">{title}</C.Typography>
+              ) : (
+                <C.TextField
+                  placeholder={title}
+                  onChange={handleChange}
+                  name="title"
+                  value={data.title}
+                />
+              )
+            }
+            subheader={`Current Offers: ${offers.length}`}
+            align="left"
+            action={
+              <C.Button onClick={toggleEdit}>
+                <ScalableIcon icon={faEdit} color={edit && "white"} />
+              </C.Button>
+            }
+          />
+          {infoBlock}
+          <C.Divider variant="middle" />
+
+          {slider}
+          {edit && (
+            <C.Button
+              disabled={loading}
+              size="small"
+              variant="outlined"
+              style={{
+                width: "fit-content",
+                alignSelf: "center",
+                margin: "15px 0px",
+              }}
+              onClick={handleEditSubmit}
+            >
+              Submit Edits
+            </C.Button>
+          )}
+        </GlassCard>
+      )}
+    </>
   );
 };
 
