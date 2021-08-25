@@ -31,8 +31,12 @@ Trade.init(
       // },
     },
     // how is this going to look/be formatted?
-    current_offers: {
-      type: DataTypes.STRING,
+    // current_offers: {
+    //   type: DataTypes.STRING,
+    // },
+    seeking: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
     },
     open: {
       type: DataTypes.BOOLEAN,

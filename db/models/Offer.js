@@ -30,10 +30,20 @@ Offer.init(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    chat_log: {
-      type: DataTypes.STRING,
-      defaultValue: null,
+    offer_money: {
+      type: DataTypes.INTEGER,
     },
+    offer_beer: {
+      type: DataTypes.STRING,
+    },
+    offer_other: {
+      type: DataTypes.STRING,
+    },
+
+    // chat_log: {
+    //   type: DataTypes.STRING,
+    //   defaultValue: null,
+    // },
   },
   {
     sequelize,
