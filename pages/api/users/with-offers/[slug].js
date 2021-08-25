@@ -33,7 +33,7 @@ const handler = nextConnect()
         {
           model: models.offers,
           as: "offers_made",
-          attributes: ["id", "participant_id", "resolved"],
+          attributes: ["id", "participant_id", "host_id", "trade_id", "resolved"],
           include: [
             {
               model: models.users,
