@@ -48,15 +48,13 @@ export async function getServerSideProps(context) {
     const { query, req } = context;
     const { nextPage } = query;
     const { origin } = absoluteUrl(req);
-  
     const token = getAppCookies(req).token || "";
-    const referer = req.headers.referer || "";
 
     //If token doesn't exist, redirect to login,
     if(!token)
-        return {
-            redirect: {destination: '/Auth?form=login', permanent: false}
-        }
+       return {
+        redirect: {destination: '/Auth?form=login', permanent: false}
+      }
 
     const baseApiUrl = `${origin}/api`;
     const reqToken = token && verifyToken(token.replace('Bearer ', '')); //Will return our UserID
@@ -79,7 +77,6 @@ export async function getServerSideProps(context) {
     return {
       props: {
         origin,
-        referer,
         token,
         offers,
       },
