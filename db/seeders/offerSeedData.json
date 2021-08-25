@@ -5,7 +5,7 @@
     "participant_id": 2,
     "resolved": false,
     "trade_id": 1,
-    "endpoint": "1t1w2",
+    "endpoint": "1b1b2",
     "offer_money": 5
   },
   {
@@ -14,7 +14,7 @@
     "participant_id": 4,
     "resolved": false,
     "trade_id": 1,
-    "endpoint": "1t1w4",
+    "endpoint": "1bt1b4",
     "offer_beer": "a dozen Yuenglings"
   },
   {
@@ -23,7 +23,7 @@
     "participant_id": 3,
     "resolved": false,
     "trade_id": 2,
-    "endpoint": "2t2w3",
+    "endpoint": "2b2b3",
     "offer_other": "I'll mow your lawn duude..."
   },
   {
@@ -32,7 +32,7 @@
     "participant_id": 1,
     "resolved": false,
     "trade_id": 3,
-    "endpoint": "3t2w1",
+    "endpoint": "3b2b1",
     "offer_beer": "rare IPA"
   },
   {
@@ -41,7 +41,7 @@
     "participant_id": 3,
     "resolved": false,
     "trade_id": 3,
-    "endpoint": "3t2w3"
+    "endpoint": "3b2b3"
   },
   {
     "id": 6,
@@ -49,7 +49,7 @@
     "participant_id": 1,
     "resolved": false,
     "trade_id": 4,
-    "endpoint": "4t3w1",
+    "endpoint": "4b3b1",
     "offer_money": 2,
     "offer_beer": "Three Philosophrs"
   },
@@ -59,7 +59,7 @@
     "participant_id": 2,
     "resolved": false,
     "trade_id": 4,
-    "endpoint": "4t3w2"
+    "endpoint": "4b3b2"
   },
   {
     "id": 8,
@@ -67,7 +67,7 @@
     "participant_id": 4,
     "resolved": false,
     "trade_id": 4,
-    "endpoint": "4t3w4",
+    "endpoint": "4b3b4",
     "offer_money": 2,
     "offer_other": "i'll do your taxes"
   },
@@ -77,7 +77,7 @@
     "participant_id": 4,
     "resolved": false,
     "trade_id": 5,
-    "endpoint": "5t5w4"
+    "endpoint": "5b5b4"
   },
   {
     "id": 10,
@@ -85,7 +85,7 @@
     "participant_id": 3,
     "resolved": false,
     "trade_id": 5,
-    "endpoint": "5t5w3",
+    "endpoint": "5b5b3",
     "offer_beer": "a case of Red Stripe"
   },
   {
@@ -94,7 +94,7 @@
     "participant_id": 2,
     "resolved": false,
     "trade_id": 6,
-    "endpoint": "6t1w2",
+    "endpoint": "6b1b2",
     "offer_money": 12
   },
   {
@@ -103,7 +103,7 @@
     "participant_id": 5,
     "resolved": false,
     "trade_id": 6,
-    "endpoint": "6t1w5",
+    "endpoint": "6b1b5",
     "offer_other": "make your web app"
   }
 ]
