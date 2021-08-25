@@ -15,6 +15,7 @@ const restricted = ["/api/trades/[slug]"];
  */
 export default middleware.use(async (req, res, next) => {
   let authHeader = req.headers.authorization || "";
+
   let user = {};
   //no auth header and not on restricted list
   if (

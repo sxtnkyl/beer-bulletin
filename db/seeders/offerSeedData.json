@@ -4,55 +4,106 @@
     "host_id": 1,
     "participant_id": 2,
     "resolved": false,
-    "trade_id": 1
+    "trade_id": 1,
+    "endpoint": "1b1b2",
+    "offer_money": 5
   },
   {
     "id": 2,
     "host_id": 1,
     "participant_id": 4,
     "resolved": false,
-    "trade_id": 1
+    "trade_id": 1,
+    "endpoint": "1bt1b4",
+    "offer_beer": "a dozen Yuenglings"
   },
   {
     "id": 3,
     "host_id": 2,
     "participant_id": 3,
     "resolved": false,
-    "trade_id": 2
+    "trade_id": 2,
+    "endpoint": "2b2b3",
+    "offer_other": "I'll mow your lawn duude..."
   },
   {
     "id": 4,
     "host_id": 2,
     "participant_id": 1,
-    "resolved": true,
-    "trade_id": 3
+    "resolved": false,
+    "trade_id": 3,
+    "endpoint": "3b2b1",
+    "offer_beer": "rare IPA"
   },
   {
     "id": 5,
     "host_id": 2,
     "participant_id": 3,
-    "resolved": true,
-    "trade_id": 3
+    "resolved": false,
+    "trade_id": 3,
+    "endpoint": "3b2b3"
   },
   {
     "id": 6,
     "host_id": 3,
     "participant_id": 1,
     "resolved": false,
-    "trade_id": 4
+    "trade_id": 4,
+    "endpoint": "4b3b1",
+    "offer_money": 2,
+    "offer_beer": "Three Philosophrs"
   },
   {
     "id": 7,
     "host_id": 3,
     "participant_id": 2,
     "resolved": false,
-    "trade_id": 4
+    "trade_id": 4,
+    "endpoint": "4b3b2"
   },
   {
     "id": 8,
     "host_id": 3,
     "participant_id": 4,
     "resolved": false,
-    "trade_id": 4
+    "trade_id": 4,
+    "endpoint": "4b3b4",
+    "offer_money": 2,
+    "offer_other": "i'll do your taxes"
+  },
+  {
+    "id": 9,
+    "host_id": 5,
+    "participant_id": 4,
+    "resolved": false,
+    "trade_id": 5,
+    "endpoint": "5b5b4"
+  },
+  {
+    "id": 10,
+    "host_id": 5,
+    "participant_id": 3,
+    "resolved": false,
+    "trade_id": 5,
+    "endpoint": "5b5b3",
+    "offer_beer": "a case of Red Stripe"
+  },
+  {
+    "id": 11,
+    "host_id": 1,
+    "participant_id": 2,
+    "resolved": false,
+    "trade_id": 6,
+    "endpoint": "6b1b2",
+    "offer_money": 12
+  },
+  {
+    "id": 12,
+    "host_id": 1,
+    "participant_id": 5,
+    "resolved": false,
+    "trade_id": 6,
+    "endpoint": "6b1b5",
+    "offer_other": "make your web app"
   }
 ]

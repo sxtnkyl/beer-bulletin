@@ -1,71 +1,87 @@
 //use next's Link to pass chat id
 // <Link href={`/CurrentChats/${id}}><Component /></Link>
-
-import React from 'react';
+import React , { useState } from "react";
 import * as C from "@material-ui/core";
-import { makeStyles } from '@material-ui/core/styles';
 
+import ChatCard from "../../components/Chat/chatCard";
+import LoadingErrorMessage from "../../components/LoadingErrorMessage";
+import { absoluteUrl, getAppCookies, verifyToken } from "../../middleware/utils";
+  
+const CurrentChats = ({offers}) => {
 
-import SendIcon from '@material-ui/icons/Send';
+  const [isHost, setIsHost] = useState(false); 
 
+    //USER AS PARTICIPANT
+    const {status, data} = offers;
+     const offerList = data.offers_made.map((offer, i ) => (
+        <ChatCard key={i} {...offer} />
+     ));
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-  chatSection: {
-    width: '100%',
-    height: '80vh',
-  },
-  headBG: {
-      backgroundColor: '#e0e0e0'
-  },
-  borderRight500: {
-      borderRight: '1px solid #e0e0e0'
-  },
-  messageArea: {
-    height: '70vh',
-    overflowY: 'auto',
-  },
-  typeArea: {
-    padding: '0px 10px'
-  }
-});
+    //USER AS HOST
+    //  const {myOfferStatus, myOfferData} = myOffers;
+    //   const myOfferList = myOfferData.offers_made.map((offer,i) => (
+    //     <ChatCard key={i} {...offer} />
+    //   )); 
 
-const CurrentChats = () => {
-  const style = useStyles();
+    async function loadMoreClick(e) {
+      await Router.push({
+        pathname: "/offers",
+        query: {
+          nextPage: offers.nextPage ? offers.nextPage : 5,
+        },
+      });
+    }
+  
+    return (
+      <C.Container>
 
-  return (
-    <div>
-      <div>
-      <C.Grid container>
-        <C.Grid container>
-            <C.Grid item xs={12} >
-                <C.Typography variant="h5" className="header-message">Chat</C.Typography>
-            </C.Grid>
-        </C.Grid>
+        {status == "success" ? offerList : <LoadingErrorMessage />}
+        {/* {myOfferStatus == 'success' ? myOfferList : <LoadingErrorMessage/>} */}
 
-        <C.Grid container component={C.Paper} className={style.chatSection}>
-            <C.Grid item xs={12}>
-                <C.List className={style.messageArea}>
-
-                {/* ALTERNATE LEFT AND RIGHT MESSAGES */}  
-
-                {/* insert messagepanel.js here */}
-
-
-                </C.List>
-                <C.Divider />
-                <C.Grid className= {style.typeArea} >
-                        <C.TextField id="outlined-basic-email" label="Username" fullWidth/>
-        
-                </C.Grid>
-            </C.Grid>
-        </C.Grid>
-        </C.Grid>
-        </div>
-    </div>
-  )
-};
+      </C.Container>
+    );
+}
 
 export default CurrentChats;
+
+export async function getServerSideProps(context) {
+    const { query, req } = context;
+    const { nextPage } = query;
+    const { origin } = absoluteUrl(req);
+  
+    const token = getAppCookies(req).token || "";
+    const referer = req.headers.referer || "";
+
+    //If token doesn't exist, redirect to login,
+    if(!token)
+        return {
+            redirect: {destination: '/Auth?form=login', permanent: false}
+        }
+
+    const baseApiUrl = `${origin}/api`;
+    const reqToken = token && verifyToken(token.replace('Bearer ', '')); //Will return our UserID
+
+    const api = await fetch(`${baseApiUrl}/users/with-offers/${reqToken.id}`, {
+      headers: {
+        authorization: token || "",
+      },
+    });
+
+    // const myOffersApi = await fetch (`${baseApiUrl}/users/with-trades/${reqToken.id}` , {
+    //   headers: {
+    //     authorization: token || "",
+    //   },
+    // });
+
+    const offers = await api.json();
+    //const myOffers = await myOffersApi.json();
+   
+    return {
+      props: {
+        origin,
+        referer,
+        token,
+        offers,
+      },
+    };
+  }
