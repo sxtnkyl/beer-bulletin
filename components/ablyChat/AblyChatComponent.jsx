@@ -19,11 +19,6 @@ const AblyChatComponent = (props) => {
 
   const [channel, ably] = useChannel(channelName, (message) => {
     // console.log("MESSAGE", message);
-    postData({
-      data: message.data,
-      channel: channelName,
-      senderID: userID,
-    });
     const history = receivedMessages;
     setMessages([...history, message]);
   });
@@ -32,6 +27,11 @@ const AblyChatComponent = (props) => {
     channel.publish({ name: "chat-message", data: messageText });
     setMessageText("");
     inputBox.current.focus();
+    postData({
+      data: messageText,
+      channel: channelName,
+      senderID: userID,
+    });
   };
 
   const handleFormSubmission = (event) => {
