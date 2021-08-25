@@ -38,5 +38,15 @@
     "last_name": "Flake",
     "pref_dark": false,
     "profile_pic": "https://beerbulletinspace.nyc3.digitaloceanspaces.com/w75.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKANBEZNAIRZRF5YRQPA%2F20210810%2Fnyc3%2Fs3%2Faws4_request&X-Amz-Date=20210810T004948Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=00d74065ee5d4a1ce2b32c0ffa8522d759554c1f8c3f5df64767542c456962c9"
+  },
+  {
+    "id": 5,
+    "username": "broFish420",
+    "email": "protein@pecs.com",
+    "password": "12345678",
+    "first_name": "Timmy",
+    "last_name": "Dinkle",
+    "pref_dark": true,
+    "profile_pic": "https://beerbulletinspace.nyc3.digitaloceanspaces.com/w75.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKANBEZNAIRZRF5YRQPA%2F20210810%2Fnyc3%2Fs3%2Faws4_request&X-Amz-Date=20210810T004948Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=00d74065ee5d4a1ce2b32c0ffa8522d759554c1f8c3f5df64767542c456962c9"
   }
 ]
