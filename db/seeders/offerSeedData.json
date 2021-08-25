@@ -5,6 +5,7 @@
     "participant_id": 2,
     "resolved": false,
     "trade_id": 1,
+    "endpoint": "1t1w2",
     "offer_money": 5
   },
   {
@@ -13,6 +14,7 @@
     "participant_id": 4,
     "resolved": false,
     "trade_id": 1,
+    "endpoint": "1t1w4",
     "offer_beer": "a dozen Yuenglings"
   },
   {
@@ -21,6 +23,7 @@
     "participant_id": 3,
     "resolved": false,
     "trade_id": 2,
+    "endpoint": "2t2w3",
     "offer_other": "I'll mow your lawn duude..."
   },
   {
@@ -29,6 +32,7 @@
     "participant_id": 1,
     "resolved": false,
     "trade_id": 3,
+    "endpoint": "3t2w1",
     "offer_beer": "rare IPA"
   },
   {
@@ -36,7 +40,8 @@
     "host_id": 2,
     "participant_id": 3,
     "resolved": false,
-    "trade_id": 3
+    "trade_id": 3,
+    "endpoint": "3t2w3"
   },
   {
     "id": 6,
@@ -44,6 +49,7 @@
     "participant_id": 1,
     "resolved": false,
     "trade_id": 4,
+    "endpoint": "4t3w1",
     "offer_money": 2,
     "offer_beer": "Three Philosophrs"
   },
@@ -52,7 +58,8 @@
     "host_id": 3,
     "participant_id": 2,
     "resolved": false,
-    "trade_id": 4
+    "trade_id": 4,
+    "endpoint": "4t3w2"
   },
   {
     "id": 8,
@@ -60,6 +67,7 @@
     "participant_id": 4,
     "resolved": false,
     "trade_id": 4,
+    "endpoint": "4t3w4",
     "offer_money": 2,
     "offer_other": "i'll do your taxes"
   },
@@ -68,7 +76,8 @@
     "host_id": 5,
     "participant_id": 4,
     "resolved": false,
-    "trade_id": 5
+    "trade_id": 5,
+    "endpoint": "5t5w4"
   },
   {
     "id": 10,
@@ -76,6 +85,7 @@
     "participant_id": 3,
     "resolved": false,
     "trade_id": 5,
+    "endpoint": "5t5w3",
     "offer_beer": "a case of Red Stripe"
   },
   {
@@ -84,6 +94,7 @@
     "participant_id": 2,
     "resolved": false,
     "trade_id": 6,
+    "endpoint": "6t1w2",
     "offer_money": 12
   },
   {
@@ -92,6 +103,7 @@
     "participant_id": 5,
     "resolved": false,
     "trade_id": 6,
+    "endpoint": "6t1w5",
     "offer_other": "make your web app"
   }
 ]
