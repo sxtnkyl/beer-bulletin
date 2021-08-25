@@ -1,6 +1,6 @@
 //use next's Link to pass chat id
 // <Link href={`/CurrentChats/${id}}><Component /></Link>
-import React from "react";
+import React , { useState } from "react";
 import * as C from "@material-ui/core";
 
 import ChatCard from "../../components/Chat/chatCard";
@@ -9,11 +9,19 @@ import { absoluteUrl, getAppCookies, verifyToken } from "../../middleware/utils"
   
 const CurrentChats = ({offers}) => {
 
+  const [isHost, setIsHost] = useState(false); 
+
+    //USER AS PARTICIPANT
     const {status, data} = offers;
-    console.log(data.offers_made);
      const offerList = data.offers_made.map((offer, i ) => (
         <ChatCard key={i} {...offer} />
      ));
+
+    //USER AS HOST
+    //  const {myOfferStatus, myOfferData} = myOffers;
+    //   const myOfferList = myOfferData.offers_made.map((offer,i) => (
+    //     <ChatCard key={i} {...offer} />
+    //   )); 
 
     async function loadMoreClick(e) {
       await Router.push({
@@ -26,7 +34,10 @@ const CurrentChats = ({offers}) => {
   
     return (
       <C.Container>
+
         {status == "success" ? offerList : <LoadingErrorMessage />}
+        {/* {myOfferStatus == 'success' ? myOfferList : <LoadingErrorMessage/>} */}
+
       </C.Container>
     );
 }
@@ -56,13 +67,14 @@ export async function getServerSideProps(context) {
       },
     });
 
-    const myOffers = await fetch (`${baseApiUrl}/users/with-trades/${reqToken.id}` , {
-      headers: {
-        authorization: token || "",
-      },
-    });
+    // const myOffersApi = await fetch (`${baseApiUrl}/users/with-trades/${reqToken.id}` , {
+    //   headers: {
+    //     authorization: token || "",
+    //   },
+    // });
 
-    const offers  = await api.json();
+    const offers = await api.json();
+    //const myOffers = await myOffersApi.json();
    
     return {
       props: {
