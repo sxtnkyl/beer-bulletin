@@ -36,6 +36,9 @@ const handler = nextConnect()
         {
           model: models.offers,
           as: "offers_made",
+<<<<<<< HEAD
+          attributes: ["id", "participant_id", "host_id" , "trade_id", "resolved"],
+=======
           attributes: [
             "id",
             "participant_id",
@@ -44,6 +47,7 @@ const handler = nextConnect()
             "offer_beer",
             "offer_other",
           ],
+>>>>>>> 5034906c7502ea44056ee0a3b972ccfa7ac2e2d4
           include: [
             {
               model: models.users,
