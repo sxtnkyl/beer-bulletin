@@ -238,13 +238,13 @@ const LoginForm = ({ origin, referer, baseApiUrl }) => {
           onChange={onChangeHandler}
           readOnly={loading && true}
           value={stateFormData.email.password}
-          // InputProps={{
-          //   endAdornment: (
-          //     <C.InputAdornment position="end" onClick={toggleVis}>
-          //       {vis ? <VisibilityIcon /> : <VisibilityOffIcon />}
-          //     </C.InputAdornment>
-          //   ),
-          // }}
+          InputProps={{
+            endAdornment: (
+              <C.InputAdornment position="end" onClick={toggleVis}>
+                {vis ? <VisibilityIcon /> : <VisibilityOffIcon />}
+              </C.InputAdornment>
+            ),
+          }}
         />
         <C.FormHelperText>
           {stateFormError.password && stateFormError.password.hint}
