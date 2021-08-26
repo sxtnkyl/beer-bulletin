@@ -31,7 +31,7 @@ const FORM_DATA_LOGIN = {
   password: {
     value: "",
     label: "Password",
-    min: 6,
+    min: 8,
     max: 36,
     required: true,
     validator: {

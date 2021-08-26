@@ -21,7 +21,7 @@ const FORM_DATA_REGISTER = {
   username: {
     value: "",
     label: "Username",
-    min: 10,
+    min: 6,
     max: 36,
     required: true,
     validator: {
@@ -43,7 +43,7 @@ const FORM_DATA_REGISTER = {
   password: {
     value: "",
     label: "Password",
-    min: 6,
+    min: 8,
     max: 36,
     required: true,
     validator: {
