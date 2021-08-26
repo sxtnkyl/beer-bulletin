@@ -33,7 +33,7 @@ const FORM_DATA = {
   username: {
     value: "",
     label: "Username",
-    min: 10,
+    min: 8,
     max: 36,
     required: true,
     validator: {
@@ -66,9 +66,9 @@ const FORM_DATA = {
   first_name: {
     value: "",
     label: "First Name",
-    min: 10,
+    // min: 10,
     max: 36,
-    required: true,
+    required: false,
     validator: {
       regEx: /^[a-z\sA-Z0-9\W\w]+$/,
       error: "first name fill correctly",
@@ -77,9 +77,9 @@ const FORM_DATA = {
   last_name: {
     value: "",
     label: "Last Name",
-    min: 10,
+    // min: 10,
     max: 36,
-    required: true,
+    required: false,
     validator: {
       regEx: /^[a-z\sA-Z0-9\W\w]+$/,
       error: "last name fill correctly",
@@ -94,6 +94,8 @@ const UserInfoForm = ({
   user,
   baseApiUrl,
   toggleEdit,
+  onRefresh,
+
 }) => {
   const { id, username, email, password, first_name, last_name, profile_pic } =
     user.data;
@@ -121,6 +123,7 @@ const UserInfoForm = ({
 
     validationHandler(stateFormData, e);
   }
+  
 
   async function onSubmitHandler(e) {
     e.preventDefault();
@@ -133,15 +136,15 @@ const UserInfoForm = ({
       data = { ...data, username: data.username.value || "" };
       data = { ...data, email: data.email.value || "" };
       data = { ...data, password: data.password.value || "" };
-      data = { ...data, email: data.first_name.value || "" };
-      data = { ...data, email: data.last_name.value || "" };
+      data = { ...data, first_name: data.first_name.value || "" };
+      data = { ...data, last_name: data.last_name.value || "" };
 
       const isValid = validationHandler(stateFormData);
 
       if (isValid) {
         setLoading(!loading);
-        const userApi = await fetch(`${baseApiUrl}/${id}`, {
-          method: "POST",
+        const userApi = await fetch(`${baseApiUrl}/users/${id}`, {
+          method: "PUT",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
@@ -151,10 +154,11 @@ const UserInfoForm = ({
           console.error("Error:", error);
         });
         let result = await userApi.json();
-        if (result.status === "success" && result.message === "done") {
+        if (result.status === "success") {
           //reset edit state and form
           setStateFormData(FORM_DATA);
           toggleEdit();
+          onRefresh();
         } else {
           setStateFormMessage(result);
         }
@@ -267,7 +271,7 @@ const UserInfoForm = ({
         <form
           onSubmit={onSubmitHandler}
           className="form-register card"
-          method="POST"
+          method="PUT"
         >
           <C.FormGroup row>
             <C.FormHelperText>

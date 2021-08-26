@@ -10,7 +10,7 @@ import ScalableIcon from "../../components/ScalableIcon";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import UserProfileCard from "../../components/UserProfileCard";
 import Cookies from "js-cookie";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 
 const useStyles = C.makeStyles(() => ({
   header: {
@@ -21,14 +21,19 @@ const useStyles = C.makeStyles(() => ({
 }));
 
 const UserProfile = (props) => {
-  console.log(props);
-  const { origin, referer, token, user } = props;
+  const { origin, referer, token, user, asPath } = props;
   const classes = useStyles();
+  const router = useRouter();
 
   const [edit, setEdit] = useState(false);
 
   const toggleEdit = () => {
     setEdit(!edit);
+  };
+
+  const onRefresh = () => {
+    console.log('hewwo');
+    router.replace(router.asPath);
   };
 
   const logoutHandler = () => {
@@ -49,7 +54,7 @@ const UserProfile = (props) => {
         </C.Button>
       </div>
       {edit ? (
-        <UserInfoForm {...props} edit={edit} toggleEdit={toggleEdit} />
+        <UserInfoForm {...props} edit={edit} toggleEdit={toggleEdit} onRefresh={onRefresh}/>
       ) : (
         <UserProfileCard {...props} />
       )}
@@ -104,6 +109,7 @@ export async function getServerSideProps(context) {
       referer,
       token,
       user,
+      baseApiUrl,
     },
   };
 }
