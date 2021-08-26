@@ -47,7 +47,6 @@ export default function CreatePostForm(props) {
   const [loading, setLoading] = useState(false);
 
   const [stateFormData, setStateFormData] = useState(FORM_DATA_POST);
-  console.log("state data", stateFormData);
   const [stateFormError, setStateFormError] = useState([]);
   const [stateFormMessage, setStateFormMessage] = useState({});
   //extra handler for notValid state
@@ -77,15 +76,18 @@ export default function CreatePostForm(props) {
     // why the extra data lines below??
 
     let data = { ...stateFormData };
+    console.log("state data", data);
+
     data = { ...data, title: data.title.value || "" };
     data = { ...data, content: data.content.value || "" };
-    data = { ...data, seeking: data.seeking.value || "" };
+    data = { ...data, seeking: data.seeking.value };
     data = { ...data, open: true };
     data = { ...data, user_id: props.user.id };
 
     // SWAP LINES BELOW AFTER ADDING VALIDATION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // const isValid = validationHandler(stateFormData);
     const isValid = true;
+    console.log("form data", data);
 
     if (isValid) {
       setLoading(!loading);
@@ -107,6 +109,7 @@ export default function CreatePostForm(props) {
       //     setStateFormMessage(result);
       //   }
       setLoading(false);
+      // NEED TO RESET FORM OR REDIRECT ?????????????????????????????????????????????????????????????????????????
     }
   }
 
