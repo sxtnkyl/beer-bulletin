@@ -32,6 +32,9 @@ const handler = nextConnect()
               model: models.offers,
               attributes: [
                 "id",
+                "participant_id",
+                "host_id",
+                "trade_id",
                 "resolved",
                 "offer_money",
                 "offer_beer",
@@ -42,6 +45,9 @@ const handler = nextConnect()
                   model: models.users,
                   as: "participant",
                   attributes: ["id", "username", "profile_pic"],
+                },
+                {
+                  model: models.trades,
                 },
               ],
             },
