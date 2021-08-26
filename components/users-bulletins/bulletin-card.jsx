@@ -29,6 +29,7 @@ const useStyles = C.makeStyles((theme) => ({
 }));
 
 const BulletinCard = (props) => {
+  console.log(props);
   const {
     toggleOffers,
     id,
@@ -37,12 +38,13 @@ const BulletinCard = (props) => {
     content,
     current_offers,
     offers,
+    seeking,
     open,
     baseApiUrl,
+    token,
     user,
   } = props;
   const classes = useStyles();
-
   const [edit, setEdit] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
@@ -66,46 +68,48 @@ const BulletinCard = (props) => {
     setEdit(!edit);
   };
   const handleEditSubmit = async () => {
-    // setLoading(!loading)
+    setLoading(!loading);
     const formUpdate = { ...data };
-    console.log(formUpdate);
-    // const editBulletin = await fetch(`${baseApiUrl}/trades/${id}`, {
-    //   method: "PUT",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //     authorization: token || "",
-    //   },
-    //   body: JSON.stringify(data),
-    // }).catch((error) => {
-    //   console.error("Error:", error);
-    // });
+    const editBulletin = await fetch(`${baseApiUrl}/trades/${id}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        authorization: token || "",
+      },
+      body: JSON.stringify(formUpdate),
+    }).catch((error) => {
+      console.error("Error:", error);
+    });
 
-    // const editRes = await editBulletin.json();
-    // setLoading(false)
+    const editRes = await editBulletin.json();
+    setLoading(false);
   };
 
   const handleDelete = async () => {
-    // setLoading(!loading)
-    // const deleteBulletin = await fetch(`${baseApiUrl}/trades/${id}`, {
-    //   method: "DELETE",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //     authorization: token || "",
-    //   },
-    //   body: JSON.stringify(data),
-    // }).catch((error) => {
-    //   console.error("Error:", error);
-    // });
-    // const deleteRes = await deleteBulletin.json();
-    // setDeleteMessage("Successfully Deleted!");
-    // setLoading(false)
+    setLoading(!loading);
+    const deleteBulletin = await fetch(`${baseApiUrl}/trades/${id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        authorization: token || "",
+      },
+      body: JSON.stringify(data),
+    }).catch((error) => {
+      console.error("Error:", error);
+    });
+    const deleteRes = await deleteBulletin.json();
+    setDeleteMessage("Successfully Deleted!");
+    setLoading(false);
   };
 
   const infoBlock = (
     <C.CardActionArea className={classes.stretch}>
       <C.CardContent className={classes.content}>
+        <C.Typography variant="h6">
+          Currently {seeking ? "Seeking..." : "Offering..."}
+        </C.Typography>
         {!edit ? (
           <C.Typography variant="body1">{content}</C.Typography>
         ) : (

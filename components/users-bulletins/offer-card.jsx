@@ -29,7 +29,19 @@ const useStyles = C.makeStyles((theme) => ({
 }));
 
 const OfferCard = (props) => {
-  const { id, participant_id, toggleOffers, host, trade, resolved } = props;
+  const {
+    id,
+    participant_id,
+    toggleOffers,
+    host,
+    trade,
+    offer_money,
+    offer_beer,
+    offer_other,
+    resolved,
+    token,
+    baseApiUrl,
+  } = props;
   const { title, content } = trade;
   const classes = useStyles();
 
@@ -39,11 +51,16 @@ const OfferCard = (props) => {
   const [data, setData] = useState({
     id,
     participant_id,
-    cash: "tempCash",
-    beer: "tempBeer",
-    other: "tempOther",
+    offer_money,
+    offer_beer,
+    offer_other,
   });
   const [deleteMessage, setDeleteMessage] = useState("");
+  useEffect(() => {
+    setTimeout(() => {
+      setDeleteMessage("");
+    }, 3000);
+  }, [deleteMessage]);
   const handleChange = (e) => {
     const { name, value } = e.currentTarget;
     setData({
@@ -55,61 +72,66 @@ const OfferCard = (props) => {
     setEdit(!edit);
   };
   const handleEditSubmit = async () => {
-    // setLoading(!loading);
+    setLoading(!loading);
     const formUpdate = { ...data };
     console.log(formUpdate);
-    // const editBulletin = await fetch(`${baseApiUrl}/offers/${id}`, {
-    //   method: "PUT",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //     authorization: token || "",
-    //   },
-    //   body: JSON.stringify(data),
-    // }).catch((error) => {
-    //   console.error("Error:", error);
-    // });
+    const editBulletin = await fetch(`${baseApiUrl}/offers/${id}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        authorization: token || "",
+      },
+      body: JSON.stringify(formUpdate),
+    }).catch((error) => {
+      console.error("Error:", error);
+    });
 
-    // const editRes = await editBulletin.json();
-    // setLoading(false);
+    const editRes = await editBulletin.json();
+
+    setLoading(false);
   };
 
   const handleDelete = async () => {
-    // setLoading(!loading)
-    // const deleteBulletin = await fetch(`${baseApiUrl}/offers/${id}`, {
-    //   method: "DELETE",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //     authorization: token || "",
-    //   },
-    //   body: JSON.stringify(data),
-    // }).catch((error) => {
-    //   console.error("Error:", error);
-    // });
-    // const deleteRes = await deleteBulletin.json();
-    // setDeleteMessage("Successfully Deleted!");
-    // setLoading(false)
+    setLoading(!loading);
+    const deleteBulletin = await fetch(`${baseApiUrl}/offers/${id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        authorization: token || "",
+      },
+      body: JSON.stringify(data),
+    }).catch((error) => {
+      console.error("Error:", error);
+    });
+    const deleteRes = await deleteBulletin.json();
+    setDeleteMessage("Successfully Deleted!");
+    setLoading(false);
   };
 
-  const offerParams = ["cash", "beer", "other"];
-  const offerBlock = offerParams.map((offer, i) =>
-    !edit ? (
-      //update to props val instead of state val
+  const offerParams = ["Cash", "Beer", "Other"];
+  const offerBlock = offerParams.map((offer, i) => {
+    let dynamicVal =
+      i == 0 ? data.offer_money : i == 1 ? data.offer_beer : data.offer_other;
+    let dynamicName =
+      i == 0 ? "offer_money" : i == 1 ? "offer_beer" : "offer_other";
+    let el = !edit ? (
       <C.Typography key={i} variant="body1">
-        {offer}: {data[offer]}
+        {dynamicVal ? (offer == "cash" ? "$" : dynamicVal) : ""}
       </C.Typography>
     ) : (
       <C.TextField
         key={i}
         label={offer}
-        placeholder={data[offer]}
+        placeholder={dynamicVal}
         onChange={handleChange}
-        name={offer}
-        value={data[offer]}
+        name={dynamicName}
+        value={dynamicVal == null ? "" : dynamicVal}
       />
-    )
-  );
+    );
+    return el;
+  });
 
   const infoBlock = (
     <C.CardActionArea className={classes.stretch}>
@@ -144,6 +166,7 @@ const OfferCard = (props) => {
         size="small"
         variant="outlined"
         style={{ width: "auto" }}
+        onClick={handleDelete}
       >
         Delete Offer
       </C.Button>
