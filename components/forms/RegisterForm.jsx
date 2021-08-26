@@ -138,7 +138,7 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
       }
       if (
         states[input].value &&
-        states[input].min > states[input].value.length
+        states[input].min > states[input].value.length + 1
       ) {
         errors[input] = {
           hint: `Min ${states[input].label} length ${states[input].min}`,
