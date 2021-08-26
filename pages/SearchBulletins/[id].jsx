@@ -33,7 +33,7 @@ export async function getServerSideProps(context) {
   }
 
   let bulletin = {};
-  let user = {};
+  let userHost = {};
 
   const tradeData = await fetch(`${baseApiUrl}/trades/${query.id}`, {
     headers: {
@@ -47,7 +47,7 @@ export async function getServerSideProps(context) {
       authorization: token || "",
     },
   });
-  user = await userData.json();
+  userHost = await userData.json();
 
   return {
     props: {
@@ -55,7 +55,8 @@ export async function getServerSideProps(context) {
       referer,
       token,
       bulletin,
-      user,
+      userHost,
+      baseApiUrl,
     },
   };
 }

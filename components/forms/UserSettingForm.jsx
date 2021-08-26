@@ -133,15 +133,15 @@ const UserInfoForm = ({
       data = { ...data, username: data.username.value || "" };
       data = { ...data, email: data.email.value || "" };
       data = { ...data, password: data.password.value || "" };
-      data = { ...data, email: data.first_name.value || "" };
-      data = { ...data, email: data.last_name.value || "" };
+      data = { ...data, first_name: data.first_name.value || "" };
+      data = { ...data, last_name: data.last_name.value || "" };
 
       const isValid = validationHandler(stateFormData);
-
+      console.log("TEST", data, id, baseApiUrl);
       if (isValid) {
         setLoading(!loading);
-        const userApi = await fetch(`${baseApiUrl}/${id}`, {
-          method: "POST",
+        const userApi = await fetch(`${baseApiUrl}/users/${id}`, {
+          method: "PUT",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
