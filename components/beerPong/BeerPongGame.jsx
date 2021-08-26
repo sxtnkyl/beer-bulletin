@@ -8,7 +8,7 @@ const BeerPongGame = () => {
     >
       <iframe
         title="bpGame"
-        src="/beerPong/beerPong.html"
+        src="/beerPong/beerPong.html?isPlayerOne=true"
         width="80%"
         height="600px"
       ></iframe>

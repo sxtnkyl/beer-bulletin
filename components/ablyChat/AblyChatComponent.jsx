@@ -3,8 +3,6 @@ import { useChannel } from "../../util/hooks/AblyReactEffect";
 import styles from "./AblyChatComponent.module.css";
 
 const AblyChatComponent = (props) => {
-  console.log("this", props);
-
   let inputBox = useRef();
   let messageEnd = useRef();
 
@@ -14,16 +12,12 @@ const AblyChatComponent = (props) => {
 
   const [msgLoading, setMsgLoading] = useState(true);
   // info for message history entries retrieved from props
-  const channelName = "channel" + props.asPath.slice(14);
+  const channelName = "channel" + props.asPath.slice(14).split("?")[0];
   const userID = props.user.id;
+  console.log("channel.....", channelName);
 
   const [channel, ably] = useChannel(channelName, (message) => {
     // console.log("MESSAGE", message);
-    postData({
-      data: message.data,
-      channel: channelName,
-      senderID: userID,
-    });
     const history = receivedMessages;
     setMessages([...history, message]);
   });
@@ -32,6 +26,12 @@ const AblyChatComponent = (props) => {
     channel.publish({ name: "chat-message", data: messageText });
     setMessageText("");
     inputBox.current.focus();
+
+    postData({
+      data: messageText,
+      channel: channelName,
+      senderID: userID,
+    });
   };
 
   const handleFormSubmission = (event) => {

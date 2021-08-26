@@ -20,9 +20,9 @@ const useStyles = C.makeStyles((theme) => ({
   },
 }));
 
-const SingleBulletin = ({ bulletin, user }) => {
+const SingleBulletin = ({ bulletin, userHost }) => {
   const { id, content, open, title } = bulletin.data;
-  const { num_trades, profile_pic, username } = user.data;
+  const { num_trades, profile_pic, username } = userHost.data;
   const classes = useStyles();
 
   const infoBlock = (

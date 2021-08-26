@@ -4,6 +4,8 @@ import * as C from "@material-ui/core";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
+// DO WE NEED COOKIE STUFF AFTER FETCH IN THIS FORM LIKE WE HAVE IN LOGIN FORM ????????????????????????????????????????
+
 const useStyles = C.makeStyles(() => ({
   formItem: {
     margin: "15px 0px",
@@ -19,7 +21,7 @@ const FORM_DATA_REGISTER = {
   username: {
     value: "",
     label: "Username",
-    min: 10,
+    min: 6,
     max: 36,
     required: true,
     validator: {
@@ -41,7 +43,7 @@ const FORM_DATA_REGISTER = {
   password: {
     value: "",
     label: "Password",
-    min: 6,
+    min: 8,
     max: 36,
     required: true,
     validator: {
@@ -136,7 +138,7 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
       }
       if (
         states[input].value &&
-        states[input].min > states[input].value.length
+        states[input].min > states[input].value.length + 1
       ) {
         errors[input] = {
           hint: `Min ${states[input].label} length ${states[input].min}`,

@@ -31,7 +31,7 @@ const FORM_DATA_LOGIN = {
   password: {
     value: "",
     label: "Password",
-    min: 6,
+    min: 8,
     max: 36,
     required: true,
     validator: {
@@ -122,7 +122,7 @@ const LoginForm = ({ origin, referer, baseApiUrl }) => {
       }
       if (
         states[input].value &&
-        states[input].min > states[input].value.length
+        states[input].min > states[input].value.length + 1
       ) {
         errors[input] = {
           hint: `Field ${states[input].label} min ${states[input].min}`,
@@ -168,7 +168,7 @@ const LoginForm = ({ origin, referer, baseApiUrl }) => {
               isValid = false;
             }
           }
-          if (field.value && field.min >= field.value.length) {
+          if (field.value && field.min > field.value.length) {
             errors[item[0]] = {
               hint: `Field ${field.label} min ${field.min}`,
               isInvalid: true,

@@ -30,9 +30,9 @@ const UserProfileCard = ({ user }) => {
       <C.Avatar
         alt={username}
         src={profile_pic}
-        style={{ height: "80px", width: "80px", alignSelf: "flex-end" }}
+        style={{ height: "80px", width: "80px", alignSelf: "flex-start", b: '30px'}}
       />
-      <C.Typography variant="h6">{username}</C.Typography>
+      <C.Typography variant="h6"></C.Typography>
       <C.Typography variant="body2">
         Number of completed trades: {num_trades}
       </C.Typography>
@@ -42,7 +42,7 @@ const UserProfileCard = ({ user }) => {
   const infoBlock = (
     <C.CardContent className={classes.content}>
       <C.Typography variant="h6">
-        {first_name} {last_name}
+       Name: {first_name} {last_name}
       </C.Typography>
       <C.Typography variant="body2">{email}</C.Typography>
     </C.CardContent>
@@ -50,7 +50,7 @@ const UserProfileCard = ({ user }) => {
 
   return (
     <GlassCard>
-      <C.CardHeader title={`Title by tradenum`} align="right" />
+      <C.CardHeader title={`${username}`} align="left" />
       <C.Divider variant="middle" />
       {userBlock}
       <C.Divider variant="middle" />

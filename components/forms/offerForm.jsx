@@ -51,7 +51,7 @@ const formState = {
   other: "",
 };
 
-const OfferForm = ({ bulletin }) => {
+const OfferForm = ({ bulletin, baseApiUrl, user, userHost }) => {
   const classes = useStyles();
   const { open } = bulletin.data;
   //cash, beer, other
@@ -61,8 +61,30 @@ const OfferForm = ({ bulletin }) => {
     setForm({ ...form, [name]: newValue });
   };
 
-  const handleSubmit = (e, form) => {
-    console.log(e, form);
+  const handleSubmit = async (e, form) => {
+    e.preventDefault();
+    console.log("FORM", form);
+
+    let data;
+    data = { ...data, offer_money: form.cash || "" };
+    data = { ...data, offer_beer: form.beer || "" };
+    data = { ...data, offer_other: form.other || "" };
+    data = { ...data, host_id: userHost.data.id || "" };
+    data = { ...data, participant_id: user.id || "" };
+    data = { ...data, trade_id: bulletin.data.id || "" };
+
+    console.log("POST DATA", data);
+
+    const offerApi = await fetch(`${baseApiUrl}/offers`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).catch((error) => {
+      console.error("Error:", error);
+    });
   };
 
   const slider = (
@@ -128,14 +150,27 @@ const OfferForm = ({ bulletin }) => {
 
             <C.CardActions style={{ flexDirection: "column" }}>
               {form.cashChecked && (
-                <CashSlider
-                  value={form.cash}
-                  className={classes.formItem}
-                  valueLabelDisplay="auto"
-                  aria-label="Cash slider"
-                  defaultValue={20}
-                  onChange={handleChange("cash")}
-                />
+                <>
+                  <C.TextField
+                    className={classes.formItem}
+                    aria-label="Cash input"
+                    onChange={handleChange("cash")}
+                    value={form.cash}
+                    label="$"
+                    type="number"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="outlined"
+                  />
+                  <CashSlider
+                    value={form.cash}
+                    className={classes.formItem}
+                    valueLabelDisplay="auto"
+                    aria-label="Cash slider"
+                    onChange={handleChange("cash")}
+                  />
+                </>
               )}
               {form.beerChecked && (
                 <C.TextField

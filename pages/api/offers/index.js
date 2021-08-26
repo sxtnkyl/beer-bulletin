@@ -18,12 +18,23 @@ const handler = nextConnect()
   })
   .post(async (req, res) => {
     const { body } = req;
-    const { host_id, participant_id, trade_id, resolved } = body;
+    const {
+      host_id,
+      participant_id,
+      trade_id,
+      resolved,
+      offer_money,
+      offer_beer,
+      offer_other,
+    } = body;
     const endpoint = trade_id + "b" + host_id + "b" + participant_id;
     const newOffer = await models.offers.create({
       host_id,
       participant_id,
       trade_id,
+      offer_money,
+      offer_beer,
+      offer_other,
       resolved,
       endpoint,
     });
