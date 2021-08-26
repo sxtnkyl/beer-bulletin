@@ -237,7 +237,6 @@ const LoginForm = ({ origin, referer, baseApiUrl }) => {
           placeholder="Password"
           onChange={onChangeHandler}
           readOnly={loading && true}
-<<<<<<< HEAD
           value={stateFormData.password.value}
           InputProps={{
             endAdornment: (
@@ -246,16 +245,6 @@ const LoginForm = ({ origin, referer, baseApiUrl }) => {
               </C.InputAdornment>
             ),
           }}
-=======
-          value={stateFormData.email.password}
-          // InputProps={{
-          //   endAdornment: (
-          //     <C.InputAdornment position="end" onClick={toggleVis}>
-          //       {vis ? <VisibilityIcon /> : <VisibilityOffIcon />}
-          //     </C.InputAdornment>
-          //   ),
-          // }}
->>>>>>> 78877fb80a7e0113272793dca4bf2f9981e02875
         />
         <C.FormHelperText>
           {stateFormError.password && stateFormError.password.hint}

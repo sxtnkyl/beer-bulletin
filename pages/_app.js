@@ -5,6 +5,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../styles/theme";
 import Layout from "../components/Layout";
 import { getAppCookies, verifyToken } from "../middleware/utils";
+import "./login.css";
 
 //_app only has access to React DOM tree
 //_document can access entire DOM
