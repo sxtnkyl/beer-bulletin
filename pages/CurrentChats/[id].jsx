@@ -5,7 +5,6 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-import MessagePanel from "./MessagePanel";
 import AblyChatComponent from "../../components/ablyChat/AblyChatComponent";
 import { absoluteUrl, getAppCookies } from "../../middleware/utils";
 import BeerPongGame from "../../components/beerPong/BeerPongGame";
