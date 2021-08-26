@@ -42,6 +42,7 @@ const Chat = (pageProps) => {
       <AblyChatComponent {...pageProps} />
       <Button onClick={() => setGameMode(!gameMode)}>Beer Pong</Button>
       {gameMode ? <BeerPongGame /> : null}
+      <CreatePostForm {...pageProps} />
     </div>
   );
 };
