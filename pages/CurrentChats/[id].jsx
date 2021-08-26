@@ -9,6 +9,7 @@ import MessagePanel from "./MessagePanel";
 import AblyChatComponent from "../../components/ablyChat/AblyChatComponent";
 import { absoluteUrl, getAppCookies } from "../../middleware/utils";
 import BeerPongGame from "../../components/beerPong/BeerPongGame";
+import CreatePostForm from "../../components/forms/CreatePostForm";
 
 const useStyles = makeStyles({
   table: {
@@ -42,6 +43,7 @@ const Chat = (pageProps) => {
       <AblyChatComponent {...pageProps} />
       <Button onClick={() => setGameMode(!gameMode)}>Beer Pong</Button>
       {gameMode ? <BeerPongGame /> : null}
+      <CreatePostForm {...pageProps} />
     </div>
   );
 };
@@ -78,31 +80,19 @@ const Chat = (pageProps) => {
 
 export default Chat;
 
-// ??? WHY DO WE export THIS ???
-// export async function getServerSideProps(context) {
-//   const { query, req } = context;
-//   const { nextPage } = query;
-//   const { origin } = absoluteUrl(req);
+export async function getServerSideProps(context) {
+  const { req, query } = context;
+  const { origin } = absoluteUrl(req);
 
-//   const token = getAppCookies(req).token || "";
-//   const referer = req.headers.referer || "";
+  const referer = req.headers.referer || "";
+  const baseApiUrl = `${origin}/api`;
 
-//   const baseApiUrl = `${origin}/api`;
-
-//   const api = await fetch(`${baseApiUrl}/messages`, {
-//     headers: {
-//       authorization: token || "",
-//     },
-//   });
-
-//   const msgHistory = await api.json();
-
-//   return {
-//     props: {
-//       origin,
-//       referer,
-//       token,
-//       msgHistory,
-//     },
-//   };
-// }
+  return {
+    props: {
+      origin,
+      referer,
+      baseApiUrl,
+      query,
+    },
+  };
+}
