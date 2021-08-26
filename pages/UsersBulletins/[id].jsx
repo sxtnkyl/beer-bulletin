@@ -1,16 +1,12 @@
 import * as C from "@material-ui/core";
 import SingleBulletin from "../../components/users-bulletins/single-bulletin";
-import SingleOffer from "../../components/users-bulletins/single-offer";
 import { absoluteUrl, getAppCookies } from "../../middleware/utils";
 
-const SingleUsersBulletins = ({ apiData, query }) => {
+const SingleUsersBulletins = (props) => {
+  const { apiData, query } = props;
   return (
     <C.Container>
-      {query.type == "bulletin" ? (
-        <SingleBulletin {...apiData} />
-      ) : (
-        <SingleOffer {...apiData} />
-      )}
+      {query.type == "bulletin" ? <SingleBulletin {...props} /> : ""}
     </C.Container>
   );
 };
@@ -42,6 +38,7 @@ export async function getServerSideProps(context) {
       origin,
       referer,
       token,
+      baseApiUrl,
       apiData,
       query,
     },
