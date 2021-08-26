@@ -39,6 +39,9 @@ const handler = nextConnect()
                   as: "participant",
                   attributes: ["id", "username", "profile_pic"],
                 },
+                {
+                  model: models.trades,
+                },
               ],
             },
           ],
