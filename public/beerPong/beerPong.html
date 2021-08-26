@@ -13,6 +13,18 @@
     <script src="/beerPong/enable3d.ammoPhysics.0.23.0.min.js"></script>
     <script src="/beerPong/GLTFLoader.js"></script>
     <script>
+      // get params from iframe
+      function getParamValue(paramName) {
+        var url = window.location.search.substring(1); //get rid of "?" in querystring
+        var qArray = url.split("&"); //get key-value pairs
+        for (var i = 0; i < qArray.length; i++) {
+          var pArr = qArray[i].split("="); //split key and value
+          if (pArr[0] == paramName) return pArr[1]; //return value
+        }
+      }
+
+      let isPlayerOne = "true" == getParamValue("isPlayerOne");
+
       // global variable declarations
       const { AmmoPhysics, PhysicsLoader } = ENABLE3D;
       let mouseCoords = new THREE.Vector2();
@@ -25,7 +37,7 @@
         ballTTLp2 = new THREE.Clock(false);
       let touchList = [];
 
-      let isPlayerOne = true;
+      // let isPlayerOne = true;
 
       // function for rendering a Three.js scene with ammo.js for physics
       const MainScene = () => {
