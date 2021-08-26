@@ -19,6 +19,7 @@ const useStyles = C.makeStyles((theme) => ({
     content: {
       display: "flex",
       flexDirection: "column",
+      align: "center",
       justifyContent: "space-around",
     },
     bot: {
@@ -32,6 +33,7 @@ const useStyles = C.makeStyles((theme) => ({
     const classes = useStyles();
     
   const chatBlock = (
+    
     <Link passHref href={`/CurrentChats/${id}`}>
     <C.CardActionArea className={classes.stretch}>
       <C.CardContent className={classes.content}>
@@ -42,14 +44,13 @@ const useStyles = C.makeStyles((theme) => ({
         <C.Divider variant="middle" />
       </C.CardContent>
     </C.CardActionArea>
-  </Link>
+    </Link>
   )
-   
-      //
     return (
-      <GlassCard className={classes.card}>
+    <GlassCard className={classes.card}>
       {chatBlock}
     </GlassCard>
     );
   }
+
 export default ChatCard;
