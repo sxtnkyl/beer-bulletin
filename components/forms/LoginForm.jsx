@@ -237,7 +237,7 @@ const LoginForm = ({ origin, referer, baseApiUrl }) => {
           placeholder="Password"
           onChange={onChangeHandler}
           readOnly={loading && true}
-          value={stateFormData.email.password}
+          value={stateFormData.password.value}
           InputProps={{
             endAdornment: (
               <C.InputAdornment position="end" onClick={toggleVis}>

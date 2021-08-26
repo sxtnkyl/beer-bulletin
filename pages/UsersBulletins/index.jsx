@@ -5,7 +5,6 @@ import {
   getAppCookies,
   verifyToken,
 } from "../../middleware/utils";
-import Link from "next/link";
 import BulletinCard from "../../components/users-bulletins/bulletin-card";
 import OfferCard from "../../components/users-bulletins/offer-card";
 import ScalableIcon from "../../components/ScalableIcon";
@@ -19,7 +18,7 @@ const useStyles = C.makeStyles(() => ({
   },
 }));
 
-const UsersBulletins = ({ bulletins, offers, user }) => {
+const UsersBulletins = ({ bulletins, offers, user, baseApiUrl, token }) => {
   const { user_trades } = bulletins.data;
   const { offers_made } = offers.data;
   const classes = useStyles();
@@ -30,13 +29,26 @@ const UsersBulletins = ({ bulletins, offers, user }) => {
   };
 
   const makeBulletinList = user_trades.map((trade) => (
-    <BulletinCard key={trade.id} {...trade} {...toggleOffers} />
+    <BulletinCard
+      key={trade.id}
+      {...trade}
+      {...toggleOffers}
+      baseApiUrl={baseApiUrl}
+      user={user}
+      token={token}
+    />
   ));
 
   const makeOffersList = offers_made.map((offer) => (
-    <OfferCard key={offer.id} {...offer} {...toggleOffers} />
+    <OfferCard
+      key={offer.id}
+      {...offer}
+      {...toggleOffers}
+      baseApiUrl={baseApiUrl}
+      user={user}
+      token={token}
+    />
   ));
-
   const header = `${bulletins.data.username}'s ${
     toggleOffers ? "Offers" : "Bulletins"
   }`;
@@ -110,6 +122,7 @@ export async function getServerSideProps(context) {
       token,
       bulletins,
       offers,
+      baseApiUrl,
     },
   };
 }
