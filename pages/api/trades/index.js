@@ -31,6 +31,7 @@ const handler = nextConnect()
       user_id,
       title,
       content,
+      seeking,
       open,
     });
 

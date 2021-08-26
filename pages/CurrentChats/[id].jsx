@@ -8,6 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import AblyChatComponent from "../../components/ablyChat/AblyChatComponent";
 import { absoluteUrl, getAppCookies } from "../../middleware/utils";
 import BeerPongGame from "../../components/beerPong/BeerPongGame";
+import CreatePostForm from "../../components/forms/CreatePostForm";
 
 const useStyles = makeStyles({
   table: {
@@ -45,4 +46,55 @@ const Chat = (pageProps) => {
   );
 };
 
+<<<<<<< HEAD
 export default Chat;
+=======
+/*const Chat = () => {
+    return(
+        <form className="message-form" onSubmit={handleSubmit}>
+        <input
+          className="message-input"
+          placeholder="Send a message..."
+          value={value}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+        />
+        <label htmlFor="upload-button">
+          <span className="image-button">
+            <PictureOutlined className="picture-icon" />
+          </span>
+        </label>
+        <input
+          type="file"
+          multiple={false}
+          id="upload-button"
+          style={{ display: 'none' }}
+          onChange={handleUpload.bind(this)}
+        />
+        <button type="submit" className="send-button">
+          <SendOutlined className="send-icon" />
+        </button>
+      </form>
+    )
+}
+*/
+
+export default Chat;
+
+export async function getServerSideProps(context) {
+  const { req, query } = context;
+  const { origin } = absoluteUrl(req);
+
+  const referer = req.headers.referer || "";
+  const baseApiUrl = `${origin}/api`;
+
+  return {
+    props: {
+      origin,
+      referer,
+      baseApiUrl,
+      query,
+    },
+  };
+}
+>>>>>>> 18ac8d700d5402efb291f18ab8588831815eae17
