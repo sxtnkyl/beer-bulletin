@@ -46,6 +46,9 @@ const Chat = (pageProps) => {
   );
 };
 
+<<<<<<< HEAD
+export default Chat;
+=======
 /*const Chat = () => {
     return(
         <form className="message-form" onSubmit={handleSubmit}>
@@ -94,3 +97,4 @@ export async function getServerSideProps(context) {
     },
   };
 }
+>>>>>>> 18ac8d700d5402efb291f18ab8588831815eae17
