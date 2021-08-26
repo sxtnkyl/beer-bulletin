@@ -29,7 +29,8 @@ const useStyles = C.makeStyles((theme) => ({
 }));
 
 const BulletinCard = (props) => {
-  const { id, user_id, title, content, current_offers, open } = props;
+  const { id, user_id, title, content, current_offers, open, loggedUser } =
+    props;
   const classes = useStyles();
 
   const infoBlock = (
@@ -52,7 +53,7 @@ const BulletinCard = (props) => {
           color="secondary"
           variant="contained"
           startIcon={open && <ScalableIcon icon={faBeer} />}
-          disabled={!open}
+          disabled={!open || user_id === loggedUser.id}
           style={{ width: "auto" }}
         >
           {open ? "Make Offer" : "Deal Pending"}

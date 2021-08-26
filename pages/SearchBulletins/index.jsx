@@ -6,11 +6,11 @@ import BulletinCard from "../../components/search-bulletins/bulletinCard";
 import LoadingErrorMessage from "../../components/LoadingErrorMessage";
 import { absoluteUrl, getAppCookies } from "../../middleware/utils";
 
-const SearchBulletins = ({ trades }) => {
+const SearchBulletins = ({ trades, user }) => {
   const { status, data, total } = trades;
 
   const makeTradesList = data.map((trade, i) => (
-    <BulletinCard key={i} {...trade} />
+    <BulletinCard key={i} loggedUser={user} {...trade} />
   ));
 
   async function loadMoreClick(e) {

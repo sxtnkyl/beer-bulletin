@@ -5,10 +5,13 @@ import SingleBulletin from "../../components/search-bulletins/singleBulletin";
 import { absoluteUrl, getAppCookies } from "../../middleware/utils";
 
 const BulletinDetails = (props) => {
+  console.log("UH", props.userHost);
   return (
     <C.Container>
       <SingleBulletin {...props} />
-      <OfferForm {...props} />
+      {props.userHost.data.id === props.user.id ? null : (
+        <OfferForm {...props} />
+      )}
     </C.Container>
   );
 };
