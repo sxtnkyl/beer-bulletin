@@ -140,7 +140,7 @@ const UserInfoForm = ({
       data = { ...data, last_name: data.last_name.value || "" };
 
       const isValid = validationHandler(stateFormData);
-
+      console.log("TEST", data, id, baseApiUrl);
       if (isValid) {
         setLoading(!loading);
         const userApi = await fetch(`${baseApiUrl}/users/${id}`, {
