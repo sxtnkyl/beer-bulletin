@@ -49,6 +49,7 @@ const Chat = (pageProps) => {
           chatPart={partUser}
           loggedUser={pageProps.user.id}
           baseApiUrl={pageProps.baseApiUrl}
+          asPath={pageProps.asPath}
         />
       ) : null}
     </div>

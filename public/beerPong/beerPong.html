@@ -9,9 +9,11 @@
     </style>
   </head>
   <body>
+    <script src="/beerPong/ably.min-1.0.13.js"></script>
     <script src="/beerPong/three.min.js"></script>
     <script src="/beerPong/enable3d.ammoPhysics.0.23.0.min.js"></script>
     <script src="/beerPong/GLTFLoader.js"></script>
+
     <script>
       // get params from iframe
       function getParamValue(paramName) {
@@ -23,7 +25,80 @@
         }
       }
 
+      // variables used for multiplayer functionality
       let isPlayerOne = "true" == getParamValue("isPlayerOne");
+      let ablyConnectURL = getParamValue("ablyURL");
+      let channelName = getParamValue("channel") + "BP";
+
+      // ***************************** MULTIPLAYER CODE *****************************
+
+      var players = [];
+      var BPchannel;
+      var myId;
+
+      var ably = new Ably.Realtime({
+        authUrl: ablyConnectURL,
+        echoMessages: false,
+      });
+      ably.connection.once("connected", function () {
+        myId = ably.auth.tokenDetails.clientId;
+        players.push(myId);
+        startApp(myId);
+      });
+
+      function startApp(userId) {
+        BPchannel = ably.channels.get(channelName);
+        BPchannel.presence.enter();
+        var currentUser = {
+          id: userId,
+          name: "player",
+          pic: "picURL",
+        };
+        //publish initial data; USE THIS TO DISPLAY NAME AND PICTURE ===============================================
+        handleSubscribeToPhysics();
+        window.addEventListener("unload", () => BPchannel.presence.leave());
+
+        //get a list of already existing players
+        BPchannel.presence.get(function (err, members) {
+          for (var i in members) {
+            if (!players.includes(members[i].clientId)) {
+              players.push(members[i].clientId);
+            }
+          }
+          console.log(players);
+        });
+        //subscribe to new user entries
+        BPchannel.presence.subscribe("enter", function (member) {
+          // DO A PRESENCE>GET HERE =========
+          console.log("SOMEONE JOINED!");
+          if (member.clientId !== myId) {
+            createPlayer(member.clientId);
+          }
+        });
+        //subscribe to existing users leaving
+        BPchannel.presence.subscribe("leave", function (member) {
+          console.log("SOMEONE LEFT");
+          removePlayer(member.clientId);
+          console.log(players);
+        });
+      }
+
+      // REPLACE WITH FUNCTION TO DO SOMETHING WHEN OTHER USER LEAVES =====================================
+      //remove player when a user leaves
+      function removePlayer(id) {
+        console.log("REMOVE FUNCTION");
+        players = players.filter((elem) => elem !== id);
+      }
+
+      // POSSIBLY ADD IN USER NAME AND/OR PHOTO TO GAME SPACE ===========================================================
+      //add player when user enters
+      function createPlayer(id) {
+        console.log("CREATE FUNCTION");
+        players.push(id);
+        console.log(players);
+      }
+
+      // ***************************** END MULTIPLAYER CODE *****************************
 
       // global variable declarations
       const { AmmoPhysics, PhysicsLoader } = ENABLE3D;
@@ -210,7 +285,7 @@
             }
           });
         };
-
+        // second player's ball
         createBallObjp2 = () => {
           ballObjectp2 = physics.add.sphere(
             { name: "ball2", x: -19, y: 1.4, radius: 0.7, mass: 20 },
@@ -264,7 +339,6 @@
 
         const animate = () => {
           physics.update(clock.getDelta() * 1000);
-          physics.updateDebugger();
           checkBallPos(physics, scene);
           checkBallPosP2(physics, scene);
           renderer.render(scene, camera);
@@ -346,6 +420,17 @@
           );
       }
 
+      function handleSubscribeToPhysics() {
+        BPchannel.subscribe("physics-change", function (data) {
+          let { target, forceX, forceY, forceZ } = data.data;
+          if (target === "ball1") {
+            ballObject.body.applyForce(forceX, forceY, forceZ);
+          } else {
+            ballObjectp2.body.applyForce(forceX, forceY, forceZ);
+          }
+        });
+      }
+
       function onWindowResize() {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
@@ -370,6 +455,15 @@
             mouseCoords.x - mouseEnd.x
           );
 
+          // ************* MULTIPLAYER *************
+          BPchannel.publish("physics-change", {
+            target: "ball1",
+            forceX: -touchLength * 2.5,
+            forceY: touchLength * 3.3,
+            forceZ: mouseCoords.x - mouseEnd.x,
+          });
+          // ***************************************
+
           touchList = [];
           ballTTL.start();
         } else {
@@ -379,6 +473,15 @@
             touchLength * 3.3, // was 1.9
             mouseEnd.x - mouseCoords.x
           );
+
+          // ************* MULTIPLAYER *************
+          BPchannel.publish("physics-change", {
+            target: "ball2",
+            forceX: touchLength * 2.5,
+            forceY: touchLength * 3.3,
+            forceZ: mouseEnd.x - mouseCoords.x,
+          });
+          // ***************************************
 
           touchList = [];
           ballTTLp2.start();
@@ -412,6 +515,15 @@
             startTouch.x - endTouch.x
           );
 
+          // ************* MULTIPLAYER *************
+          BPchannel.publish("physics-change", {
+            target: "ball1",
+            forceX: -touchLength * 2.5,
+            forceY: touchLength * 3.3,
+            forceZ: startTouch.x - endTouch.x,
+          });
+          // ***************************************
+
           touchList = [];
           ballTTL.start();
         } else {
@@ -421,6 +533,15 @@
             touchLength * 3.3, // was 1.9
             endTouch.x - startTouch.x
           );
+
+          // ************* MULTIPLAYER *************
+          BPchannel.publish("physics-change", {
+            target: "ball2",
+            forceX: touchLength * 2.5,
+            forceY: touchLength * 3.3,
+            forceZ: endTouch.x - startTouch.x,
+          });
+          // ***************************************
 
           touchList = [];
           ballTTLp2.start();
