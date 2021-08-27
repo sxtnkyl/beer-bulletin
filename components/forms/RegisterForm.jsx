@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Router, { useRouter } from "next/router";
+import Cookies from "js-cookie";
+
 import * as C from "@material-ui/core";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
@@ -110,9 +112,25 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
           console.error("Error:", error);
         });
         let result = await registerApi.json();
-        if (result.status === "success" && result.message === "done") {
+        if (result.status === "success") {
           //login redirect
-          Router.push("/SearchBulletins");
+          const loginApi = await fetch(`${baseApiUrl}/auth`, {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          }).catch((error) => {
+            console.error("Error:", error);
+          });
+          let result = await loginApi.json();
+          if (result.success && result.token) {
+            Cookies.set("token", result.token);
+            Router.push("/SearchBulletins");
+          } else {
+            setStateFormMessage(result);
+          }
         } else {
           setStateFormMessage(result);
         }

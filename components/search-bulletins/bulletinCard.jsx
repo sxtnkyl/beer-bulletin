@@ -32,6 +32,8 @@ const BulletinCard = (props) => {
   const { id, user_id, title, content, offers, open, loggedUser } = props;
   const classes = useStyles();
 
+  if (!loggedUser) loggedUser = { id: 0 };
+
   const [loggedUserHasOffer, setLoggedUserHasOffer] = useState(false);
 
   useEffect(() => {
