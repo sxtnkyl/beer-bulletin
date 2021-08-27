@@ -108,6 +108,34 @@ const UserInfoForm = ({
   const [stateFormValid, setStateFormValid] = useState(false);
   const [stateFormMessage, setStateFormMessage] = useState({});
 
+  useEffect(() => {
+    setStateFormData({
+      ...stateFormData,
+      username: {
+        ...stateFormData[username],
+      value: username,
+      },
+      email: {
+        ...stateFormData[email],
+      value: email,
+      },
+      password: {
+        ...stateFormData[password],
+        value: password,
+      },
+      first_name: {
+        ...stateFormData[first_name],
+      value: first_name,
+      },
+      last_name: {
+      ...stateFormData[last_name],
+      value: last_name,
+      },
+    });
+
+  }, []);
+
+  
   function onChangeHandler(e) {
     setStateFormValid(false);
     const { name, value } = e.currentTarget;
@@ -289,7 +317,8 @@ const UserInfoForm = ({
               name="username"
               placeholder={username}
               readOnly={loading && true}
-              value={stateFormData.username.value}
+              defaultValue={username}
+              // value={stateFormData.username.value}
               variant="outlined"
               InputProps={{
                 endAdornment: (
@@ -312,7 +341,7 @@ const UserInfoForm = ({
               name="email"
               placeholder={email}
               readOnly={loading && true}
-              defaultValue={stateFormData.email.value}
+              defaultValue={email}
               variant="outlined"
               InputProps={{
                 endAdornment: (
@@ -336,7 +365,7 @@ const UserInfoForm = ({
               name="password"
               placeholder="Password"
               readOnly={loading && true}
-              defaultValue={stateFormData.password.value}
+              defaultValue={password}
               variant="outlined"
               InputProps={{
                 endAdornment: (
@@ -359,7 +388,7 @@ const UserInfoForm = ({
               name="first_name"
               placeholder={first_name}
               readOnly={loading && true}
-              defaultValue={stateFormData.first_name.value}
+              defaultValue={first_name}
               variant="outlined"
               InputProps={{
                 endAdornment: (
@@ -382,7 +411,7 @@ const UserInfoForm = ({
               name="last_name"
               placeholder={last_name}
               readOnly={loading && true}
-              defaultValue={stateFormData.last_name.value}
+              defaultValue={last_name}
               variant="outlined"
               InputProps={{
                 endAdornment: (
