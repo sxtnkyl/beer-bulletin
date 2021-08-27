@@ -95,7 +95,6 @@ const UserInfoForm = ({
   baseApiUrl,
   toggleEdit,
   onRefresh,
-
 }) => {
   const { id, username, email, password, first_name, last_name, profile_pic } =
     user.data;
@@ -123,7 +122,6 @@ const UserInfoForm = ({
 
     validationHandler(stateFormData, e);
   }
-  
 
   async function onSubmitHandler(e) {
     e.preventDefault();
