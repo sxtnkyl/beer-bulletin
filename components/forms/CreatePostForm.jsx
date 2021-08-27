@@ -8,7 +8,10 @@ const useStyles = C.makeStyles((theme) => ({
     margin: "15px 0px",
     width: "100%",
   },
-  // add textArea noResize
+  textArea: {
+    width: "100%",
+    resize: "none",
+  },
 }));
 
 /* login schemas */
@@ -44,14 +47,15 @@ const FORM_DATA_POST = {
 export default function CreatePostForm(props) {
   console.log("CPF PROPS", props);
   const classes = useStyles();
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  const { loading, setLoading, stateFormValid, setStateFormValid } = props;
 
   const [stateFormData, setStateFormData] = useState(FORM_DATA_POST);
   const [stateFormError, setStateFormError] = useState([]);
   const [stateFormMessage, setStateFormMessage] = useState({});
   //extra handler for notValid state
   // change below to false after implementing validation !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  const [stateFormValid, setStateFormValid] = useState(true);
+  // const [stateFormValid, setStateFormValid] = useState(true);
 
   function onChangeHandler(e) {
     // setStateFormValid(false);
@@ -82,7 +86,7 @@ export default function CreatePostForm(props) {
     data = { ...data, content: data.content.value || "" };
     data = { ...data, seeking: data.seeking.value };
     data = { ...data, open: true };
-    data = { ...data, user_id: props.user.id };
+    data = { ...data, user_id: props.user.data.id };
 
     // SWAP LINES BELOW AFTER ADDING VALIDATION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // const isValid = validationHandler(stateFormData);
@@ -109,7 +113,7 @@ export default function CreatePostForm(props) {
       //     setStateFormMessage(result);
       //   }
       setLoading(false);
-      // NEED TO RESET FORM OR REDIRECT ?????????????????????????????????????????????????????????????????????????
+      props.handleClose();
     }
   }
 
@@ -212,10 +216,13 @@ export default function CreatePostForm(props) {
   //   }
 
   return (
-    <form className="form-post card" method="POST" onSubmit={onSubmitHandler}>
+    <form
+      id="create-post-form"
+      className="form-post card"
+      method="POST"
+      onSubmit={onSubmitHandler}
+    >
       <C.FormGroup row>
-        <h2>Post New Trade</h2>
-        <hr />
         <C.FormHelperText>
           {stateFormMessage.status === "error" && (
             <C.Typography variant="h4">{stateFormMessage.error}</C.Typography>
@@ -262,10 +269,11 @@ export default function CreatePostForm(props) {
       </C.FormGroup>
       <C.FormGroup row>
         <C.TextareaAutosize
-          className={classes.formItem}
+          className={classes.textArea}
           label="Content"
           id="content"
           name="content"
+          minRows={4}
           placeholder="Content"
           onChange={onChangeHandler}
           readOnly={loading && true}
@@ -275,6 +283,7 @@ export default function CreatePostForm(props) {
           {stateFormError.content && stateFormError.content.hint}
         </C.FormHelperText>
       </C.FormGroup>
+      <br />
       <C.FormGroup row>
         <C.Button
           variant="contained"
@@ -285,9 +294,9 @@ export default function CreatePostForm(props) {
           <input type="file" hidden />
         </C.Button>
       </C.FormGroup>
-
+      <br />
       <C.CardActions>
-        <C.Button
+        {/* <C.Button
           type="submit"
           color="secondary"
           variant="contained"
@@ -295,7 +304,7 @@ export default function CreatePostForm(props) {
           disabled={loading || !stateFormValid}
         >
           {!loading ? "Post" : "Loading..."}
-        </C.Button>
+        </C.Button> */}
       </C.CardActions>
     </form>
   );

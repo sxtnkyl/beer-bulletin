@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../styles/theme";
 import Layout from "../components/Layout";
-import { getAppCookies, verifyToken } from "../middleware/utils";
+import { getAppCookies, verifyToken, absoluteUrl } from "../middleware/utils";
 import "./login.css";
 
 //_app only has access to React DOM tree
@@ -44,10 +44,13 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
     asPath,
   } = ctx;
 
+  const { origin } = absoluteUrl(req);
+  const baseApiUrl = `${origin}/api`;
+
   const { token } = getAppCookies(req);
   const user = token && verifyToken(token.replace("Bearer ", ""));
 
-  let pageProps = { user, asPath };
+  let pageProps = { user, asPath, baseApiUrl };
   if (Component.getInitialProps) {
     pageProps = await Component.getInitialProps({ ctx });
   }
