@@ -1,7 +1,17 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 
-const BeerPongGame = ({ chatHost, chatPart, loggedUser, baseApiUrl }) => {
-  console.log("GAME", baseApiUrl);
+// LOOK INTO USING WEB WORKER TO RUN GAME IN SEPARATE THREAD
+
+const BeerPongGame = ({
+  chatHost,
+  chatPart,
+  loggedUser,
+  baseApiUrl,
+  asPath,
+}) => {
+  const channelName = "channel" + asPath.slice(14).split("?")[0];
+  const ablyURL = baseApiUrl + "/createTokenRequest";
+
   const playerOne = loggedUser == chatHost ? true : false;
   return (
     <div
@@ -10,7 +20,7 @@ const BeerPongGame = ({ chatHost, chatPart, loggedUser, baseApiUrl }) => {
     >
       <iframe
         title="bpGame"
-        src={`/beerPong/beerPong.html?isPlayerOne=${playerOne}`}
+        src={`/beerPong/beerPong.html?isPlayerOne=${playerOne}&ablyURL=${ablyURL}&channel=${channelName}`}
         width="80%"
         height="600px"
       ></iframe>
