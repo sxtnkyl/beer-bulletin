@@ -6,12 +6,22 @@ import BulletinCard from "../../components/search-bulletins/bulletinCard";
 import LoadingErrorMessage from "../../components/LoadingErrorMessage";
 import { absoluteUrl, getAppCookies } from "../../middleware/utils";
 
-const SearchBulletins = ({ trades, user }) => {
-  const { status, data, total } = trades;
+import { useBulletins } from "../../util/hooks/useSWRs";
+import { fetchBulletins } from "../../util/fetchers";
 
-  const makeTradesList = data.map((trade, i) => (
+const SearchBulletins = ({ trades, user, baseApiUrl }) => {
+  const { status, data, total } = trades;
+  const { bulletins, isLoading, isError } = useBulletins(
+    baseApiUrl,
+    fetchBulletins,
+    { initialData: trades, refreshInterval: 3000 }
+  );
+  const makeTradesList = bulletins.data.map((trade, i) => (
     <BulletinCard key={i} loggedUser={user} {...trade} />
   ));
+  // const makeTradesList = data.map((trade, i) => (
+  //   <BulletinCard key={i} loggedUser={user} {...trade} />
+  // ));
 
   async function loadMoreClick(e) {
     await Router.push({
@@ -24,7 +34,12 @@ const SearchBulletins = ({ trades, user }) => {
 
   return (
     <C.Container>
-      {status == "success" ? makeTradesList : <LoadingErrorMessage />}
+      {/* {status == "success" ? makeTradesList : <LoadingErrorMessage />} */}
+      {isLoading
+        ? "Loading bulletins..."
+        : isError
+        ? "OOPS, there was an error fetching new data..."
+        : makeTradesList}
     </C.Container>
   );
 };
@@ -44,15 +59,15 @@ export async function getServerSideProps(context) {
 
   // const tradesApi = await fetch(`${baseApiUrl}/trades${nextPageUrl}`
   // });
-  const api = await fetch(`${baseApiUrl}/trades`);
-
-  const trades = await api.json();
+  // const api = await fetch(`${baseApiUrl}/trades`);
+  const trades = await fetchBulletins(baseApiUrl);
 
   return {
     props: {
       origin,
       referer,
       token,
+      baseApiUrl,
       trades,
     },
   };

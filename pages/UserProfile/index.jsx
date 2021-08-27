@@ -21,18 +21,17 @@ const useStyles = C.makeStyles(() => ({
 }));
 
 const UserProfile = (props) => {
-  const { origin, referer, token, user, asPath } = props;
+  const { token, referer, baseApiUrl, user } = props;
   const classes = useStyles();
   const router = useRouter();
 
   const [edit, setEdit] = useState(false);
-
   const toggleEdit = () => {
     setEdit(!edit);
   };
 
   const onRefresh = () => {
-    console.log('hewwo');
+    console.log("hewwo");
     router.replace(router.asPath);
   };
 
@@ -54,7 +53,12 @@ const UserProfile = (props) => {
         </C.Button>
       </div>
       {edit ? (
-        <UserInfoForm {...props} edit={edit} toggleEdit={toggleEdit} onRefresh={onRefresh}/>
+        <UserInfoForm
+          {...props}
+          edit={edit}
+          toggleEdit={toggleEdit}
+          onRefresh={onRefresh}
+        />
       ) : (
         <UserProfileCard {...props} />
       )}
@@ -106,10 +110,10 @@ export async function getServerSideProps(context) {
   return {
     props: {
       origin,
-      referer,
       token,
-      user,
+      referer,
       baseApiUrl,
+      user,
     },
   };
 }

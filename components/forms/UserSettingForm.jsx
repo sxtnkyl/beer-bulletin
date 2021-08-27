@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
+import { useForm, Controller } from "react-hook-form";
 import * as C from "@material-ui/core";
 import GlassCard from "../glassCard";
 import SettingsIcon from "@material-ui/icons/Settings";
@@ -87,6 +88,16 @@ const FORM_DATA = {
   },
 };
 
+const hookFormData = {
+  username: "",
+  email: "",
+  password: "",
+  first_name: "",
+  last_name: "",
+  profile_pic: "",
+  pref_dark: false,
+};
+
 const UserInfoForm = ({
   origin,
   referer,
@@ -95,7 +106,6 @@ const UserInfoForm = ({
   baseApiUrl,
   toggleEdit,
   onRefresh,
-
 }) => {
   const { id, username, email, password, first_name, last_name, profile_pic } =
     user.data;
@@ -123,7 +133,6 @@ const UserInfoForm = ({
 
     validationHandler(stateFormData, e);
   }
-  
 
   async function onSubmitHandler(e) {
     e.preventDefault();
