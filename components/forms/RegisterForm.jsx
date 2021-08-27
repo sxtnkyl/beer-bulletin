@@ -184,7 +184,7 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
               isValid = false;
             }
           }
-          if (field.value && field.min >= field.value.length) {
+          if (field.value && field.min > field.value.length) {
             errors[item[0]] = {
               hint: `Min ${field.label} length ${field.min}`,
               isInvalid: true,

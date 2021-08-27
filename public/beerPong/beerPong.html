@@ -110,6 +110,73 @@
         // NOTE: setBounciness for cup, ball, and ground may need fine-tuning for optimal physics
         const physics = new AmmoPhysics(scene);
 
+        // static table
+        let table = physics.add.ground(
+          { name: "table", width: 80, height: 24 },
+          { lambert: { color: "cadetblue" } }
+        );
+        table.body.setBounciness(0.9);
+
+        function createCup(pos_x, pos_y, pos_z, cupNum, fileName) {
+          new THREE.GLTFLoader().loadAsync(fileName).then((gltf) => {
+            const Pcup = gltf.scene.children[0];
+            Pcup.position.x = pos_x;
+            Pcup.position.y = pos_y;
+            Pcup.position.z = pos_z;
+            Pcup.scale.x = 11.75;
+            Pcup.scale.y = 11.75;
+            Pcup.scale.z = 11.75;
+
+            Pcup.traverse((child) => {
+              if (child.isMesh) {
+                child.castShadow = true;
+                // receiveShadow adds unpleasant appearance to cups so it's disabled
+                // child.receiveShadow = true;
+              }
+            });
+            scene.add(Pcup);
+            physics.add.existing(Pcup, {
+              mass: 5000,
+              shape: "concave",
+            });
+            let sensor = physics.add.cylinder(
+              {
+                name: cupNum,
+                x: pos_x - 0.75,
+                y: pos_y - 2.2,
+                z: pos_z + 2.25,
+                height: 0.01,
+                radiusSegments: 30,
+                radiusTop: 1.2,
+                radiusBottom: 1.2,
+                mass: 20,
+              },
+              { lambert: { color: "blue", opacity: 0 } }
+            );
+            sensor.body.setCollisionFlags(5);
+            sensor.body.setBounciness(0.2);
+            sensor.refCup = Pcup;
+
+            Pcup.body.setBounciness(0.4);
+          });
+        }
+
+        // player 1 red cups created in triangle pattern
+        createCup(-35, 3, -6.8, "sixRed", "cupRedNew.glb");
+        createCup(-35, 3, -2.25, "fiveRed", "cupRedNew.glb");
+        createCup(-35, 3, 2.3, "fourRed", "cupRedNew.glb");
+        createCup(-31.05, 3, -4.5, "threeRed", "cupRedNew.glb");
+        createCup(-31.05, 3, -0, "twoRed", "cupRedNew.glb");
+        createCup(-27.1, 3, -2.25, "oneRed", "cupRedNew.glb");
+
+        // player 2 blue cups created in triangle pattern
+        createCup(36, 3, -6.8, "sixBlue", "cupBlueNew.glb");
+        createCup(36, 3, -2.25, "fiveBlue", "cupBlueNew.glb");
+        createCup(36, 3, 2.3, "fourBlue", "cupBlueNew.glb");
+        createCup(32.05, 3, -4.5, "threeBlue", "cupBlueNew.glb");
+        createCup(32.05, 3, 0, "twoBlue", "cupBlueNew.glb");
+        createCup(28.1, 3, -2.25, "oneBlue", "cupBlueNew.glb");
+
         // function for ball creation assigned to global var so it can be accessed in handleTouchEnd() that is outside this MainScene() function
         createBallObj = () => {
           ballObject = physics.add.sphere(
@@ -177,76 +244,9 @@
           });
         };
 
-        function createCup(pos_x, pos_y, pos_z, cupNum, fileName) {
-          new THREE.GLTFLoader().loadAsync(fileName).then((gltf) => {
-            const Pcup = gltf.scene.children[0];
-            Pcup.position.x = pos_x;
-            Pcup.position.y = pos_y;
-            Pcup.position.z = pos_z;
-            Pcup.scale.x = 10;
-            Pcup.scale.y = 10;
-            Pcup.scale.z = 10;
-
-            Pcup.traverse((child) => {
-              if (child.isMesh) {
-                child.castShadow = true;
-                // receiveShadow adds unpleasant appearance to cups so it's disabled
-                // child.receiveShadow = true;
-              }
-            });
-            scene.add(Pcup);
-            physics.add.existing(Pcup, {
-              mass: 5000,
-              shape: "concave",
-            });
-            let sensor = physics.add.cylinder(
-              {
-                name: cupNum,
-                x: pos_x,
-                y: pos_y - 2.2,
-                z: pos_z + 2.5,
-                height: 0.01,
-                radiusSegments: 30,
-                radiusTop: 1.2,
-                radiusBottom: 1.2,
-                mass: 20,
-              },
-              { lambert: { color: "blue", transparent: true, opacity: 0 } }
-            );
-            sensor.body.setCollisionFlags(5);
-            sensor.body.setBounciness(0.2);
-            sensor.refCup = Pcup;
-
-            Pcup.body.setBounciness(0.4);
-          });
-        }
-
-        // player 1 red cups created in triangle pattern
-        createCup(-35, 3, -7.05, "sixRed", "/beerPong/pCupRed.glb");
-        createCup(-35, 3, -2.5, "fiveRed", "/beerPong/pCupRed.glb");
-        createCup(-35, 3, 2.05, "fourRed", "/beerPong/pCupRed.glb");
-        createCup(-31.05, 3, -4.75, "threeRed", "/beerPong/pCupRed.glb");
-        createCup(-31.05, 3, -0.25, "twoRed", "/beerPong/pCupRed.glb");
-        createCup(-27.1, 3, -2.5, "oneRed", "/beerPong/pCupRed.glb");
-
-        // player 2 blue cups created in triangle pattern
-        createCup(35, 3, -7.05, "sixBlue", "/beerPong/pCupBlue.glb");
-        createCup(35, 3, -2.5, "fiveBlue", "/beerPong/pCupBlue.glb");
-        createCup(35, 3, 2.05, "fourBlue", "/beerPong/pCupBlue.glb");
-        createCup(31.05, 3, -4.75, "threeBlue", "/beerPong/pCupBlue.glb");
-        createCup(31.05, 3, -0.25, "twoBlue", "/beerPong/pCupBlue.glb");
-        createCup(27.1, 3, -2.5, "oneBlue", "/beerPong/pCupBlue.glb");
-
         // starting balls created
         createBallObj();
         createBallObjp2();
-
-        // static table
-        let table = physics.add.ground(
-          { name: "table", width: 80, height: 24 },
-          { lambert: { color: "cadetblue" } }
-        );
-        table.body.setBounciness(0.9);
 
         // static ground
         let ground = physics.add.ground(

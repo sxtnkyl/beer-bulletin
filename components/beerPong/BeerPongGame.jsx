@@ -1,6 +1,8 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 
-const BeerPongGame = () => {
+const BeerPongGame = ({ chatHost, chatPart, loggedUser, baseApiUrl }) => {
+  console.log("GAME", baseApiUrl);
+  const playerOne = loggedUser == chatHost ? true : false;
   return (
     <div
       className="beer-pong"
@@ -8,7 +10,7 @@ const BeerPongGame = () => {
     >
       <iframe
         title="bpGame"
-        src="/beerPong/beerPong.html?isPlayerOne=true"
+        src={`/beerPong/beerPong.html?isPlayerOne=${playerOne}`}
         width="80%"
         height="600px"
       ></iframe>

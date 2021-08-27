@@ -35,13 +35,22 @@ const useStyles = makeStyles({
 
 //Pass chat ID here??
 const Chat = (pageProps) => {
+  const [tradeID, hostUser, partUser] = pageProps.query.id.split("b");
+
   const style = useStyles();
   const [gameMode, setGameMode] = useState(false);
   return (
     <div>
       <AblyChatComponent {...pageProps} />
       <Button onClick={() => setGameMode(!gameMode)}>Beer Pong</Button>
-      {gameMode ? <BeerPongGame /> : null}
+      {gameMode ? (
+        <BeerPongGame
+          chatHost={hostUser}
+          chatPart={partUser}
+          loggedUser={pageProps.user.id}
+          baseApiUrl={pageProps.baseApiUrl}
+        />
+      ) : null}
     </div>
   );
 };

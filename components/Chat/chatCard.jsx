@@ -27,12 +27,12 @@ const useStyles = C.makeStyles((theme) => ({
 }));
 
 const ChatCard = (props) => {
-  const { id, offer_money, offer_beer, offer_other, host, trade } = props;
+  const { id, offer_money, offer_beer, offer_other, host, trade, endpoint } =
+    props;
   const classes = useStyles();
 
   const chatBlock = (
-    
-    <Link passHref href={`/CurrentChats/${id}`}>
+    <Link passHref href={`/CurrentChats/${endpoint}`}>
       <C.CardActionArea className={classes.stretch}>
         <C.CardContent className={classes.content}>
           <h2>Username: {host.username}</h2>
