@@ -14,7 +14,6 @@ const AblyChatComponent = (props) => {
   // info for message history entries retrieved from props
   const channelName = "channel" + props.asPath.slice(14).split("?")[0];
   const userID = props.user.id;
-  console.log("channel.....", channelName);
 
   const [channel, ably] = useChannel(channelName, (message) => {
     // console.log("MESSAGE", message);
@@ -100,7 +99,6 @@ const AblyChatComponent = (props) => {
   useEffect(() => {
     async function getMsgHistory() {
       let msgHistory = await getData();
-      console.log(msgHistory);
       setMessages(msgHistory.data);
       setMsgLoading(false);
     }
