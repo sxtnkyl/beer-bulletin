@@ -45,6 +45,7 @@ const handler = nextConnect()
             "offer_money",
             "offer_beer",
             "offer_other",
+            "endpoint",
           ],
           include: [
             {
