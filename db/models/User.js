@@ -58,7 +58,7 @@ User.init(
         newUserData.password = bcrypt.hashSync(newUserData.password, 8);
         return newUserData;
       },
-      beforeBulkUpdate: (updatedUserData) => {
+      beforeUpdate: (updatedUserData) => {
         updatedUserData.password = bcrypt.hashSync(updatedUserData.password, 8);
         return updatedUserData;
       },
