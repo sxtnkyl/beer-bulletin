@@ -35,12 +35,15 @@ Offer.init(
     },
     offer_money: {
       type: DataTypes.INTEGER,
+      defaultValue: 0,
     },
     offer_beer: {
       type: DataTypes.STRING,
+      defaultValue: "",
     },
     offer_other: {
       type: DataTypes.STRING,
+      defaultValue: "",
     },
 
     // chat_log: {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import * as C from "@material-ui/core";
 import { faBeer } from "@fortawesome/free-solid-svg-icons";
@@ -29,9 +29,16 @@ const useStyles = C.makeStyles((theme) => ({
 }));
 
 const BulletinCard = (props) => {
-  const { id, user_id, title, content, current_offers, open, loggedUser } =
-    props;
+  const { id, user_id, title, content, offers, open, loggedUser } = props;
   const classes = useStyles();
+
+  const [loggedUserHasOffer, setLoggedUserHasOffer] = useState(false);
+
+  useEffect(() => {
+    offers.forEach((offer) => {
+      if (offer.participant.id === loggedUser.id) setLoggedUserHasOffer(true);
+    });
+  }, []);
 
   const infoBlock = (
     <Link passHref href={`/SearchBulletins/${id}`}>
@@ -41,6 +48,7 @@ const BulletinCard = (props) => {
           <C.Divider variant="middle" />
           {content}
           <C.Divider variant="middle" />
+          Current Offers: {offers.length}
         </C.CardContent>
       </C.CardActionArea>
     </Link>
@@ -56,7 +64,13 @@ const BulletinCard = (props) => {
           disabled={!open || user_id === loggedUser.id}
           style={{ width: "auto" }}
         >
-          {open ? "Make Offer" : "Deal Pending"}
+          {user_id === loggedUser.id
+            ? "Your Trade"
+            : loggedUserHasOffer
+            ? "Edit Offer"
+            : open
+            ? "Make Offer"
+            : "Deal Pending"}
         </C.Button>
       </Link>
     </C.CardActions>

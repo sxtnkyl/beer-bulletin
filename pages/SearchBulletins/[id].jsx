@@ -5,7 +5,6 @@ import SingleBulletin from "../../components/search-bulletins/singleBulletin";
 import { absoluteUrl, getAppCookies } from "../../middleware/utils";
 
 const BulletinDetails = (props) => {
-  console.log("UH", props.userHost);
   return (
     <C.Container>
       <SingleBulletin {...props} />
@@ -38,11 +37,14 @@ export async function getServerSideProps(context) {
   let bulletin = {};
   let userHost = {};
 
-  const tradeData = await fetch(`${baseApiUrl}/trades/${query.id}`, {
-    headers: {
-      authorization: token || "",
-    },
-  });
+  const tradeData = await fetch(
+    `${baseApiUrl}/trades/with-offers/${query.id}`,
+    {
+      headers: {
+        authorization: token || "",
+      },
+    }
+  );
   bulletin = await tradeData.json();
 
   const userData = await fetch(`${baseApiUrl}/users/${bulletin.data.user_id}`, {
