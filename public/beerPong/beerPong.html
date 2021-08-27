@@ -9,7 +9,7 @@
     </style>
   </head>
   <body>
-    <script src="https://cdn.ably.com/lib/ably.min-1.0.13.js"></script>
+    <script src="/beerPong/ably.min-1.0.13.js"></script>
     <script src="/beerPong/three.min.js"></script>
     <script src="/beerPong/enable3d.ammoPhysics.0.23.0.min.js"></script>
     <script src="/beerPong/GLTFLoader.js"></script>
@@ -36,11 +36,7 @@
       var BPchannel;
       var myId;
 
-      // import baseApiUrl =============================================================================
-      // import channel name =============================================================================
-
       var ably = new Ably.Realtime({
-        // add baseApiUrl  =============================================================================
         authUrl: ablyConnectURL,
         echoMessages: false,
       });
@@ -51,7 +47,6 @@
       });
 
       function startApp(userId) {
-        // add channel name =============================================================================
         BPchannel = ably.channels.get(channelName);
         BPchannel.presence.enter();
         var currentUser = {
@@ -60,46 +55,31 @@
           pic: "picURL",
         };
         //publish initial data; USE THIS TO DISPLAY NAME AND PICTURE ===============================================
-        BPchannel.publish("attr-change", currentUser);
         handleSubscribeToPhysics();
-        // BPchannel.subscribe("physics-change", function (data) {
-        //   var playerData = JSON.stringify(data);
-        //   var playerJSON = JSON.parse(playerData);
-        //   if (playerExists(playerJSON.data.id)) {
-        //     updatePlayer(playerJSON.data.id, playerJSON);
-        //   } else {
-        //     if (playerJSON.data.id != myId)
-        //       createPlayer(playerJSON.data.id, playerJSON);
-        //   }
-        // });
-
-        // USE THIS FOR PHYSICS UPDATES =============================================================================
-        function networkTick() {
-          //publish updating data
-          BPchannel.publish("attr-change", currentUser);
-        }
-        // LINE BELOW RACKS UP MESSAGE COUNT VEERRYY FAST !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // setInterval(networkTick, 100);
+        window.addEventListener("unload", () => BPchannel.presence.leave());
 
         //get a list of already existing players
         BPchannel.presence.get(function (err, members) {
           for (var i in members) {
-            console.log("Found player!");
-            subscribeToPlayerChanges(members[i].clientId);
+            if (!players.includes(members[i].clientId)) {
+              players.push(members[i].clientId);
+            }
           }
+          console.log(players);
         });
         //subscribe to new user entries
         BPchannel.presence.subscribe("enter", function (member) {
-          // DO A PRESENCE>GET HERE ======================================================================
+          // DO A PRESENCE>GET HERE =========
           console.log("SOMEONE JOINED!");
-          var memberData = JSON.stringify(member);
-          var memberJSON = JSON.parse(memberData);
-          subscribeToPlayerChanges(memberJSON.clientId);
+          if (member.clientId !== myId) {
+            createPlayer(member.clientId);
+          }
         });
         //subscribe to existing users leaving
         BPchannel.presence.subscribe("leave", function (member) {
           console.log("SOMEONE LEFT");
-          removePlayer(JSON.stringify(member.clientId));
+          removePlayer(member.clientId);
+          console.log(players);
         });
       }
 
@@ -112,32 +92,10 @@
 
       // POSSIBLY ADD IN USER NAME AND/OR PHOTO TO GAME SPACE ===========================================================
       //add player when user enters
-      function createPlayer(id, playerJSON) {
+      function createPlayer(id) {
         console.log("CREATE FUNCTION");
         players.push(id);
-      }
-
-      //subscribe to changes in attributes
-      function subscribeToPlayerChanges(id) {
-        BPchannel.subscribe("attr-change", function (data) {
-          var playerData = JSON.stringify(data);
-          var playerJSON = JSON.parse(playerData);
-          if (playerExists(playerJSON.data.id)) {
-            updatePlayer(playerJSON.data.id, playerJSON);
-          } else {
-            if (playerJSON.data.id != myId)
-              createPlayer(playerJSON.data.id, playerJSON);
-          }
-        });
-      }
-      //check if player needs to be created or updated
-      function playerExists(id) {
-        return players.includes(id);
-      }
-      //update player according to changing attributes
-      function updatePlayer(id, playerJSON) {
-        console.log("UPDATE PLAYER");
-        var player = id;
+        console.log(players);
       }
 
       // ***************************** END MULTIPLAYER CODE *****************************
