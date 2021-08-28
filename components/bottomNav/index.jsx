@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import { useState, useEffect } from "react";
 import * as C from "@material-ui/core";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
@@ -61,15 +62,17 @@ const BottomNav = ({ scroll, user, baseApiUrl }) => {
   let paths = [
     "UsersBulletins",
     "CurrentChats",
+    "",
     "SearchBulletins",
     "UserProfile",
   ];
   //tab routes left to right
-  let tabs = ["Bulletins", "Chats", "Search", "Profile"];
+  let tabs = ["Bulletins", "Chats", "", "Search", "Profile"];
 
   let icons = [
     <AssignmentIndIcon />,
     <ChatIcon />,
+    "",
     <PageviewIcon />,
     <AccountBoxIcon />,
   ];
@@ -85,9 +88,21 @@ const BottomNav = ({ scroll, user, baseApiUrl }) => {
     setActiveTab(newValue);
   };
 
-  let tabButtons = tabs.map((tab, i) => (
-    <Link href={`/${paths[i]}`} label={tab} value={i} icon={icons[i]} key={i} />
-  ));
+  let tabButtons = tabs.map((tab, i) => {
+    if (tab === "") {
+      return <div style={{ width: "50px" }}></div>;
+    } else {
+      return (
+        <Link
+          href={`/${paths[i]}`}
+          label={tab}
+          value={i}
+          icon={icons[i]}
+          key={i}
+        />
+      );
+    }
+  });
 
   return (
     // <C.Paper elevation={6}>
@@ -101,7 +116,7 @@ const BottomNav = ({ scroll, user, baseApiUrl }) => {
           background: scroll ? "transparent" : theme.palette.primary.main,
         }}
       >
-        <CreatePostButton onClick={handleOpen} />
+        {user && <CreatePostButton onClick={handleOpen} />}
         {tabButtons}
         <C.Dialog
           open={open}

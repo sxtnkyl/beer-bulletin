@@ -42,7 +42,7 @@ const useStyles = C.makeStyles((theme) => ({
   },
 }));
 
-const Landing = () => {
+const Landing = (props) => {
   const t = useStyles();
   return (
     <C.Container style={{ marginBottom: "0px" }}>

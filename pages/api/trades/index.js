@@ -26,13 +26,14 @@ const handler = nextConnect()
   })
   .post(async (req, res) => {
     const { body } = req;
-    const { user_id, title, content, open, seeking } = body;
+    const { user_id, title, content, open, seeking, picture } = body;
     const newTrade = await models.trades.create({
       user_id,
       title,
       content,
       seeking,
       open,
+      picture,
     });
 
     if (!newTrade) {

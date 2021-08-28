@@ -30,9 +30,9 @@ const FORM_DATA_POST = {
   content: {
     value: "",
     label: "Content",
-    min: 0,
+    min: 1,
     max: 250,
-    required: false,
+    required: true,
     validator: null,
     // validator: {
     //   regEx: /^[a-z\sA-Z0-9\W\w]+$/,

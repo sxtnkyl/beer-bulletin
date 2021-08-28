@@ -7,8 +7,11 @@ import theme from "../../styles/theme";
 const useStyles = C.makeStyles((theme) => ({
   createPostBtn: {
     position: "absolute",
-    top: "-110%",
-    right: "5%",
+    bottom: "10%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    left: 0,
+    right: 0,
   },
 }));
 const CreatePostButton = (props) => {
@@ -16,11 +19,12 @@ const CreatePostButton = (props) => {
   return (
     <C.Fab
       className={classes.createPostBtn}
-      size="medium"
+      size="large"
       aria-label="create post"
       onClick={props.onClick}
     >
-      <AddCircleIcon />
+      {/* <AddCircleIcon /> */}
+      New Post
     </C.Fab>
   );
 };
