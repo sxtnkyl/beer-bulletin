@@ -17,7 +17,7 @@ const FORM_DATA_POST = {
   title: {
     value: "",
     label: "Title",
-    min: 7,
+    min: 8,
     max: 36,
     required: true,
     validator: null,
@@ -83,7 +83,7 @@ export default function CreatePostForm(props) {
     data = { ...data, content: data.content.value || "" };
     data = { ...data, seeking: data.seeking.value };
     data = { ...data, open: true };
-    data = { ...data, user_id: props.user.data.id };
+    data = { ...data, user_id: props.user.id || props.user.data.id };
 
     const isValid = validationHandler(stateFormData);
 
