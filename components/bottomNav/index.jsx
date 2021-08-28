@@ -11,6 +11,11 @@ import CreatePostButton from "../buttons/CreatePostButton";
 import { useRouter } from "next/router";
 import theme from "../../styles/theme";
 import CreatePostForm from "../forms/CreatePostForm";
+import MuiAlert from "@material-ui/lab/Alert";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -34,6 +39,7 @@ const BottomNav = ({ scroll, user, baseApiUrl }) => {
   // these states lifted from CreatePostForm
   const [stateFormValid, setStateFormValid] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [openToast, setOpenToast] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -41,6 +47,13 @@ const BottomNav = ({ scroll, user, baseApiUrl }) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleCloseToast = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenToast(false);
   };
 
   const router = useRouter();
@@ -78,55 +91,68 @@ const BottomNav = ({ scroll, user, baseApiUrl }) => {
 
   return (
     // <C.Paper elevation={6}>
-    <C.BottomNavigation
-      value={activeTab}
-      onChange={handleChange}
-      component={C.Paper}
-      elevation={scroll ? 10 : 2}
-      style={{
-        background: scroll ? "transparent" : theme.palette.primary.main,
-      }}
-    >
-      <CreatePostButton onClick={handleOpen} />
-      {tabButtons}
-      <C.Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
+    <>
+      <C.BottomNavigation
+        value={activeTab}
+        onChange={handleChange}
+        component={C.Paper}
+        elevation={scroll ? 10 : 2}
+        style={{
+          background: scroll ? "transparent" : theme.palette.primary.main,
+        }}
       >
-        <C.DialogTitle id="form-dialog-title">Post New Trade</C.DialogTitle>
-        <C.DialogContent>
-          <C.DialogContentText>
-            Select Whether you are Offering or Seeking, then fill out the form
-            and post your trade!
-          </C.DialogContentText>
-          <CreatePostForm
-            handleClose={handleClose}
-            user={user}
-            baseApiUrl={baseApiUrl}
-            loading={loading}
-            setLoading={setLoading}
-            stateFormValid={stateFormValid}
-            setStateFormValid={setStateFormValid}
-          />
-        </C.DialogContent>
-        <C.DialogActions>
-          <C.Button onClick={handleClose} color="white">
-            Cancel
-          </C.Button>
-          <C.Button
-            type="submit"
-            form="create-post-form"
-            color="secondary"
-            variant="contained"
-            style={{ width: "auto" }}
-            disabled={loading || !stateFormValid}
-          >
-            {!loading ? "Post" : "Loading..."}
-          </C.Button>
-        </C.DialogActions>
-      </C.Dialog>
-    </C.BottomNavigation>
+        <CreatePostButton onClick={handleOpen} />
+        {tabButtons}
+        <C.Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="form-dialog-title"
+        >
+          <C.DialogTitle id="form-dialog-title">Post New Trade</C.DialogTitle>
+          <C.DialogContent>
+            <C.DialogContentText>
+              Select Whether you are Offering or Seeking, then fill out the form
+              and post your trade!
+            </C.DialogContentText>
+            {/* POST FORM COMPONENT PASSED LIFTED STATES */}
+            <CreatePostForm
+              handleClose={handleClose}
+              user={user}
+              baseApiUrl={baseApiUrl}
+              loading={loading}
+              setLoading={setLoading}
+              stateFormValid={stateFormValid}
+              setStateFormValid={setStateFormValid}
+              setOpenToast={setOpenToast}
+            />
+          </C.DialogContent>
+          <C.DialogActions>
+            <C.Button onClick={handleClose} color="white">
+              Cancel
+            </C.Button>
+            <C.Button
+              type="submit"
+              form="create-post-form"
+              color="secondary"
+              variant="contained"
+              style={{ width: "auto" }}
+              disabled={loading || !stateFormValid}
+            >
+              {!loading ? "Post" : "Loading..."}
+            </C.Button>
+          </C.DialogActions>
+        </C.Dialog>
+      </C.BottomNavigation>
+      <C.Snackbar
+        open={openToast}
+        autoHideDuration={5000}
+        onClose={handleCloseToast}
+      >
+        <Alert onClose={handleCloseToast} severity="success">
+          New Bulletin Posted
+        </Alert>
+      </C.Snackbar>
+    </>
     // </C.Paper>
   );
 };
