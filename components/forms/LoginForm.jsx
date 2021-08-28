@@ -20,13 +20,14 @@ const FORM_DATA_LOGIN = {
   email: {
     value: "",
     label: "Email",
-    min: 10,
+    min: 6,
     max: 36,
     required: true,
-    validator: {
-      regEx: emailRegEx,
-      error: "Please insert valid email",
-    },
+    validator: null,
+    // validator: {
+    //   regEx: emailRegEx,
+    //   error: "Please insert valid email",
+    // },
   },
   password: {
     value: "",
@@ -215,10 +216,10 @@ const LoginForm = ({ origin, referer, baseApiUrl }) => {
       <C.FormGroup row>
         <C.TextField
           className={classes.formItem}
-          label="Email"
+          label="Username or Email"
           id="email"
           name="email"
-          placeholder="Email"
+          placeholder="Username or Email"
           onChange={onChangeHandler}
           readOnly={loading && true}
           value={stateFormData.email.value}
