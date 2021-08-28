@@ -1,7 +1,8 @@
-import models from '../../db/models/index';
-import nextConnect from 'next-connect';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import models from "../../db/models/index";
+import nextConnect from "next-connect";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+const Op = require("sequelize").Op;
 
 const KEY = process.env.JWT_KEY;
 
@@ -9,37 +10,47 @@ const handler = nextConnect()
   .get((req, res) => {})
   .post(async (req, res) => {
     /* Get Post Data */
-    const { email, password } = req.body;
+    const { email: userInfo, password } = req.body;
     /* Any how email or password is blank */
-    if (!email || !password) {
+    if (!userInfo || !password) {
       return res.status(400).json({
-        status: 'error',
-        error: 'Request missing username or password',
+        status: "error",
+        error: "Request missing username or password",
       });
     }
     /* Check user in database */
     const user = await models.users.findOne({
-      where: { email: email },
-      attributes: ['id', 'email', 'password'],
+      where: {
+        [Op.or]: [
+          {
+            email: userInfo,
+          },
+          { username: userInfo },
+        ],
+      },
+      attributes: ["id", "email", "username", "password"],
       limit: 1,
     });
     /* Check if exists */
     if (!user) {
-      res.status(400).json({ status: 'error', error: 'User Not Found' });
+      res.status(400).json({ status: "error", error: "User Not Found" });
     }
     /* Define variables */
     const dataUser = user.toJSON();
     const userId = dataUser.id,
       userEmail = dataUser.email,
+      username = dataUser.username,
       userPassword = dataUser.password;
+
     /* Check and compare password */
-    bcrypt.compare(password, userPassword).then(isMatch => {
+    bcrypt.compare(password, userPassword).then((isMatch) => {
       if (isMatch) {
         /* User matched */
         /* Create JWT Payload */
         const payload = {
           id: userId,
           email: userEmail,
+          username: username,
         };
         /* Sign token */
         jwt.sign(
@@ -51,12 +62,12 @@ const handler = nextConnect()
           (err, token) => {
             res.status(200).json({
               success: true,
-              token: 'Bearer ' + token,
+              token: "Bearer " + token,
             });
-          },
+          }
         );
       } else {
-        res.status(400).json({ status: 'error', error: 'Password incorrect' });
+        res.status(400).json({ status: "error", error: "Password incorrect" });
       }
     });
   });

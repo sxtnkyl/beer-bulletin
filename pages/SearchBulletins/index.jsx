@@ -10,7 +10,7 @@ const SearchBulletins = ({ trades, user }) => {
   const { status, data, total } = trades;
 
   const makeTradesList = data.map((trade, i) => (
-    <BulletinCard key={i} loggedUser={user} {...trade} />
+    <BulletinCard key={i} loggedUser={user ? user : { id: 0 }} {...trade} />
   ));
 
   async function loadMoreClick(e) {

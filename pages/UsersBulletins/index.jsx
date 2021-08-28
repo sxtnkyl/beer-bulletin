@@ -112,6 +112,7 @@ export async function getServerSideProps(context) {
       authorization: token || "",
     },
   });
+
   const bulletins = await userBulletins.json();
   const offers = await userOffers.json();
 
