@@ -113,11 +113,11 @@ const UserInfoForm = ({
       ...stateFormData,
       username: {
         ...stateFormData[username],
-      value: username,
+        value: username,
       },
       email: {
         ...stateFormData[email],
-      value: email,
+        value: email,
       },
       password: {
         ...stateFormData[password],
@@ -125,17 +125,15 @@ const UserInfoForm = ({
       },
       first_name: {
         ...stateFormData[first_name],
-      value: first_name,
+        value: first_name,
       },
       last_name: {
-      ...stateFormData[last_name],
-      value: last_name,
+        ...stateFormData[last_name],
+        value: last_name,
       },
     });
-
   }, []);
 
-  
   function onChangeHandler(e) {
     setStateFormValid(false);
     const { name, value } = e.currentTarget;
@@ -210,7 +208,7 @@ const UserInfoForm = ({
       }
       if (
         states[input].value &&
-        states[input].min > states[input].value.length
+        states[input].min > states[input].value.length + 1
       ) {
         errors[input] = {
           hint: `Min ${states[input].label} length ${states[input].min}`,
@@ -256,7 +254,7 @@ const UserInfoForm = ({
               isValid = false;
             }
           }
-          if (field.value && field.min >= field.value.length) {
+          if (field.value && field.min > field.value.length) {
             errors[item[0]] = {
               hint: `Min ${field.label} length ${field.min}`,
               isInvalid: true,

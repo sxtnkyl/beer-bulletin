@@ -10,7 +10,7 @@ const SearchBulletins = ({ trades, user }) => {
   const { status, data, total } = trades;
 
   const makeTradesList = data.map((trade, i) => (
-    <BulletinCard key={i} loggedUser={user} {...trade} />
+    <BulletinCard key={i} loggedUser={user ? user : { id: 0 }} {...trade} />
   ));
 
   async function loadMoreClick(e) {
@@ -44,7 +44,7 @@ export async function getServerSideProps(context) {
 
   // const tradesApi = await fetch(`${baseApiUrl}/trades${nextPageUrl}`
   // });
-  const api = await fetch(`${baseApiUrl}/trades`);
+  const api = await fetch(`${baseApiUrl}/trades/with-offers`);
 
   const trades = await api.json();
 

@@ -11,13 +11,14 @@ const useStyles = C.makeStyles((theme) => ({
     right: "5%",
   },
 }));
-const CreatePostButton = () => {
+const CreatePostButton = (props) => {
   const classes = useStyles();
   return (
     <C.Fab
       className={classes.createPostBtn}
       size="medium"
       aria-label="create post"
+      onClick={props.onClick}
     >
       <AddCircleIcon />
     </C.Fab>
