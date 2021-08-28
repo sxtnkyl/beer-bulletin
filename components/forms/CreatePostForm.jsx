@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as C from "@material-ui/core";
+import ImageUpload from "../imageUpload";
 
 // VALIDATION COMMENTED OUT FOR NOW
 
@@ -57,7 +58,6 @@ export default function CreatePostForm(props) {
     // setStateFormValid(false);
     const { name, value } = e.currentTarget;
 
-    // WHY IS NAME IN BRACKETS ?????????????????????????????????????????????????????????????????????????
     setStateFormData({
       ...stateFormData,
       [name]: {
@@ -223,6 +223,8 @@ export default function CreatePostForm(props) {
         </C.FormHelperText>
       </C.FormGroup>
       <C.FormGroup row>
+
+        {/* SEEKING OR SELLING */}
         <C.FormControlLabel
           control={
             <C.Switch
@@ -245,6 +247,7 @@ export default function CreatePostForm(props) {
         />
       </C.FormGroup>
 
+      {/* POST TITLE */}
       <C.FormGroup row>
         <C.TextField
           className={classes.formItem}
@@ -260,6 +263,8 @@ export default function CreatePostForm(props) {
           {stateFormError.title && stateFormError.title.hint}
         </C.FormHelperText>
       </C.FormGroup>
+
+      {/* POST DESCRIPTION */}
       <C.FormGroup row>
         <C.TextareaAutosize
           className={classes.formItem}
@@ -275,7 +280,10 @@ export default function CreatePostForm(props) {
           {stateFormError.content && stateFormError.content.hint}
         </C.FormHelperText>
       </C.FormGroup>
+
+      {/* IMAGE UPLOAD */}
       <C.FormGroup row>
+        <ImageUpload test={'Upload Image'}>
         <C.Button
           variant="contained"
           component="label"
@@ -284,8 +292,11 @@ export default function CreatePostForm(props) {
           {!loading ? "Upload File" : "Loading..."}
           <input type="file" hidden />
         </C.Button>
+        </ImageUpload>
       </C.FormGroup>
-
+      
+        
+        {/* SUBMIT POST */}
       <C.CardActions>
         <C.Button
           type="submit"
