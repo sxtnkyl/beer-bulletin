@@ -22,11 +22,11 @@ const handler = nextConnect()
             "offer_other",
           ],
           include: [
-            {
-              model: models.users,
-              as: "participant",
-              attributes: ["id", "username", "profile_pic"],
-            },
+          {
+            model: models.users,
+            as: "participant",
+            attributes: ["id", "username", "profile_pic"],
+          },
           ],
         },
       ],

@@ -5,6 +5,8 @@ import Cookies from "js-cookie";
 import * as C from "@material-ui/core";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+import ImageUpload from "../imageUpload";
+import { Image } from 'cloudinary-react';
 
 // DO WE NEED COOKIE STUFF AFTER FETCH IN THIS FORM LIKE WE HAVE IN LOGIN FORM ????????????????????????????????????????
 
@@ -68,6 +70,7 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
   const [stateFormError, setStateFormError] = useState([]);
   const [stateFormValid, setStateFormValid] = useState(false);
   const [stateFormMessage, setStateFormMessage] = useState({});
+  const [profileUrl, setProfileUrl] = useState();
 
   function onChangeHandler(e) {
     setStateFormValid(false);
@@ -96,6 +99,7 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
       data = { ...data, username: data.username.value || "" };
       data = { ...data, email: data.email.value || "" };
       data = { ...data, password: data.password.value || "" };
+      data = { ...data, profile_pic: profileUrl || "" };
 
       const isValid = validationHandler(stateFormData);
 
@@ -302,6 +306,11 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
         <C.FormHelperText>
           {stateFormError.password && stateFormError.password.hint}
         </C.FormHelperText>
+      </C.FormGroup>
+
+      {/* Image Upload */}
+      <C.FormGroup row>
+        <ImageUpload baseApiUrl = {baseApiUrl} setProfileUrl = {setProfileUrl}> {profileUrl} </ImageUpload>
       </C.FormGroup>
 
       <C.CardActions>
