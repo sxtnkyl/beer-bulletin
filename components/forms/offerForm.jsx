@@ -114,6 +114,7 @@ const OfferForm = ({ bulletin, baseApiUrl, user, userHost }) => {
       : x === y;
   }
 
+  /// Special Validations
   useEffect(() => {
     if (form.cash == 0 && form.beer == "" && form.other == "") {
       setNotValid(true);

@@ -85,7 +85,7 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
     validationHandler(stateFormData, e);
   }
 
-  async function metaSubmit(e) {
+  function metaSubmit(e) {
     e.preventDefault();
     uploadEl.current.handleUpload(onSubmitHandler);
   }
