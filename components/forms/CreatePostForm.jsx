@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import * as C from "@material-ui/core";
-import ImageUpload from "../imageUpload";
 
 const useStyles = C.makeStyles((theme) => ({
   formItem: {
@@ -31,9 +30,9 @@ const FORM_DATA_POST = {
   content: {
     value: "",
     label: "Content",
-    min: 1,
+    min: 0,
     max: 250,
-    required: true,
+    required: false,
     validator: null,
     // validator: {
     //   regEx: /^[a-z\sA-Z0-9\W\w]+$/,
@@ -112,131 +111,6 @@ export default function CreatePostForm(props) {
     const errors = [];
     let isValid = true;
 
-<<<<<<< HEAD
-  //     if (input) {
-  //       if (states[input].required) {
-  //         if (!states[input].value) {
-  //           errors[input] = {
-  //             hint: `${states[e.target.name].label} required`,
-  //             isInvalid: true,
-  //           };
-  //           isValid = false;
-  //         }
-  //       }
-  //       if (
-  //         states[input].value &&
-  //         states[input].min > states[input].value.length
-  //       ) {
-  //         errors[input] = {
-  //           hint: `Field ${states[input].label} min ${states[input].min}`,
-  //           isInvalid: true,
-  //         };
-  //         isValid = false;
-  //       }
-  //       if (
-  //         states[input].value &&
-  //         states[input].max < states[input].value.length
-  //       ) {
-  //         errors[input] = {
-  //           hint: `Field ${states[input].label} max ${states[input].max}`,
-  //           isInvalid: true,
-  //         };
-  //         isValid = false;
-  //       }
-  //       if (
-  //         states[input].validator !== null &&
-  //         typeof states[input].validator === "object"
-  //       ) {
-  //         if (
-  //           states[input].value &&
-  //           !states[input].validator.regEx.test(states[input].value)
-  //         ) {
-  //           errors[input] = {
-  //             hint: states[input].validator.error,
-  //             isInvalid: true,
-  //           };
-  //           isValid = false;
-  //         }
-  //       }
-  //     } else {
-  //       Object.entries(states).forEach((item) => {
-  //         item.forEach((field) => {
-  //           errors[item[0]] = "";
-  //           if (field.required) {
-  //             if (!field.value) {
-  //               errors[item[0]] = {
-  //                 hint: `${field.label} required`,
-  //                 isInvalid: true,
-  //               };
-  //               isValid = false;
-  //             }
-  //           }
-  //           if (field.value && field.min >= field.value.length) {
-  //             errors[item[0]] = {
-  //               hint: `Field ${field.label} min ${field.min}`,
-  //               isInvalid: true,
-  //             };
-  //             isValid = false;
-  //           }
-  //           if (field.value && field.max <= field.value.length) {
-  //             errors[item[0]] = {
-  //               hint: `Field ${field.label} max ${field.max}`,
-  //               isInvalid: true,
-  //             };
-  //             isValid = false;
-  //           }
-  //           if (field.validator !== null && typeof field.validator === "object") {
-  //             if (field.value && !field.validator.regEx.test(field.value)) {
-  //               errors[item[0]] = {
-  //                 hint: field.validator.error,
-  //                 isInvalid: true,
-  //               };
-  //               isValid = false;
-  //             }
-  //           }
-  //         });
-  //       });
-  //     }
-  //     if (isValid) {
-  //       setStateFormValid(isValid);
-  //     }
-  //     setStateFormError({
-  //       ...errors,
-  //     });
-  //     return isValid;
-  //   }
-
-  return (
-    <form className="form-post card" method="POST" onSubmit={onSubmitHandler}>
-      <C.FormGroup row>
-        <h2>Post New Trade</h2>
-        <hr />
-        <C.FormHelperText>
-          {stateFormMessage.status === "error" && (
-            <C.Typography variant="h4">{stateFormMessage.error}</C.Typography>
-          )}
-        </C.FormHelperText>
-      </C.FormGroup>
-      <C.FormGroup row>
-
-        {/* SEEKING OR SELLING */}
-        <C.FormControlLabel
-          control={
-            <C.Switch
-              color="secondary"
-              name="seeking"
-              checked={stateFormData.seeking.value}
-              onChange={() =>
-                setStateFormData({
-                  ...stateFormData,
-                  seeking: {
-                    ...stateFormData["seeking"],
-                    value: !stateFormData.seeking.value,
-                  },
-                })
-              }
-            />
-=======
     if (input) {
       if (states[input].required) {
         if (!states[input].value) {
@@ -317,7 +191,6 @@ export default function CreatePostForm(props) {
               };
               isValid = false;
             }
->>>>>>> d61c512b78fcf29bae8e200c1bc5f40f4b776224
           }
         });
       });
@@ -331,60 +204,6 @@ export default function CreatePostForm(props) {
     return isValid;
   }
 
-<<<<<<< HEAD
-      {/* POST TITLE */}
-      <C.FormGroup row>
-        <C.TextField
-          className={classes.formItem}
-          label="Title"
-          id="post-title"
-          name="title"
-          placeholder="Title"
-          onChange={onChangeHandler}
-          readOnly={loading && true}
-          value={stateFormData.title.value}
-        />
-        <C.FormHelperText>
-          {stateFormError.title && stateFormError.title.hint}
-        </C.FormHelperText>
-      </C.FormGroup>
-
-      {/* POST DESCRIPTION */}
-      <C.FormGroup row>
-        <C.TextareaAutosize
-          className={classes.formItem}
-          label="Content"
-          id="content"
-          name="content"
-          placeholder="Content"
-          onChange={onChangeHandler}
-          readOnly={loading && true}
-          value={stateFormData.content.value}
-        />
-        <C.FormHelperText>
-          {stateFormError.content && stateFormError.content.hint}
-        </C.FormHelperText>
-      </C.FormGroup>
-
-      {/* IMAGE UPLOAD */}
-      <C.FormGroup row>
-        <ImageUpload test={'Upload Image'}>
-        <C.Button
-          variant="contained"
-          component="label"
-          disabled={loading || !stateFormValid}
-        >
-          {!loading ? "Upload File" : "Loading..."}
-          <input type="file" hidden />
-        </C.Button>
-        </ImageUpload>
-      </C.FormGroup>
-      
-        
-        {/* SUBMIT POST */}
-      <C.CardActions>
-        <C.Button
-=======
   return (
     <>
       <form
@@ -468,7 +287,6 @@ export default function CreatePostForm(props) {
         <br />
         <C.CardActions>
           {/* <C.Button
->>>>>>> d61c512b78fcf29bae8e200c1bc5f40f4b776224
           type="submit"
           color="secondary"
           variant="contained"

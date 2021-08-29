@@ -6,7 +6,6 @@ import * as C from "@material-ui/core";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import ImageUpload from "../imageUpload";
-import { Image } from 'cloudinary-react';
 
 // DO WE NEED COOKIE STUFF AFTER FETCH IN THIS FORM LIKE WE HAVE IN LOGIN FORM ????????????????????????????????????????
 
@@ -310,7 +309,10 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
 
       {/* Image Upload */}
       <C.FormGroup row>
-        <ImageUpload baseApiUrl = {baseApiUrl} setProfileUrl = {setProfileUrl}> {profileUrl} </ImageUpload>
+        <ImageUpload baseApiUrl={baseApiUrl} setProfileUrl={setProfileUrl}>
+          {" "}
+          {profileUrl}{" "}
+        </ImageUpload>
       </C.FormGroup>
 
       <C.CardActions>
