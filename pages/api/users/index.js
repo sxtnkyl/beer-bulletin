@@ -44,7 +44,7 @@ const handler = nextConnect()
       // first_name,
       // last_name,
       // pref_dark,
-      // profile_pic,
+      profile_pic,
     } = body;
     const newUser = await models.users.create({
       username,
@@ -53,7 +53,7 @@ const handler = nextConnect()
       // first_name,
       // last_name,
       // pref_dark,
-      // profile_pic,
+      profile_pic,
     });
 
     if (!newUser) {

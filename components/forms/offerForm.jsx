@@ -4,6 +4,7 @@ import GlassCard from "../glassCard";
 import { faBeer } from "@fortawesome/free-solid-svg-icons";
 import ScalableIcon from "../ScalableIcon";
 import MuiAlert from "@material-ui/lab/Alert";
+import SliderBtn from "../buttons/SliderBtn";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -286,6 +287,7 @@ const OfferForm = ({ bulletin, baseApiUrl, user, userHost }) => {
         </C.CardContent>
       </GlassCard>
       {slider}
+      {/* <SliderBtn /> */}
       <C.Snackbar
         open={openToast}
         autoHideDuration={5000}
