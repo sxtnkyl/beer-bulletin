@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Router, { useRouter } from "next/router";
 import * as C from "@material-ui/core";
 import GlassCard from "../glassCard";
 import SettingsIcon from "@material-ui/icons/Settings";
+import ImageUpload from "../imageUpload";
 
 const useStyles = C.makeStyles(() => ({
   formItem: {
@@ -55,7 +56,7 @@ const FORM_DATA = {
   password: {
     value: "",
     label: "Password",
-    min: 6,
+    min: 8,
     max: 36,
     required: true,
     validator: {
@@ -85,6 +86,14 @@ const FORM_DATA = {
       error: "last name fill correctly",
     },
   },
+  profile_pic: {
+    value: "",
+    label: "Profile Pic",
+    // min: 10,
+    max: 36,
+    required: false,
+    validator: null,
+  },
 };
 
 const UserInfoForm = ({
@@ -99,40 +108,72 @@ const UserInfoForm = ({
   const { id, username, email, password, first_name, last_name, profile_pic } =
     user.data;
 
+  const uploadEl = useRef();
   const classes = useStyles();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const [stateFormData, setStateFormData] = useState(FORM_DATA);
-  const [stateFormError, setStateFormError] = useState([]);
+  const [stateFormError, setStateFormError] = useState({});
   const [stateFormValid, setStateFormValid] = useState(false);
   const [stateFormMessage, setStateFormMessage] = useState({});
+
+  const [selectedUpload, setSelectedUpload] = useState(false);
+
+  const oldData = {};
+  oldData.username = username;
+  oldData.email = email;
+  oldData.first_name = first_name;
+  oldData.last_name = last_name;
+  oldData.profile_pic = profile_pic;
 
   useEffect(() => {
     setStateFormData({
       ...stateFormData,
       username: {
-        ...stateFormData[username],
+        ...stateFormData.username,
+        validator: { ...stateFormData.username.validator },
         value: username,
       },
       email: {
-        ...stateFormData[email],
+        ...stateFormData.email,
+        validator: { ...stateFormData.email.validator },
+
         value: email,
       },
       password: {
-        ...stateFormData[password],
+        ...stateFormData.password,
+        validator: { ...stateFormData.password.validator },
+
         value: password,
       },
       first_name: {
-        ...stateFormData[first_name],
+        ...stateFormData.first_name,
+        validator: { ...stateFormData.first_name.validator },
+
         value: first_name,
       },
       last_name: {
-        ...stateFormData[last_name],
+        ...stateFormData.last_name,
+        validator: { ...stateFormData.last_name.validator },
+
         value: last_name,
+      },
+      profile_pic: {
+        value: profile_pic,
       },
     });
   }, []);
+
+  function deepEqual(x, y) {
+    const ok = Object.keys,
+      tx = typeof x,
+      ty = typeof y;
+    return x && y && tx === "object" && tx === ty
+      ? ok(x).length === ok(y).length &&
+          ok(x).every((key) => deepEqual(x[key], y[key]))
+      : x === y;
+  }
 
   function onChangeHandler(e) {
     setStateFormValid(false);
@@ -149,51 +190,69 @@ const UserInfoForm = ({
     validationHandler(stateFormData, e);
   }
 
-  async function onSubmitHandler(e) {
+  useEffect(() => {
+    // does not allow user to submit same info that is already in DB
+    // is there a better way to get all the stateForm data excluding the password??????????????????????????????????????
+    let currentData = {};
+    currentData.username = stateFormData.username.value;
+    currentData.email = stateFormData.email.value;
+    currentData.first_name = stateFormData.first_name.value;
+    currentData.last_name = stateFormData.last_name.value;
+    currentData.profile_pic = stateFormData.profile_pic.value;
+    if (deepEqual(oldData, currentData) && !selectedUpload) {
+      setStateFormValid(false);
+    } else {
+      setStateFormValid(true);
+    }
+  }, [stateFormData]);
+
+  function metaSubmit(e) {
     e.preventDefault();
+    uploadEl.current.handleUpload(onSubmitHandler);
+  }
+
+  async function onSubmitHandler(profPicUrl) {
+    // e.preventDefault();
 
     let data = { ...stateFormData };
 
+    data = { ...data, username: data.username.value || "" };
+    data = { ...data, email: data.email.value || "" };
+    data = { ...data, password: data.password.value || "" };
+    data = { ...data, first_name: data.first_name.value || "" };
+    data = { ...data, last_name: data.last_name.value || "" };
+    data = { ...data, profile_pic: profPicUrl || "" };
+
     const isValid = validationHandler(stateFormData);
-
     if (isValid) {
-      data = { ...data, username: data.username.value || "" };
-      data = { ...data, email: data.email.value || "" };
-      data = { ...data, password: data.password.value || "" };
-      data = { ...data, first_name: data.first_name.value || "" };
-      data = { ...data, last_name: data.last_name.value || "" };
+      setLoading(!loading);
 
-      const isValid = validationHandler(stateFormData);
-      console.log("TEST", data, id, baseApiUrl);
-      if (isValid) {
-        setLoading(!loading);
-        const userApi = await fetch(`${baseApiUrl}/users/${id}`, {
-          method: "PUT",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }).catch((error) => {
-          console.error("Error:", error);
-        });
-        let result = await userApi.json();
-        if (result.status === "success") {
-          //reset edit state and form
-          setStateFormData(FORM_DATA);
-          toggleEdit();
-          onRefresh();
-        } else {
-          setStateFormMessage(result);
-        }
-        setLoading(false);
+      const userApi = await fetch(`${baseApiUrl}/users/${id}`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }).catch((error) => {
+        console.error("Error:", error);
+      });
+      let result = await userApi.json();
+      if (result.status === "success") {
+        //reset edit state and form
+        setStateFormData(FORM_DATA);
+        toggleEdit();
+        onRefresh();
+      } else {
+        setStateFormMessage(result);
       }
+      setLoading(false);
     }
   }
 
   function validationHandler(states, e) {
     const input = (e && e.target.name) || "";
-    const errors = [];
+    const errors = {};
     let isValid = true;
 
     if (input) {
@@ -292,11 +351,7 @@ const UserInfoForm = ({
   return (
     <GlassCard>
       <C.CardContent>
-        <form
-          onSubmit={onSubmitHandler}
-          className="form-register card"
-          method="PUT"
-        >
+        <form onSubmit={metaSubmit} className="form-register card" method="PUT">
           <C.FormGroup row>
             <C.FormHelperText>
               {stateFormMessage.status === "error" && (
@@ -315,8 +370,8 @@ const UserInfoForm = ({
               name="username"
               placeholder={username}
               readOnly={loading && true}
-              defaultValue={username}
-              // value={stateFormData.username.value}
+              // defaultValue={username}
+              value={stateFormData.username.value}
               variant="outlined"
               InputProps={{
                 endAdornment: (
@@ -339,7 +394,7 @@ const UserInfoForm = ({
               name="email"
               placeholder={email}
               readOnly={loading && true}
-              defaultValue={email}
+              value={stateFormData.email.value}
               variant="outlined"
               InputProps={{
                 endAdornment: (
@@ -363,7 +418,7 @@ const UserInfoForm = ({
               name="password"
               placeholder="Password"
               readOnly={loading && true}
-              defaultValue={password}
+              value={stateFormData.password.value}
               variant="outlined"
               InputProps={{
                 endAdornment: (
@@ -386,7 +441,7 @@ const UserInfoForm = ({
               name="first_name"
               placeholder={first_name}
               readOnly={loading && true}
-              defaultValue={first_name}
+              value={stateFormData.first_name.value}
               variant="outlined"
               InputProps={{
                 endAdornment: (
@@ -409,7 +464,7 @@ const UserInfoForm = ({
               name="last_name"
               placeholder={last_name}
               readOnly={loading && true}
-              defaultValue={last_name}
+              value={stateFormData.last_name.value}
               variant="outlined"
               InputProps={{
                 endAdornment: (
@@ -425,15 +480,30 @@ const UserInfoForm = ({
           </C.FormGroup>
 
           <C.CardActions>
-            <C.Button
-              type="submit"
-              color="secondary"
-              variant="contained"
-              style={{ width: "auto" }}
-              disabled={!stateFormValid || loading}
+            <C.ButtonGroup
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
             >
-              Update
-            </C.Button>
+              <ImageUpload
+                ref={uploadEl}
+                baseApiUrl={baseApiUrl}
+                oldData={oldData.profile_pic}
+                setSelectedUpload={setSelectedUpload}
+              />
+
+              <C.Button
+                type="submit"
+                color="secondary"
+                variant="contained"
+                style={{ width: "auto" }}
+                disabled={loading || !stateFormValid}
+              >
+                Update
+              </C.Button>
+            </C.ButtonGroup>
           </C.CardActions>
         </form>
       </C.CardContent>

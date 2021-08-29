@@ -52,7 +52,7 @@ const LoginForm = ({ origin, referer, baseApiUrl }) => {
   };
 
   const [stateFormData, setStateFormData] = useState(FORM_DATA_LOGIN);
-  const [stateFormError, setStateFormError] = useState([]);
+  const [stateFormError, setStateFormError] = useState({});
   const [stateFormMessage, setStateFormMessage] = useState({});
   //extra handler for notValid state
   const [stateFormValid, setStateFormValid] = useState(false);
@@ -71,6 +71,7 @@ const LoginForm = ({ origin, referer, baseApiUrl }) => {
 
     // validate onChange
     validationHandler(stateFormData, e);
+    console.log(stateFormError);
   }
 
   async function onSubmitHandler(e) {
@@ -108,7 +109,7 @@ const LoginForm = ({ origin, referer, baseApiUrl }) => {
 
   function validationHandler(states, e) {
     const input = (e && e.target.name) || "";
-    const errors = [];
+    const errors = {};
     let isValid = true;
 
     if (input) {
