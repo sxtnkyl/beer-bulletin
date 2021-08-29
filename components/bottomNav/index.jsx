@@ -54,7 +54,7 @@ const BottomNav = ({ scroll }) => {
         background: scroll ? "transparent" : theme.palette.primary.main,
       }}
     >
-      {/* {session && <CreatePostButton />} */}
+      {/* <CreatePostButton /> */}
       {tabButtons}
     </C.BottomNavigation>
     // </C.Paper>

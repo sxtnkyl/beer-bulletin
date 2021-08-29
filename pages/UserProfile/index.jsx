@@ -11,6 +11,8 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import UserProfileCard from "../../components/UserProfileCard";
 import Cookies from "js-cookie";
 import Router, { useRouter } from "next/router";
+import { fetchSingleUser } from "../../util/fetchers";
+import { useGetSingleUser } from "../../util/hooks/useSWRs";
 
 const useStyles = C.makeStyles(() => ({
   header: {
@@ -24,6 +26,14 @@ const UserProfile = (props) => {
   const { token, referer, baseApiUrl, user } = props;
   const classes = useStyles();
   const router = useRouter();
+
+  const { userData } = useGetSingleUser(
+    baseApiUrl,
+    user.data.id,
+    token,
+    fetchSingleUser,
+    { initialData: user }
+  );
 
   const [edit, setEdit] = useState(false);
   const toggleEdit = () => {
@@ -40,8 +50,8 @@ const UserProfile = (props) => {
     Router.push({ pathname: "/", query: {} }, "/");
   };
 
-  const welcomeHeader = user.data.username
-    ? `Welcome, ${user.data.username}!`
+  const welcomeHeader = userData.data.username
+    ? `Welcome, ${userData.data.username}!`
     : "User Settings";
 
   return (
@@ -60,7 +70,7 @@ const UserProfile = (props) => {
           onRefresh={onRefresh}
         />
       ) : (
-        <UserProfileCard {...props} />
+        <UserProfileCard {...userData} />
       )}
       <C.Button
         color="secondary"
@@ -99,13 +109,7 @@ export async function getServerSideProps(context) {
 
   //get user id from token- payload: id(userId)
   //api/users/[slug]
-  const api = await fetch(`${baseApiUrl}/users/${reqToken.id}`, {
-    headers: {
-      authorization: token || "",
-    },
-  });
-
-  const user = await api.json();
+  const user = await fetchSingleUser(baseApiUrl, reqToken.id, token);
 
   return {
     props: {

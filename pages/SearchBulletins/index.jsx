@@ -10,18 +10,14 @@ import { useBulletins } from "../../util/hooks/useSWRs";
 import { fetchBulletins } from "../../util/fetchers";
 
 const SearchBulletins = ({ trades, user, baseApiUrl }) => {
-  const { status, data, total } = trades;
   const { bulletins, isLoading, isError } = useBulletins(
     baseApiUrl,
     fetchBulletins,
-    { initialData: trades, refreshInterval: 3000 }
+    { initialData: trades }
   );
   const makeTradesList = bulletins.data.map((trade, i) => (
     <BulletinCard key={i} loggedUser={user} {...trade} />
   ));
-  // const makeTradesList = data.map((trade, i) => (
-  //   <BulletinCard key={i} loggedUser={user} {...trade} />
-  // ));
 
   async function loadMoreClick(e) {
     await Router.push({
@@ -34,12 +30,13 @@ const SearchBulletins = ({ trades, user, baseApiUrl }) => {
 
   return (
     <C.Container>
-      {/* {status == "success" ? makeTradesList : <LoadingErrorMessage />} */}
-      {isLoading
-        ? "Loading bulletins..."
-        : isError
-        ? "OOPS, there was an error fetching new data..."
-        : makeTradesList}
+      {isLoading ? (
+        "Put Mui Skeleton here..."
+      ) : isError ? (
+        <LoadingErrorMessage err={isError} />
+      ) : (
+        makeTradesList
+      )}
     </C.Container>
   );
 };

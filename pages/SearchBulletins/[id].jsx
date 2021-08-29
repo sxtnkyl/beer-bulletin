@@ -3,15 +3,32 @@ import * as C from "@material-ui/core";
 import OfferForm from "../../components/forms/OfferForm";
 import SingleBulletin from "../../components/search-bulletins/singleBulletin";
 import { absoluteUrl, getAppCookies } from "../../middleware/utils";
+import { fetchSingleBulletin, fetchSingleUser } from "../../util/fetchers";
+import { useBulletinDetails, useGetSingleUser } from "../../util/hooks/useSWRs";
 
 const BulletinDetails = (props) => {
-  console.log("UH", props.userHost);
+  const { userHost, user, baseApiUrl, query, token, bulletin } = props;
+
+  const { bulletinData, isLoading, isError } = useBulletinDetails(
+    baseApiUrl,
+    query.id,
+    token,
+    fetchSingleBulletin,
+    { initialData: bulletin }
+  );
+
+  const { userData } = useGetSingleUser(
+    baseApiUrl,
+    bulletin.data.user_id,
+    token,
+    fetchSingleUser,
+    { initialData: userHost }
+  );
+
   return (
     <C.Container>
-      <SingleBulletin {...props} />
-      {props.userHost.data.id === props.user.id ? null : (
-        <OfferForm {...props} />
-      )}
+      <SingleBulletin bulletin={bulletinData} userHost={userData} />
+      {userHost.data.id === user.id ? null : <OfferForm {...props} />}
     </C.Container>
   );
 };
@@ -35,25 +52,17 @@ export async function getServerSideProps(context) {
     };
   }
 
-  let bulletin = {};
-  let userHost = {};
+  const bulletin = await fetchSingleBulletin(baseApiUrl, query.id, token);
 
-  const tradeData = await fetch(`${baseApiUrl}/trades/${query.id}`, {
-    headers: {
-      authorization: token || "",
-    },
-  });
-  bulletin = await tradeData.json();
-
-  const userData = await fetch(`${baseApiUrl}/users/${bulletin.data.user_id}`, {
-    headers: {
-      authorization: token || "",
-    },
-  });
-  userHost = await userData.json();
+  const userHost = await fetchSingleUser(
+    baseApiUrl,
+    bulletin.data.user_id,
+    token
+  );
 
   return {
     props: {
+      query,
       origin,
       referer,
       token,

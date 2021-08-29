@@ -29,7 +29,6 @@ const useStyles = C.makeStyles((theme) => ({
 }));
 
 const BulletinCard = (props) => {
-  console.log(props);
   const {
     toggleOffers,
     id,

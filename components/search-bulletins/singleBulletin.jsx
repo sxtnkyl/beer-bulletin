@@ -39,7 +39,6 @@ const SingleBulletin = ({ bulletin, userHost }) => {
         src={profile_pic}
         style={{ height: "80px", width: "80px", alignSelf: "flex-end" }}
       />
-      {/* <C.Divider variant="middle" style={{ marginBottom: "15px" }} /> */}
       <C.Typography variant="h6">{username}</C.Typography>
       <C.Typography variant="body2">
         Number of completed trades: {num_trades}

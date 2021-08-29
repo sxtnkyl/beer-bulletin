@@ -20,9 +20,9 @@ const useStyles = C.makeStyles((theme) => ({
   },
 }));
 
-const UserProfileCard = ({ user }) => {
+const UserProfileCard = ({ data }) => {
   const { username, email, first_name, last_name, profile_pic, num_trades } =
-    user.data;
+    data;
   const classes = useStyles();
 
   const userBlock = (
@@ -30,7 +30,12 @@ const UserProfileCard = ({ user }) => {
       <C.Avatar
         alt={username}
         src={profile_pic}
-        style={{ height: "80px", width: "80px", alignSelf: "flex-start", b: '30px'}}
+        style={{
+          height: "80px",
+          width: "80px",
+          alignSelf: "flex-start",
+          b: "30px",
+        }}
       />
       <C.Typography variant="h6"></C.Typography>
       <C.Typography variant="body2">
@@ -42,7 +47,7 @@ const UserProfileCard = ({ user }) => {
   const infoBlock = (
     <C.CardContent className={classes.content}>
       <C.Typography variant="h6">
-       Name: {first_name} {last_name}
+        Name: {first_name} {last_name}
       </C.Typography>
       <C.Typography variant="body2">{email}</C.Typography>
     </C.CardContent>

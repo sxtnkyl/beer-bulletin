@@ -53,7 +53,7 @@ const BulletinCard = (props) => {
           color="secondary"
           variant="contained"
           startIcon={open && <ScalableIcon icon={faBeer} />}
-          disabled={!open || user_id === loggedUser.id}
+          disabled={!open || !loggedUser || user_id === loggedUser.id}
           style={{ width: "auto" }}
         >
           {open ? "Make Offer" : "Deal Pending"}
