@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as C from "@material-ui/core";
+import ImageUpload from "../imageUpload";
 
 const useStyles = C.makeStyles((theme) => ({
   formItem: {
@@ -46,6 +47,7 @@ const FORM_DATA_POST = {
 };
 
 export default function CreatePostForm(props) {
+  const uploadEl = useRef();
   const classes = useStyles();
   // lifted to bottomNav
   // const [loading, setLoading] = useState(false);
@@ -73,17 +75,22 @@ export default function CreatePostForm(props) {
     validationHandler(stateFormData, e);
   }
 
-  async function onSubmitHandler(e) {
+  function metaSubmit(e) {
     e.preventDefault();
+    uploadEl.current.handleUpload(onSubmitHandler);
+  }
+
+  async function onSubmitHandler(tradePicUrl) {
+    // e.preventDefault();
 
     let data = { ...stateFormData };
-    console.log("state data", data);
 
     data = { ...data, title: data.title.value || "" };
     data = { ...data, content: data.content.value || "" };
     data = { ...data, seeking: data.seeking.value };
     data = { ...data, open: true };
     data = { ...data, user_id: props.user.id || props.user.data.id };
+    data = { ...data, picture: tradePicUrl || "" };
 
     const isValid = validationHandler(stateFormData);
 
@@ -210,7 +217,7 @@ export default function CreatePostForm(props) {
         id="create-post-form"
         className="form-post card"
         method="POST"
-        onSubmit={onSubmitHandler}
+        onSubmit={metaSubmit}
       >
         <C.FormGroup row>
           <C.FormHelperText>
@@ -274,16 +281,9 @@ export default function CreatePostForm(props) {
           </C.FormHelperText>
         </C.FormGroup>
         <br />
-        <C.FormGroup row>
-          <C.Button
-            variant="contained"
-            component="label"
-            disabled={loading || !stateFormValid}
-          >
-            {!loading ? "Upload File" : "Loading..."}
-            <input type="file" hidden />
-          </C.Button>
-        </C.FormGroup>
+        <C.ButtonGroup>
+          <ImageUpload ref={uploadEl} baseApiUrl={props.baseApiUrl} />
+        </C.ButtonGroup>
         <br />
         <C.CardActions>
           {/* <C.Button

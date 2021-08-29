@@ -5,6 +5,7 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import GlassCard from "../glassCard";
 import ScalableIcon from "../ScalableIcon";
 import theme from "../../styles/theme";
+import Image from "next/image";
 
 const useStyles = C.makeStyles((theme) => ({
   stretch: {
@@ -29,7 +30,6 @@ const useStyles = C.makeStyles((theme) => ({
 }));
 
 const BulletinCard = (props) => {
-  console.log(props);
   const {
     toggleOffers,
     id,
@@ -42,6 +42,7 @@ const BulletinCard = (props) => {
     open,
     baseApiUrl,
     token,
+    picture,
     user,
   } = props;
   const classes = useStyles();

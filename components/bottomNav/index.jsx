@@ -133,7 +133,7 @@ const BottomNav = ({ scroll, user, baseApiUrl }) => {
           />
         </C.DialogContent>
         <C.DialogActions>
-          <C.Button onClick={handleClose} color="white">
+          <C.Button onClick={handleClose} color="default">
             Cancel
           </C.Button>
           <C.Button
@@ -150,7 +150,7 @@ const BottomNav = ({ scroll, user, baseApiUrl }) => {
       </C.Dialog>
       <C.Snackbar
         open={openToast}
-        autoHideDuration={5000}
+        autoHideDuration={3000}
         onClose={handleCloseToast}
       >
         <Alert onClose={handleCloseToast} severity="success">

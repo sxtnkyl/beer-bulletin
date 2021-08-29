@@ -36,37 +36,45 @@ const handler = nextConnect()
     });
   })
   .post(async (req, res) => {
-    const { body } = req;
-    const {
-      username,
-      email,
-      password,
-      // first_name,
-      // last_name,
-      // pref_dark,
-      profile_pic,
-    } = body;
-    const newUser = await models.users.create({
-      username,
-      email,
-      password,
-      // first_name,
-      // last_name,
-      // pref_dark,
-      profile_pic,
-    });
+    try {
+      const { body } = req;
+      const {
+        username,
+        email,
+        password,
+        // first_name,
+        // last_name,
+        // pref_dark,
+        profile_pic,
+      } = body;
+      const newUser = await models.users.create({
+        username,
+        email,
+        password,
+        // first_name,
+        // last_name,
+        // pref_dark,
+        profile_pic,
+      });
 
-    if (!newUser) {
-      return res.status(500).json({
+      if (!newUser) {
+        return res.status(500).json({
+          status: "failed",
+          message: `Database error, please try again later.`,
+        });
+      }
+      return res.status(200).json({
+        status: "success",
+        message: `New User created with ID = ${newUser.dataValues.id}`,
+        data: newUser,
+      });
+    } catch (error) {
+      console.log(error.errors[0].message);
+      return res.status(400).send({
         status: "failed",
-        message: `Database error, please try again later.`,
+        message: error.errors[0].message,
       });
     }
-    return res.status(200).json({
-      status: "success",
-      message: `New User created with ID = ${newUser.dataValues.id}`,
-      data: newUser,
-    });
   });
 
 export default handler;
