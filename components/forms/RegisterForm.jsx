@@ -6,9 +6,6 @@ import * as C from "@material-ui/core";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import ImageUpload from "../imageUpload";
-import util from "util";
-
-// DO WE NEED COOKIE STUFF AFTER FETCH IN THIS FORM LIKE WE HAVE IN LOGIN FORM ????????????????????????????????????????
 
 const useStyles = C.makeStyles(() => ({
   formItem: {
