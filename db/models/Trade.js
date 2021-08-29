@@ -22,21 +22,16 @@ Trade.init(
       //   // maybe no bad words? lol
       // },
     },
-    // SHOULD THIS HAVE A LENGTH LIMIT??
     content: {
       type: DataTypes.TEXT,
-      // THISS MEANS IT HAS TO BE AT LEAST 250, find new way...
-      // validate: {
-      //   len: [250],
-      // },
+      allowNull: false,
     },
-    // how is this going to look/be formatted?
-    // current_offers: {
-    //   type: DataTypes.STRING,
-    // },
     seeking: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
+    },
+    picture: {
+      type: DataTypes.TEXT,
     },
     open: {
       type: DataTypes.BOOLEAN,

@@ -1,9 +1,11 @@
+/* eslint-disable react/jsx-key */
 import { useState, useEffect } from "react";
 import * as C from "@material-ui/core";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import ChatIcon from "@material-ui/icons/Chat";
 import PageviewIcon from "@material-ui/icons/Pageview";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Link from "./BotNavButton";
@@ -101,48 +103,51 @@ const BottomNav = ({ scroll, user, baseApiUrl }) => {
           background: scroll ? "transparent" : theme.palette.primary.main,
         }}
       >
-        <CreatePostButton onClick={handleOpen} />
-        {tabButtons}
-        <C.Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="form-dialog-title"
-        >
-          <C.DialogTitle id="form-dialog-title">Post New Trade</C.DialogTitle>
-          <C.DialogContent>
-            <C.DialogContentText>
-              Select Whether you are Offering or Seeking, then fill out the form
-              and post your trade!
-            </C.DialogContentText>
-            {/* POST FORM COMPONENT PASSED LIFTED STATES */}
-            <CreatePostForm
-              handleClose={handleClose}
-              user={user}
-              baseApiUrl={baseApiUrl}
-              loading={loading}
-              setLoading={setLoading}
-              stateFormValid={stateFormValid}
-              setStateFormValid={setStateFormValid}
-              setOpenToast={setOpenToast}
-            />
-          </C.DialogContent>
-          <C.DialogActions>
-            <C.Button onClick={handleClose} color="white">
-              Cancel
-            </C.Button>
-            <C.Button
-              type="submit"
-              form="create-post-form"
-              color="secondary"
-              variant="contained"
-              style={{ width: "auto" }}
-              disabled={loading || !stateFormValid}
-            >
-              {!loading ? "Post" : "Loading..."}
-            </C.Button>
-          </C.DialogActions>
-        </C.Dialog>
+        {user && <CreatePostButton onClick={handleOpen} />}
+
+        {tabButtons.slice(0, 2)}
+        {user && <C.BottomNavigationAction />}
+        {tabButtons.slice(2, 5)}
       </C.BottomNavigation>
+      <C.Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <C.DialogTitle id="form-dialog-title">Post New Trade</C.DialogTitle>
+        <C.DialogContent>
+          <C.DialogContentText>
+            Select Whether you are Offering or Seeking, then fill out the form
+            and post your trade!
+          </C.DialogContentText>
+          {/* POST FORM COMPONENT PASSED LIFTED STATES */}
+          <CreatePostForm
+            handleClose={handleClose}
+            user={user}
+            baseApiUrl={baseApiUrl}
+            loading={loading}
+            setLoading={setLoading}
+            stateFormValid={stateFormValid}
+            setStateFormValid={setStateFormValid}
+            setOpenToast={setOpenToast}
+          />
+        </C.DialogContent>
+        <C.DialogActions>
+          <C.Button onClick={handleClose} color="white">
+            Cancel
+          </C.Button>
+          <C.Button
+            type="submit"
+            form="create-post-form"
+            color="secondary"
+            variant="contained"
+            style={{ width: "auto" }}
+            disabled={loading || !stateFormValid}
+          >
+            {!loading ? "Post" : "Loading..."}
+          </C.Button>
+        </C.DialogActions>
+      </C.Dialog>
       <C.Snackbar
         open={openToast}
         autoHideDuration={5000}

@@ -1,5 +1,5 @@
 import * as C from "@material-ui/core";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
+import PostAddOutlinedIcon from "@material-ui/icons/PostAddOutlined";
 import theme from "../../styles/theme";
 
 //TODO: add logic to render if session
@@ -7,8 +7,12 @@ import theme from "../../styles/theme";
 const useStyles = C.makeStyles((theme) => ({
   createPostBtn: {
     position: "absolute",
-    top: "-110%",
-    right: "5%",
+    bottom: "10%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    left: 0,
+    right: 0,
+    zIndex: 3,
   },
 }));
 const CreatePostButton = (props) => {
@@ -16,11 +20,11 @@ const CreatePostButton = (props) => {
   return (
     <C.Fab
       className={classes.createPostBtn}
-      size="medium"
+      size="large"
       aria-label="create post"
       onClick={props.onClick}
     >
-      <AddCircleIcon />
+      <PostAddOutlinedIcon />
     </C.Fab>
   );
 };

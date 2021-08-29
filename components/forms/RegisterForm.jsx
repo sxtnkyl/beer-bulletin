@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Router, { useRouter } from "next/router";
 import Cookies from "js-cookie";
 
@@ -6,7 +6,7 @@ import * as C from "@material-ui/core";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import ImageUpload from "../imageUpload";
-import { Image } from 'cloudinary-react';
+import util from "util";
 
 // DO WE NEED COOKIE STUFF AFTER FETCH IN THIS FORM LIKE WE HAVE IN LOGIN FORM ????????????????????????????????????????
 
@@ -58,6 +58,7 @@ const FORM_DATA_REGISTER = {
 };
 
 const RegisterForm = ({ origin, referer, baseApiUrl }) => {
+  const uploadEl = useRef();
   const classes = useStyles();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -70,7 +71,6 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
   const [stateFormError, setStateFormError] = useState([]);
   const [stateFormValid, setStateFormValid] = useState(false);
   const [stateFormMessage, setStateFormMessage] = useState({});
-  const [profileUrl, setProfileUrl] = useState();
 
   function onChangeHandler(e) {
     setStateFormValid(false);
@@ -88,8 +88,13 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
     validationHandler(stateFormData, e);
   }
 
-  async function onSubmitHandler(e) {
+  async function metaSubmit(e) {
     e.preventDefault();
+    uploadEl.current.handleUpload(onSubmitHandler);
+  }
+
+  async function onSubmitHandler(profPicUrl) {
+    // e.preventDefault();
 
     let data = { ...stateFormData };
 
@@ -99,7 +104,7 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
       data = { ...data, username: data.username.value || "" };
       data = { ...data, email: data.email.value || "" };
       data = { ...data, password: data.password.value || "" };
-      data = { ...data, profile_pic: profileUrl || "" };
+      data = { ...data, profile_pic: profPicUrl || "" };
 
       const isValid = validationHandler(stateFormData);
 
@@ -139,6 +144,8 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
           setStateFormMessage(result);
         }
         setLoading(false);
+      } else {
+        console.log("BROKE");
       }
     }
   }
@@ -242,11 +249,7 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
   }
 
   return (
-    <form
-      onSubmit={onSubmitHandler}
-      className="form-register card"
-      method="POST"
-    >
+    <form onSubmit={metaSubmit} className="form-register card" method="POST">
       <C.FormGroup row>
         <C.FormHelperText>
           {stateFormMessage.status === "error" && (
@@ -310,7 +313,7 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
 
       {/* Image Upload */}
       <C.FormGroup row>
-        <ImageUpload baseApiUrl = {baseApiUrl} setProfileUrl = {setProfileUrl}> {profileUrl} </ImageUpload>
+        <ImageUpload ref={uploadEl} baseApiUrl={baseApiUrl} />
       </C.FormGroup>
 
       <C.CardActions>
