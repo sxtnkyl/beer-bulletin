@@ -17,9 +17,19 @@ const ImageUpload = forwardRef(
 
     const handleFileInputChange = (e) => {
       const file = e.target.files[0];
+      previewImg(file);
       setSelectedFile(file);
       setFileInput(e.target.value);
     };
+
+    const previewImg = (file) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onloadend = () => {
+            setImgPreview(reader.result);
+        }
+    }; 
 
     //Loads into FileReader and sends to uploadFile
     useImperativeHandle(ref, () => ({
@@ -28,8 +38,10 @@ const ImageUpload = forwardRef(
         //If no file is selected
         if (!selectedFile) return;
 
+        ///Compresses image to 64Encoded for space
         const reader = new FileReader();
         reader.readAsDataURL(selectedFile);
+
         reader.onloadend = () => {
           fetch(`${baseApiUrl}/images/img_upload/`, {
             method: "POST",
@@ -41,6 +53,9 @@ const ImageUpload = forwardRef(
             })
             .then((data) => {
               callbackFn(data.secure_url);
+              setFileInput('');
+              setSelectedFile('');
+              setImgPreview('');
             });
           //  uploadFile(reader.result);
         };
@@ -50,23 +65,8 @@ const ImageUpload = forwardRef(
       },
     }));
 
-    // const uploadFile = async (base64Img) => {
-    //   return fetch(`${baseApiUrl}/images/img_upload/`, {
-    //     method: "POST",
-    //     body: JSON.stringify({ data: base64Img }),
-    //     headers: { "Content-Type": "application/json" },
-    //   })
-    //     .then((res) => {
-    //       return res.json();
-    //     })
-    //     .then((data) => {
-    //       console.log("HERE", data.secure_url);
-    //       setProfileUrl(data.secure_url);
-    //       setFileInput("");
-    //     });
-    // };
-
     return (
+      <>
       <C.Button variant="contained" component="label">
         Upload File
         <input
@@ -74,9 +74,19 @@ const ImageUpload = forwardRef(
           onChange={handleFileInputChange}
           type="file"
           accept=".jpg, .png, .jpeg"
-          // hidden
+          hidden
         ></input>
       </C.Button>
+      
+      {imgPreview&& (
+        <img
+        
+      src={imgPreview}
+      alt="chosen"
+      style={{ height: "100px", width: "100px", alignSelf: "flex-start", m: '30px'}}
+      />
+      )}
+      </>
     );
   }
 );
