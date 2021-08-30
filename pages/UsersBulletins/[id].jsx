@@ -1,5 +1,5 @@
 import * as C from "@material-ui/core";
-import SingleBulletin from "../../components/users-bulletins/single-bulletin";
+import SingleBulletin from "../../components/users-bulletins/SingleBulletin";
 import { absoluteUrl, getAppCookies } from "../../middleware/utils";
 
 const SingleUsersBulletins = (props) => {
