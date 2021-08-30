@@ -6,7 +6,7 @@ export const fetchBulletinsWithOffers = async (baseApiUrl) => {
 };
 
 export const fetchSingleBulletin = async (baseApiUrl, id, token) => {
-  let api = await fetch(`${baseApiUrl}/trades/${id}`, {
+  let api = await fetch(`${baseApiUrl}/trades/with-offers/${id}`, {
     headers: {
       authorization: token || "",
     },
