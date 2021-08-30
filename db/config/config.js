@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 module.exports = {
   development: {
     username: process.env.DB_USER,
@@ -6,7 +6,7 @@ module.exports = {
     port: process.env.DB_PORT,
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
-    dialect: 'mysql',
+    dialect: "mysql",
     pool: {
       max: 5,
       min: 0,
@@ -20,7 +20,7 @@ module.exports = {
     port: process.env.DB_PORT,
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
-    dialect: 'mysql',
+    dialect: "mysql",
     logging: false,
     pool: {
       max: 5,
@@ -35,6 +35,12 @@ module.exports = {
     database: process.env.DB_NAME,
     port: process.env.DB_PORT,
     host: process.env.DB_HOST,
-    dialect: 'mysql',
+    dialect: "mysql",
+    pool: {
+      max: 5,
+      min: 0,
+      acuire: 30000,
+      idle: 10000,
+    },
   },
 };
