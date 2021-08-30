@@ -1,7 +1,9 @@
 import nextConnect from "next-connect";
+console.log("connect");
 const models = require("../../../../db/models/index");
+console.log("models");
 import middleware from "../../../../middleware/auth";
-
+console.log("middle");
 const handler = nextConnect()
   .use(middleware)
   .get(async (req, res) => {
