@@ -6,6 +6,11 @@ import * as C from "@material-ui/core";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import ImageUpload from "../imageUpload";
+import MuiAlert from "@material-ui/lab/Alert";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = C.makeStyles(() => ({
   formItem: {
@@ -56,6 +61,8 @@ const FORM_DATA_REGISTER = {
 
 const RegisterForm = ({ origin, referer, baseApiUrl }) => {
   const uploadEl = useRef();
+  const [openToast, setOpenToast] = useState(false);
+  const [toastStatus, setToastStatus] = useState("loading");
   const classes = useStyles();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -85,8 +92,19 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
     validationHandler(stateFormData, e);
   }
 
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenToast(false);
+  };
+
   function metaSubmit(e) {
     e.preventDefault();
+    setLoading(true);
+    setToastStatus("loading");
+    setOpenToast(true);
+
     uploadEl.current.handleUpload(onSubmitHandler);
   }
 
@@ -106,7 +124,7 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
       const isValid = validationHandler(stateFormData);
 
       if (isValid) {
-        setLoading(!loading);
+        // setLoading(!loading);
         const registerApi = await fetch(`${baseApiUrl}/users`, {
           method: "POST",
           headers: {
@@ -128,20 +146,24 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
             },
             body: JSON.stringify(data),
           }).catch((error) => {
+            setToastStatus("error");
             console.error("Error:", error);
           });
           let result = await loginApi.json();
           if (result.success && result.token) {
             Cookies.set("token", result.token);
-            Router.push("/SearchBulletins");
+            setToastStatus("success");
+            setTimeout(() => Router.push("/SearchBulletins"), 750);
           } else {
             setStateFormMessage(result);
           }
         } else {
-          setStateFormMessage(result);
+          setToastStatus("error");
+          setStateFormMessage({ status: "error", error: result.message });
         }
-        setLoading(false);
+        setTimeout(() => setLoading(false), 850);
       } else {
+        setToastStatus("error");
         console.log("BROKE");
       }
     }
@@ -246,85 +268,109 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
   }
 
   return (
-    <form onSubmit={metaSubmit} className="form-register card" method="POST">
-      <C.FormGroup row>
-        <C.FormHelperText>
-          {stateFormMessage.status === "error" && (
-            <C.Typography variant="h4">{stateFormMessage.error}</C.Typography>
-          )}
-        </C.FormHelperText>
-      </C.FormGroup>
-      <C.FormGroup row>
-        <C.TextField
-          onChange={onChangeHandler}
-          className={classes.formItem}
-          label="Username"
-          id="username"
-          name="username"
-          placeholder="Username"
-          readOnly={loading && true}
-          value={stateFormData.username.value}
-        />
-        <C.FormHelperText>
-          {stateFormError.username && stateFormError.username.hint}
-        </C.FormHelperText>
-      </C.FormGroup>
-      <C.FormGroup row>
-        <C.TextField
-          onChange={onChangeHandler}
-          className={classes.formItem}
-          label="Email"
-          id="email"
-          name="email"
-          placeholder="Email"
-          readOnly={loading && true}
-          defaultValue={stateFormData.email.value}
-        />
-        <C.FormHelperText>
-          {stateFormError.email && stateFormError.email.hint}
-        </C.FormHelperText>
-      </C.FormGroup>
-      <C.FormGroup row>
-        <C.TextField
-          onChange={onChangeHandler}
-          className={classes.formItem}
-          label="Password"
-          type={vis ? "text" : "password"}
-          id="password"
-          name="password"
-          placeholder="Password"
-          readOnly={loading && true}
-          defaultValue={stateFormData.password.value}
-          InputProps={{
-            endAdornment: (
-              <C.InputAdornment position="end" onClick={toggleVis}>
-                {vis ? <VisibilityIcon /> : <VisibilityOffIcon />}
-              </C.InputAdornment>
-            ),
-          }}
-        />
-        <C.FormHelperText>
-          {stateFormError.password && stateFormError.password.hint}
-        </C.FormHelperText>
-      </C.FormGroup>
+    <>
+      <form onSubmit={metaSubmit} className="form-register card" method="POST">
+        <C.FormGroup row>
+          <C.FormHelperText>
+            {stateFormMessage.status === "error" && (
+              <C.Typography variant="h4">{stateFormMessage.error}</C.Typography>
+            )}
+          </C.FormHelperText>
+        </C.FormGroup>
+        <C.FormGroup row>
+          <C.TextField
+            onChange={onChangeHandler}
+            className={classes.formItem}
+            label="Username"
+            id="username"
+            name="username"
+            placeholder="Username"
+            readOnly={loading && true}
+            value={stateFormData.username.value}
+          />
+          <C.FormHelperText>
+            {stateFormError.username && stateFormError.username.hint}
+          </C.FormHelperText>
+        </C.FormGroup>
+        <C.FormGroup row>
+          <C.TextField
+            onChange={onChangeHandler}
+            className={classes.formItem}
+            label="Email"
+            id="email"
+            name="email"
+            placeholder="Email"
+            readOnly={loading && true}
+            defaultValue={stateFormData.email.value}
+          />
+          <C.FormHelperText>
+            {stateFormError.email && stateFormError.email.hint}
+          </C.FormHelperText>
+        </C.FormGroup>
+        <C.FormGroup row>
+          <C.TextField
+            onChange={onChangeHandler}
+            className={classes.formItem}
+            label="Password"
+            type={vis ? "text" : "password"}
+            id="password"
+            name="password"
+            placeholder="Password"
+            readOnly={loading && true}
+            defaultValue={stateFormData.password.value}
+            InputProps={{
+              endAdornment: (
+                <C.InputAdornment position="end" onClick={toggleVis}>
+                  {vis ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                </C.InputAdornment>
+              ),
+            }}
+          />
+          <C.FormHelperText>
+            {stateFormError.password && stateFormError.password.hint}
+          </C.FormHelperText>
+        </C.FormGroup>
 
-      {/* Image Upload */}
-      <C.FormGroup row>
-        <ImageUpload ref={uploadEl} baseApiUrl={baseApiUrl} />
-      </C.FormGroup>
+        {/* Image Upload */}
+        <C.FormGroup row>
+          <ImageUpload ref={uploadEl} baseApiUrl={baseApiUrl} />
+        </C.FormGroup>
 
-      <C.CardActions>
-        <C.Button
-          type="submit"
-          color="secondary"
-          variant="contained"
-          style={{ width: "auto" }}
-          disabled={loading || !stateFormValid}
+        <C.CardActions>
+          <C.Button
+            type="submit"
+            color="secondary"
+            variant="contained"
+            style={{ width: "auto" }}
+            disabled={loading || !stateFormValid}
+          >
+            {!loading ? "Register" : "Loading..."}
+          </C.Button>
+        </C.CardActions>
+      </form>
+      <C.Snackbar
+        open={openToast}
+        autoHideDuration={5000}
+        onClose={handleClose}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={
+            toastStatus === "loading"
+              ? "info"
+              : toastStatus === "error"
+              ? "error"
+              : "success"
+          }
         >
-          {!loading ? "Register" : "Loading..."}
-        </C.Button>
-      </C.CardActions>
-    </form>
+          {toastStatus === "loading"
+            ? "Creating Profile..."
+            : toastStatus === "error"
+            ? stateFormMessage.error
+            : "Profile Created"}
+        </Alert>
+      </C.Snackbar>
+    </>
   );
 };
 

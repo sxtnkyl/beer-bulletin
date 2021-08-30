@@ -42,8 +42,7 @@ const ImageUpload = forwardRef(
             callbackFn(oldData);
             return;
           } else {
-            // ERROR HANDLING HERE
-            console.log("ERROR ERROR");
+            callbackFn(null);
             return;
           }
         }

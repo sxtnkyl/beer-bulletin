@@ -2,6 +2,7 @@ import React from "react";
 import * as C from "@material-ui/core";
 import GlassCard from "../glassCard";
 import theme from "../../styles/theme";
+import Image from "next/image";
 
 const useStyles = C.makeStyles((theme) => ({
   stretch: {
@@ -21,12 +22,13 @@ const useStyles = C.makeStyles((theme) => ({
 }));
 
 const SingleBulletin = ({ bulletin, userHost }) => {
-  const { id, content, open, title } = bulletin.data;
+  const { id, content, open, title, picture } = bulletin.data;
   const { num_trades, profile_pic, username } = userHost.data;
   const classes = useStyles();
 
   const infoBlock = (
     <C.CardContent className={classes.content}>
+      {picture && <Image src={picture} alt={title} width={100} height={100} />}
       <C.Typography variant="h6">{title}</C.Typography>
       <C.Typography variant="body1">{content}</C.Typography>
     </C.CardContent>

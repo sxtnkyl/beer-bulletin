@@ -291,7 +291,7 @@ const OfferForm = ({ bulletin, baseApiUrl, user, userHost }) => {
       {/* <SliderBtn /> */}
       <C.Snackbar
         open={openToast}
-        autoHideDuration={5000}
+        autoHideDuration={3000}
         onClose={handleClose}
       >
         <Alert onClose={handleClose} severity="success">

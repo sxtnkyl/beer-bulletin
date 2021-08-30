@@ -121,11 +121,11 @@ const UserInfoForm = ({
   const [selectedUpload, setSelectedUpload] = useState(false);
 
   const oldData = {};
-  oldData.username = username;
-  oldData.email = email;
-  oldData.first_name = first_name;
-  oldData.last_name = last_name;
-  oldData.profile_pic = profile_pic;
+  oldData.username = username || "";
+  oldData.email = email || "";
+  oldData.first_name = first_name || "";
+  oldData.last_name = last_name || "";
+  oldData.profile_pic = profile_pic || "";
 
   useEffect(() => {
     setStateFormData({
@@ -133,34 +133,34 @@ const UserInfoForm = ({
       username: {
         ...stateFormData.username,
         validator: { ...stateFormData.username.validator },
-        value: username,
+        value: username || "",
       },
       email: {
         ...stateFormData.email,
         validator: { ...stateFormData.email.validator },
 
-        value: email,
+        value: email || "",
       },
       password: {
         ...stateFormData.password,
         validator: { ...stateFormData.password.validator },
 
-        value: password,
+        value: password || "",
       },
       first_name: {
         ...stateFormData.first_name,
         validator: { ...stateFormData.first_name.validator },
 
-        value: first_name,
+        value: first_name || "",
       },
       last_name: {
         ...stateFormData.last_name,
         validator: { ...stateFormData.last_name.validator },
 
-        value: last_name,
+        value: last_name || "",
       },
       profile_pic: {
-        value: profile_pic,
+        value: profile_pic || "",
       },
     });
   }, []);
