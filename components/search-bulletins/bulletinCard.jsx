@@ -130,7 +130,7 @@ const BulletinCard = (props) => {
             <C.Typography variant="h4">{title}</C.Typography>
           </>
         }
-        subheader={`Current Offers: `}
+        subheader={`Current Offers: ${offers.length} `}
         align="left"
       />
       {infoBlock}
