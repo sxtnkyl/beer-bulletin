@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 import * as C from "@material-ui/core";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
-import ImageUpload from "../imageUpload";
+import ImageUpload from "../ImageUpload";
 import MuiAlert from "@material-ui/lab/Alert";
 
 function Alert(props) {

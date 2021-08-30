@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import LoginForm from "../../components/forms/LoginForm";
 import RegisterForm from "../../components/forms/RegisterForm";
 import { absoluteUrl } from "../../middleware/utils";
-import GlassCard from "../../components/glassCard";
+import GlassCard from "../../components/GlassCard";
 
 const useStyles = C.makeStyles(() => ({
   header: { display: "flex", justifyContent: "space-between" },
