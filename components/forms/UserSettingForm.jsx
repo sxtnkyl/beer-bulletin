@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Router, { useRouter } from "next/router";
 import * as C from "@material-ui/core";
-import GlassCard from "../glassCard";
+import GlassCard from "../GlassCard";
 import SettingsIcon from "@material-ui/icons/Settings";
 import ImageUpload from "../ImageUpload";
 
