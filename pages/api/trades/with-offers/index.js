@@ -20,13 +20,14 @@ const handler = nextConnect()
             "offer_money",
             "offer_beer",
             "offer_other",
+            "endpoint",
           ],
           include: [
-          {
-            model: models.users,
-            as: "participant",
-            attributes: ["id", "username", "profile_pic"],
-          },
+            {
+              model: models.users,
+              as: "participant",
+              attributes: ["id", "username", "profile_pic"],
+            },
           ],
         },
       ],

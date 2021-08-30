@@ -28,18 +28,20 @@ const handler = nextConnect()
           { username: userInfo },
         ],
       },
-      attributes: ["id", "email", "username", "password"],
+      attributes: ["id", "profile_pic", "email", "username", "password"],
       limit: 1,
     });
     /* Check if exists */
     if (!user) {
       res.status(400).json({ status: "error", error: "User Not Found" });
+      return;
     }
     /* Define variables */
     const dataUser = user.toJSON();
     const userId = dataUser.id,
       userEmail = dataUser.email,
       username = dataUser.username,
+      userPic = dataUser.profile_pic,
       userPassword = dataUser.password;
 
     /* Check and compare password */
@@ -51,6 +53,7 @@ const handler = nextConnect()
           id: userId,
           email: userEmail,
           username: username,
+          profPic: userPic,
         };
         /* Sign token */
         jwt.sign(

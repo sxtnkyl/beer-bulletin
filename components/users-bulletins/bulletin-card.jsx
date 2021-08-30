@@ -111,6 +111,7 @@ const BulletinCard = (props) => {
         {picture && (
           <Image src={picture} alt={title} width={100} height={100} />
         )}
+        <br />
         <C.Typography variant="h6">
           Currently {seeking ? "Seeking..." : "Offering..."}
         </C.Typography>

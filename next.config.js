@@ -5,7 +5,7 @@ module.exports = {
   },
   api: {
     bodyParser: {
-      sizeLimit: '2mb',
+      sizeLimit: "2mb",
     },
-  }
+  },
 };

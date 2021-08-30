@@ -29,12 +29,14 @@
       let isPlayerOne = "true" == getParamValue("isPlayerOne");
       let ablyConnectURL = getParamValue("ablyURL");
       let channelName = getParamValue("channel") + "BP";
+      let gamePic = getParamValue("gamePic");
 
       // ***************************** MULTIPLAYER CODE *****************************
-
+      var createPlayerPic;
       var players = [];
       var BPchannel;
       var myId;
+      var createCupArrays;
 
       var ably = new Ably.Realtime({
         authUrl: ablyConnectURL,
@@ -66,6 +68,12 @@
             }
           }
           console.log(players);
+          if (players.length == 2) {
+            BPchannel.publish("pictures", {
+              picUrl: gamePic,
+              playerStatus: isPlayerOne,
+            });
+          }
         });
         //subscribe to new user entries
         BPchannel.presence.subscribe("enter", function (member) {
@@ -80,6 +88,7 @@
           console.log("SOMEONE LEFT");
           removePlayer(member.clientId);
           console.log(players);
+          location.reload();
         });
       }
 
@@ -96,6 +105,12 @@
         console.log("CREATE FUNCTION");
         players.push(id);
         console.log(players);
+        if (players.length == 2) {
+          BPchannel.publish("pictures", {
+            picUrl: gamePic,
+            playerStatus: isPlayerOne,
+          });
+        }
       }
 
       // ***************************** END MULTIPLAYER CODE *****************************
@@ -236,26 +251,37 @@
           });
         }
 
-        // player 1 red cups created in triangle pattern
-        createCup(-35, 3, -6.8, "sixRed", "cupRedNew.glb");
-        createCup(-35, 3, -2.25, "fiveRed", "cupRedNew.glb");
-        createCup(-35, 3, 2.3, "fourRed", "cupRedNew.glb");
-        createCup(-31.05, 3, -4.5, "threeRed", "cupRedNew.glb");
-        createCup(-31.05, 3, -0, "twoRed", "cupRedNew.glb");
-        createCup(-27.1, 3, -2.25, "oneRed", "cupRedNew.glb");
+        createCupArrays = () => {
+          // player 1 red cups created in triangle pattern
+          createCup(-35, 3, -6.8, "sixRed", "cupRedNew.glb");
+          createCup(-35, 3, -2.25, "fiveRed", "cupRedNew.glb");
+          createCup(-35, 3, 2.3, "fourRed", "cupRedNew.glb");
+          createCup(-31.05, 3, -4.5, "threeRed", "cupRedNew.glb");
+          createCup(-31.05, 3, -0, "twoRed", "cupRedNew.glb");
+          createCup(-27.1, 3, -2.25, "oneRed", "cupRedNew.glb");
 
-        // player 2 blue cups created in triangle pattern
-        createCup(36, 3, -6.8, "sixBlue", "cupBlueNew.glb");
-        createCup(36, 3, -2.25, "fiveBlue", "cupBlueNew.glb");
-        createCup(36, 3, 2.3, "fourBlue", "cupBlueNew.glb");
-        createCup(32.05, 3, -4.5, "threeBlue", "cupBlueNew.glb");
-        createCup(32.05, 3, 0, "twoBlue", "cupBlueNew.glb");
-        createCup(28.1, 3, -2.25, "oneBlue", "cupBlueNew.glb");
+          // player 2 blue cups created in triangle pattern
+          createCup(36, 3, -6.8, "sixBlue", "cupBlueNew.glb");
+          createCup(36, 3, -2.25, "fiveBlue", "cupBlueNew.glb");
+          createCup(36, 3, 2.3, "fourBlue", "cupBlueNew.glb");
+          createCup(32.05, 3, -4.5, "threeBlue", "cupBlueNew.glb");
+          createCup(32.05, 3, 0, "twoBlue", "cupBlueNew.glb");
+          createCup(28.1, 3, -2.25, "oneBlue", "cupBlueNew.glb");
+        };
 
+        createCupArrays();
         // function for ball creation assigned to global var so it can be accessed in handleTouchEnd() that is outside this MainScene() function
         createBallObj = () => {
           ballObject = physics.add.sphere(
-            { name: "ball", x: 19, y: 1.4, radius: 0.7, mass: 20 },
+            {
+              name: "ball",
+              x: 19,
+              y: 1.4,
+              radius: 0.7,
+              mass: 20,
+              collisionGroup: 2,
+              collisionMask: 1,
+            },
             { lambert: { color: "white" } }
           );
           ballObject.body.setGravity(0, -60, 0);
@@ -274,11 +300,12 @@
                 }
               });
 
+              physics.destroy(otherObject);
+              scene.remove(otherObject);
+
               setTimeout(() => {
                 physics.destroy(otherObject.refCup);
                 scene.remove(otherObject.refCup);
-                physics.destroy(otherObject);
-                scene.remove(otherObject);
                 physics.destroy(ballObject);
                 scene.remove(ballObject);
               }, 750);
@@ -288,7 +315,15 @@
         // second player's ball
         createBallObjp2 = () => {
           ballObjectp2 = physics.add.sphere(
-            { name: "ball2", x: -19, y: 1.4, radius: 0.7, mass: 20 },
+            {
+              name: "ball2",
+              x: -19,
+              y: 1.4,
+              radius: 0.7,
+              mass: 20,
+              collisionGroup: 2,
+              collisionMask: 1,
+            },
             { lambert: { color: "yellow" } }
           );
           ballObjectp2.body.setGravity(0, -60, 0);
@@ -306,12 +341,12 @@
                   });
                 }
               });
+              physics.destroy(otherObject);
+              scene.remove(otherObject);
 
               setTimeout(() => {
                 physics.destroy(otherObject.refCup);
                 scene.remove(otherObject.refCup);
-                physics.destroy(otherObject);
-                scene.remove(otherObject);
                 physics.destroy(ballObjectp2);
                 scene.remove(ballObjectp2);
               }, 750);
@@ -328,6 +363,20 @@
           { name: "ground", width: 120, height: 100, y: -22 },
           { lambert: { color: "brown" } }
         );
+
+        createPlayerPic = async (picUrl, playerStatus) => {
+          new THREE.TextureLoader().load(picUrl, function onLoad(texture) {
+            let playerMaterial = new THREE.SpriteMaterial({
+              map: texture,
+            });
+            let sprite = new THREE.Sprite(playerMaterial);
+            playerStatus
+              ? sprite.position.set(90, 7, 0)
+              : sprite.position.set(-90, 7, 0);
+            sprite.scale.set(28, 28, 1.0); // imageWidth, imageHeight
+            scene.add(sprite);
+          });
+        };
 
         //==================================
 
@@ -425,9 +474,16 @@
           let { target, forceX, forceY, forceZ } = data.data;
           if (target === "ball1") {
             ballObject.body.applyForce(forceX, forceY, forceZ);
+            ballTTL.start();
           } else {
             ballObjectp2.body.applyForce(forceX, forceY, forceZ);
+            ballTTLp2.start();
           }
+        });
+        BPchannel.subscribe("pictures", function (data) {
+          let { picUrl, playerStatus } = data.data;
+          createPlayerPic(gamePic, isPlayerOne);
+          createPlayerPic(picUrl, playerStatus);
         });
       }
 

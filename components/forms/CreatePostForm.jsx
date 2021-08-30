@@ -18,7 +18,7 @@ const FORM_DATA_POST = {
   title: {
     value: "",
     label: "Title",
-    min: 8,
+    min: 6,
     max: 36,
     required: true,
     validator: null,
@@ -31,9 +31,9 @@ const FORM_DATA_POST = {
   content: {
     value: "",
     label: "Content",
-    min: 0,
+    min: 1,
     max: 250,
-    required: false,
+    required: true,
     validator: null,
     // validator: {
     //   regEx: /^[a-z\sA-Z0-9\W\w]+$/,
@@ -55,7 +55,7 @@ export default function CreatePostForm(props) {
 
   const [stateFormData, setStateFormData] = useState(FORM_DATA_POST);
   const [stateFormError, setStateFormError] = useState([]);
-  const [stateFormMessage, setStateFormMessage] = useState({});
+  // const [stateFormMessage, setStateFormMessage] = useState({});
   // lifted to bottomNav
   // const [stateFormValid, setStateFormValid] = useState(true);
 
@@ -78,6 +78,8 @@ export default function CreatePostForm(props) {
   function metaSubmit(e) {
     e.preventDefault();
     uploadEl.current.handleUpload(onSubmitHandler);
+    props.setToastStatus("loading");
+    props.setOpenToast(true);
   }
 
   async function onSubmitHandler(tradePicUrl) {
@@ -103,11 +105,18 @@ export default function CreatePostForm(props) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      })
-        .then(props.setOpenToast(true))
-        .catch((error) => {
-          console.error("Error:", error);
+      });
+      let result = await tradesApi.json();
+      if (result.status == "success") {
+        props.setToastStatus("success");
+      } else {
+        console.log("MEE", result);
+        props.setToastStatus("error");
+        props.setStateFormMessage({
+          status: "error",
+          error: result.message.slice(6),
         });
+      }
       setLoading(false);
       props.handleClose();
     }
@@ -221,8 +230,10 @@ export default function CreatePostForm(props) {
       >
         <C.FormGroup row>
           <C.FormHelperText>
-            {stateFormMessage.status === "error" && (
-              <C.Typography variant="h4">{stateFormMessage.error}</C.Typography>
+            {props.stateFormMessage.status === "error" && (
+              <C.Typography variant="h4">
+                {props.stateFormMessage.error}
+              </C.Typography>
             )}
           </C.FormHelperText>
         </C.FormGroup>
@@ -281,9 +292,9 @@ export default function CreatePostForm(props) {
           </C.FormHelperText>
         </C.FormGroup>
         <br />
-        <C.ButtonGroup>
-          <ImageUpload ref={uploadEl} baseApiUrl={props.baseApiUrl} />
-        </C.ButtonGroup>
+
+        <ImageUpload ref={uploadEl} baseApiUrl={props.baseApiUrl} />
+
         <br />
         <C.CardActions>
           {/* <C.Button
