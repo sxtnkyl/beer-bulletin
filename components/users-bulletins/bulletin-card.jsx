@@ -5,6 +5,7 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import GlassCard from "../glassCard";
 import ScalableIcon from "../ScalableIcon";
 import theme from "../../styles/theme";
+import { mutate } from "swr";
 
 const useStyles = C.makeStyles((theme) => ({
   stretch: {
@@ -80,8 +81,8 @@ const BulletinCard = (props) => {
     }).catch((error) => {
       console.error("Error:", error);
     });
-
     const editRes = await editBulletin.json();
+    editRes && setEdit(!edit);
     setLoading(false);
   };
 
@@ -110,10 +111,10 @@ const BulletinCard = (props) => {
           Currently {seeking ? "Seeking..." : "Offering..."}
         </C.Typography>
         {!edit ? (
-          <C.Typography variant="body1">{content}</C.Typography>
+          <C.Typography variant="body1">{data.content}</C.Typography>
         ) : (
           <C.TextField
-            placeholder={content}
+            placeholder={data.content}
             onChange={handleChange}
             name="content"
             value={data.content}
@@ -157,10 +158,10 @@ const BulletinCard = (props) => {
           <C.CardHeader
             title={
               !edit ? (
-                <C.Typography variant="h6">{title}</C.Typography>
+                <C.Typography variant="h6">{data.title}</C.Typography>
               ) : (
                 <C.TextField
-                  placeholder={title}
+                  placeholder={data.title}
                   onChange={handleChange}
                   name="title"
                   value={data.title}

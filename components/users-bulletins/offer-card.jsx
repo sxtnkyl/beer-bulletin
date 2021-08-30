@@ -88,7 +88,7 @@ const OfferCard = (props) => {
     });
 
     const editRes = await editBulletin.json();
-
+    editRes && setEdit(!edit);
     setLoading(false);
   };
 
@@ -124,7 +124,9 @@ const OfferCard = (props) => {
       <C.TextField
         key={i}
         label={offer}
-        placeholder={dynamicVal}
+        placeholder={
+          typeof dynamicVal == "number" ? dynamicVal.toString() : dynamicVal
+        }
         onChange={handleChange}
         name={dynamicName}
         value={dynamicVal == null ? "" : dynamicVal}
