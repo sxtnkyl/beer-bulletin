@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import * as C from "@material-ui/core";
 
-import ChatCard from "../../components/chat/ChatCard";
+import ChatCard from "../../components/Chat/ChatCard";
 import LoadingErrorMessage from "../../components/LoadingErrorMessage";
 import {
   absoluteUrl,
