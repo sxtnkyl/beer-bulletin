@@ -68,7 +68,7 @@ const UsersBulletins = ({ bulletins, offers, user, baseApiUrl, token }) => {
         </C.Button>
       </div>
 
-      <C.Typography variant="body1" style={{ textAlign: "center" }}>
+      <C.Typography variant="h5" style={{ textAlign: "center" }}>
         {toggleOffers ? openoffers : opentrades}
       </C.Typography>
       {toggleOffers ? makeOffersList : makeBulletinList}
