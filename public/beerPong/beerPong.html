@@ -29,9 +29,10 @@
       let isPlayerOne = "true" == getParamValue("isPlayerOne");
       let ablyConnectURL = getParamValue("ablyURL");
       let channelName = getParamValue("channel") + "BP";
+      let gamePic = getParamValue("gamePic");
 
       // ***************************** MULTIPLAYER CODE *****************************
-
+      var createPlayerPic;
       var players = [];
       var BPchannel;
       var myId;
@@ -255,7 +256,15 @@
         // function for ball creation assigned to global var so it can be accessed in handleTouchEnd() that is outside this MainScene() function
         createBallObj = () => {
           ballObject = physics.add.sphere(
-            { name: "ball", x: 19, y: 1.4, radius: 0.7, mass: 20 },
+            {
+              name: "ball",
+              x: 19,
+              y: 1.4,
+              radius: 0.7,
+              mass: 20,
+              collisionGroup: 2,
+              collisionMask: 1,
+            },
             { lambert: { color: "white" } }
           );
           ballObject.body.setGravity(0, -60, 0);
@@ -274,11 +283,12 @@
                 }
               });
 
+              physics.destroy(otherObject);
+              scene.remove(otherObject);
+
               setTimeout(() => {
                 physics.destroy(otherObject.refCup);
                 scene.remove(otherObject.refCup);
-                physics.destroy(otherObject);
-                scene.remove(otherObject);
                 physics.destroy(ballObject);
                 scene.remove(ballObject);
               }, 750);
@@ -288,7 +298,15 @@
         // second player's ball
         createBallObjp2 = () => {
           ballObjectp2 = physics.add.sphere(
-            { name: "ball2", x: -19, y: 1.4, radius: 0.7, mass: 20 },
+            {
+              name: "ball2",
+              x: -19,
+              y: 1.4,
+              radius: 0.7,
+              mass: 20,
+              collisionGroup: 2,
+              collisionMask: 1,
+            },
             { lambert: { color: "yellow" } }
           );
           ballObjectp2.body.setGravity(0, -60, 0);
@@ -306,12 +324,12 @@
                   });
                 }
               });
+              physics.destroy(otherObject);
+              scene.remove(otherObject);
 
               setTimeout(() => {
                 physics.destroy(otherObject.refCup);
                 scene.remove(otherObject.refCup);
-                physics.destroy(otherObject);
-                scene.remove(otherObject);
                 physics.destroy(ballObjectp2);
                 scene.remove(ballObjectp2);
               }, 750);
@@ -328,6 +346,21 @@
           { name: "ground", width: 120, height: 100, y: -22 },
           { lambert: { color: "brown" } }
         );
+
+        createPlayerPic = async () => {
+          new THREE.TextureLoader().load(gamePic, function onLoad(texture) {
+            let playerMaterial = new THREE.SpriteMaterial({
+              map: texture,
+              useScreenCoordinates: false,
+            });
+            let sprite = new THREE.Sprite(playerMaterial);
+            isPlayerOne
+              ? sprite.position.set(-90, 7, 0)
+              : sprite.position.set(90, 7, 0);
+            sprite.scale.set(28, 28, 1.0); // imageWidth, imageHeight
+            scene.add(sprite);
+          });
+        };
 
         //==================================
 
@@ -425,8 +458,10 @@
           let { target, forceX, forceY, forceZ } = data.data;
           if (target === "ball1") {
             ballObject.body.applyForce(forceX, forceY, forceZ);
+            ballTTL.start();
           } else {
             ballObjectp2.body.applyForce(forceX, forceY, forceZ);
+            ballTTLp2.start();
           }
         });
       }

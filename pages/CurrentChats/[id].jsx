@@ -2,7 +2,7 @@
 // domain.com/CurrentChats/:id
 
 import React, { useState, useEffect } from "react";
-import { Button } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import AblyChatComponent from "../../components/ablyChat/AblyChatComponent";
@@ -40,9 +40,23 @@ const Chat = (pageProps) => {
   const style = useStyles();
   const [gameMode, setGameMode] = useState(false);
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
+    >
       <AblyChatComponent {...pageProps} />
-      <Button onClick={() => setGameMode(!gameMode)}>Beer Pong</Button>
+      <br />
+      <Button
+        color="secondary"
+        variant="contained"
+        style={{ width: "50%", margin: "auto" }}
+        onClick={() => setGameMode(!gameMode)}
+      >
+        <Typography variant="h4">Beer Pong</Typography>
+      </Button>
       {gameMode ? (
         <BeerPongGame
           chatHost={hostUser}
@@ -50,6 +64,7 @@ const Chat = (pageProps) => {
           loggedUser={pageProps.user.id}
           baseApiUrl={pageProps.baseApiUrl}
           asPath={pageProps.asPath}
+          userPic={pageProps.user.profPic}
         />
       ) : null}
     </div>
