@@ -1,11 +1,14 @@
 import { useState } from "react";
 import * as C from "@material-ui/core";
 import GlassCard from "../glassCard";
+import ScalableIcon from "../../components/ScalableIcon";
+import { faArrowAltCircleLeft } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 const useStyles = C.makeStyles((theme) => ({
   header: {
     display: "flex",
-    flexDirection: "column",
+    justifyContent: "flex-end",
   },
   stretch: {
     display: "flex",
@@ -29,6 +32,11 @@ const useStyles = C.makeStyles((theme) => ({
     width: "100%",
     display: "flex",
     justifyContent: "center",
+  },
+  backButton: {
+    position: "absolute",
+    top: "2%",
+    left: 0,
   },
 }));
 
@@ -81,6 +89,7 @@ const SingleBulletin = ({ apiData, baseApiUrl, token }) => {
     offer_money,
     offer_beer,
     offer_other,
+    endpoint,
   }) => (
     <GlassCard>
       <C.CardContent className={classes.content}>
@@ -112,6 +121,18 @@ const SingleBulletin = ({ apiData, baseApiUrl, token }) => {
         >
           Accept Offer
         </C.Button>
+        <Link
+          passHref
+          href={{
+            pathname: `/CurrentChats/[id]`,
+            query: { id: endpoint, partUserName: participant.username },
+          }}
+          as={`/CurrentChats/${endpoint}`}
+        >
+          <C.Button size="small" variant="outlined" style={{ width: "auto" }}>
+            Chat
+          </C.Button>
+        </Link>
         <C.Button
           onClick={() => {
             handleRejectOffer(id);
@@ -128,6 +149,9 @@ const SingleBulletin = ({ apiData, baseApiUrl, token }) => {
 
   return (
     <>
+      <C.Button href="/UsersBulletins" className={classes.backButton}>
+        <ScalableIcon icon={faArrowAltCircleLeft} color="primary" />
+      </C.Button>
       <div className={classes.header}>
         <C.Typography variant="h2">{title}</C.Typography>
       </div>

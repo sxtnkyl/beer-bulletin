@@ -43,6 +43,7 @@ const BulletinCard = (props) => {
     seeking,
     picture,
     loggedUser,
+    host,
   } = props;
   const classes = useStyles();
 
@@ -65,7 +66,12 @@ const BulletinCard = (props) => {
           )}
           <br />
           <C.Divider variant="fullWidth" />
+          <br />
           <C.Typography variant="body1">{content}</C.Typography>
+          <br />
+          <C.Typography align="right" variant="subtitle2">
+            - {host.username}
+          </C.Typography>
 
           <C.Divider variant="fullWidth" />
         </C.CardContent>
