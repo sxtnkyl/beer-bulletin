@@ -1,7 +1,7 @@
 import { useState } from "react";
 import * as C from "@material-ui/core";
-import GlassCard from "../glassCard";
-import ScalableIcon from "../../components/ScalableIcon";
+import GlassCard from "../GlassCard";
+import ScalableIcon from "../ScalableIcon";
 import { faArrowAltCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
