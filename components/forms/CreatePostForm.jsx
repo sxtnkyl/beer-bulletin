@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as C from "@material-ui/core";
-import ImageUpload from "../imageUpload";
+import ImageUpload from "../ImageUpload";
 
 const useStyles = C.makeStyles((theme) => ({
   formItem: {

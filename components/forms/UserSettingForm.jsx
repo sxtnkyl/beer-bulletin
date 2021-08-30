@@ -3,7 +3,7 @@ import Router, { useRouter } from "next/router";
 import * as C from "@material-ui/core";
 import GlassCard from "../glassCard";
 import SettingsIcon from "@material-ui/icons/Settings";
-import ImageUpload from "../imageUpload";
+import ImageUpload from "../ImageUpload";
 
 const useStyles = C.makeStyles(() => ({
   formItem: {
