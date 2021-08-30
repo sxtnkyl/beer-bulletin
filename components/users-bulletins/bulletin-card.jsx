@@ -82,8 +82,8 @@ const BulletinCard = (props) => {
     }).catch((error) => {
       console.error("Error:", error);
     });
-
     const editRes = await editBulletin.json();
+    editRes && setEdit(!edit);
     setLoading(false);
   };
 
@@ -108,18 +108,17 @@ const BulletinCard = (props) => {
   const infoBlock = (
     <C.CardActionArea className={classes.stretch}>
       <C.CardContent className={classes.content}>
-        {picture && (
+        {/* {picture && (
           <Image src={picture} alt={title} width={100} height={100} />
-        )}
-        <br />
+        )} */}
         <C.Typography variant="h6">
           Currently {seeking ? "Seeking..." : "Offering..."}
         </C.Typography>
         {!edit ? (
-          <C.Typography variant="body1">{content}</C.Typography>
+          <C.Typography variant="body1">{data.content}</C.Typography>
         ) : (
           <C.TextField
-            placeholder={content}
+            placeholder={data.content}
             onChange={handleChange}
             name="content"
             value={data.content}
@@ -163,10 +162,10 @@ const BulletinCard = (props) => {
           <C.CardHeader
             title={
               !edit ? (
-                <C.Typography variant="h6">{title}</C.Typography>
+                <C.Typography variant="h6">{data.title}</C.Typography>
               ) : (
                 <C.TextField
-                  placeholder={title}
+                  placeholder={data.title}
                   onChange={handleChange}
                   name="title"
                   value={data.title}

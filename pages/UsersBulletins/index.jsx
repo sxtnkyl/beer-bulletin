@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import * as C from "@material-ui/core";
 import {
   absoluteUrl,
@@ -9,6 +9,14 @@ import BulletinCard from "../../components/users-bulletins/bulletin-card";
 import OfferCard from "../../components/users-bulletins/offer-card";
 import ScalableIcon from "../../components/ScalableIcon";
 import { faAddressBook } from "@fortawesome/free-solid-svg-icons";
+import {
+  fetchUserWithOffers,
+  fetchUserWithBulletins,
+} from "../../util/fetchers";
+import {
+  useGetUserBulletins,
+  useGetUserOffers,
+} from "../../util/hooks/useSWRs";
 
 const useStyles = C.makeStyles(() => ({
   header: {
@@ -19,16 +27,33 @@ const useStyles = C.makeStyles(() => ({
 }));
 
 const UsersBulletins = ({ bulletins, offers, user, baseApiUrl, token }) => {
-  const { user_trades } = bulletins.data;
-  const { offers_made } = offers.data;
   const classes = useStyles();
+
+  const { userBulletins } = useGetUserBulletins(
+    baseApiUrl,
+    user.id,
+    token,
+    "ub",
+    fetchUserWithBulletins,
+    { initialData: bulletins }
+  );
+  const { userOffers, isError } = useGetUserOffers(
+    baseApiUrl,
+    user.id,
+    token,
+    "uo",
+    fetchUserWithOffers,
+    { initialData: offers }
+  );
 
   const [toggleOffers, setToggle] = useState(false);
   const toggleOffs = () => {
     setToggle(!toggleOffers);
   };
 
-  const makeBulletinList = user_trades.map((trade) => (
+  console.log("BASE DATA: ", userBulletins, userOffers);
+
+  const makeBulletinList = userBulletins.data.user_trades.map((trade) => (
     <BulletinCard
       key={trade.id}
       {...trade}
@@ -39,7 +64,7 @@ const UsersBulletins = ({ bulletins, offers, user, baseApiUrl, token }) => {
     />
   ));
 
-  const makeOffersList = offers_made.map((offer) => (
+  const makeOffersList = userOffers.data.offers_made.map((offer) => (
     <OfferCard
       key={offer.id}
       {...offer}
@@ -53,10 +78,10 @@ const UsersBulletins = ({ bulletins, offers, user, baseApiUrl, token }) => {
     toggleOffers ? "Offers" : "Bulletins"
   }`;
   const opentrades = `Currently Open Trades: ${
-    user_trades.filter((trade) => trade.open).length
+    userBulletins.data.user_trades.filter((trade) => trade.open).length
   }`;
   const openoffers = `Currently Open Offers: ${
-    offers_made.filter((offer) => !offer.resolved).length
+    userOffers.data.offers_made.filter((offer) => !offer.resolved).length
   }`;
 
   return (
@@ -102,19 +127,9 @@ export async function getServerSideProps(context) {
   // });
 
   const { id } = token && verifyToken(token.replace("Bearer ", ""));
-  const userBulletins = await fetch(`${baseApiUrl}/users/with-trades/${id}`, {
-    headers: {
-      authorization: token || "",
-    },
-  });
-  const userOffers = await fetch(`${baseApiUrl}/users/with-offers/${id}`, {
-    headers: {
-      authorization: token || "",
-    },
-  });
 
-  const bulletins = await userBulletins.json();
-  const offers = await userOffers.json();
+  const bulletins = await fetchUserWithBulletins(baseApiUrl, id, token);
+  const offers = await fetchUserWithOffers(baseApiUrl, id, token);
 
   return {
     props: {

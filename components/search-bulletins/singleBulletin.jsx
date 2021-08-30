@@ -32,7 +32,7 @@ const SingleBulletin = ({ bulletin, userHost }) => {
 
   const infoBlock = (
     <C.CardContent className={classes.content}>
-      {picture && <Image src={picture} alt={title} width={100} height={100} />}
+      {/* {picture && <Image src={picture} alt={title} width={100} height={100} />} */}
       <C.Typography variant="h6">{title}</C.Typography>
       <C.Typography variant="body1">{content}</C.Typography>
     </C.CardContent>

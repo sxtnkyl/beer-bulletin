@@ -96,6 +96,16 @@ const FORM_DATA = {
   },
 };
 
+const hookFormData = {
+  username: "",
+  email: "",
+  password: "",
+  first_name: "",
+  last_name: "",
+  profile_pic: "",
+  pref_dark: false,
+};
+
 const UserInfoForm = ({
   origin,
   referer,

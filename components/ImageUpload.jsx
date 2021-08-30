@@ -87,6 +87,7 @@ const ImageUpload = forwardRef(
               if (setLoading) setLoading(false);
               setSelectedFile(null);
             });
+
           //  uploadFile(reader.result);
         };
         reader.onerror = () => {
