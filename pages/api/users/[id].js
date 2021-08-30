@@ -6,8 +6,8 @@ const { fn, col } = models.sequelize;
 const handler = nextConnect()
   .use(middleware)
   .get(async (req, res) => {
-    const { slug } = req.query;
-    const userId = slug;
+    const { id } = req.query;
+    const userId = id;
     const user = await models.users.findOne({
       where: {
         id: userId,
@@ -42,8 +42,8 @@ const handler = nextConnect()
     return res.json({ status: "success", data: user });
   })
   .put(async (req, res) => {
-    const { slug } = req.query;
-    const userId = slug;
+    const { id } = req.query;
+    const userId = id;
     const userData = await models.users.update(req.body, {
       individualHooks: true,
       where: {
@@ -63,8 +63,8 @@ const handler = nextConnect()
     });
   })
   .delete(async (req, res) => {
-    const { slug } = req.query;
-    const userId = slug;
+    const { id } = req.query;
+    const userId = id;
     const userData = await models.users.destroy({
       where: {
         id: userId,

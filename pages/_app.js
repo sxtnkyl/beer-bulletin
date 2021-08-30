@@ -6,7 +6,6 @@ import theme from "../styles/theme";
 import Layout from "../components/Layout";
 import { getAppCookies, verifyToken, absoluteUrl } from "../middleware/utils";
 import "./login.css";
-require("dotenv").config();
 
 //_app only has access to React DOM tree
 //_document can access entire DOM
@@ -44,10 +43,8 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
     query: { amp },
     asPath,
   } = ctx;
-  console.log("req", req);
 
   const { origin } = absoluteUrl(req);
-  console.log("origin", origin);
   const baseApiUrl = `${origin}/api`;
 
   const { token } = getAppCookies(req);

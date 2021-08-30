@@ -8,7 +8,7 @@ const middleware = nextConnect();
 
 /* Set restricted public access / put any api access that is restricted in here */
 // put secured or restricted routes in here V
-const restricted = ["/api/trades/[slug]"];
+const restricted = ["/api/trades/[id]"];
 /*
  * @params {request, response, callback} default Request and Response
  * @return {object} object if true, response message if false and continue
@@ -20,8 +20,8 @@ export default middleware.use(async (req, res, next) => {
   //no auth header and not on restricted list
   if (
     !restricted.some((re) => {
-      if (re.endsWith("[slug]")) {
-        let newUrl = req.url.replace(req.query.slug, "[slug]");
+      if (re.endsWith("[id]")) {
+        let newUrl = req.url.replace(req.query.id, "[id]");
         return newUrl === re;
       }
       return req.url === re;

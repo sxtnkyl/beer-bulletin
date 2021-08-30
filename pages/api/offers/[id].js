@@ -5,8 +5,8 @@ import middleware from "../../../middleware/auth";
 const handler = nextConnect()
   .use(middleware)
   .get(async (req, res) => {
-    const { slug } = req.query;
-    const offerID = slug;
+    const { id } = req.query;
+    const offerID = id;
     const offer = await models.offers.findOne({
       where: {
         id: offerID,
@@ -22,8 +22,8 @@ const handler = nextConnect()
     return res.json({ status: "success", data: offer });
   })
   .put(async (req, res) => {
-    const { slug } = req.query;
-    const offerID = slug;
+    const { id } = req.query;
+    const offerID = id;
     const offerData = await models.offers.update(req.body, {
       where: {
         id: offerID,
@@ -42,8 +42,8 @@ const handler = nextConnect()
     });
   })
   .delete(async (req, res) => {
-    const { slug } = req.query;
-    const offerID = slug;
+    const { id } = req.query;
+    const offerID = id;
     const offerData = await models.offers.destroy({
       where: {
         id: offerID,
