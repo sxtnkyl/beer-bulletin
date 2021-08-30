@@ -36,7 +36,6 @@ const useStyles = makeStyles({
 //Pass chat ID here??
 const Chat = (pageProps) => {
   const [tradeID, hostUser, partUser] = pageProps.query.id.split("b");
-
   const style = useStyles();
   const [gameMode, setGameMode] = useState(false);
   return (
