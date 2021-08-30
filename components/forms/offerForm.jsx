@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as C from "@material-ui/core";
-import GlassCard from "../glassCard";
+import GlassCard from "../GlassCard";
 import { faBeer } from "@fortawesome/free-solid-svg-icons";
 import ScalableIcon from "../ScalableIcon";
 import MuiAlert from "@material-ui/lab/Alert";
