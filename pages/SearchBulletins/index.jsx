@@ -58,7 +58,8 @@ export async function getServerSideProps(context) {
   const baseApiUrl = `${origin}/api`;
 
   // const tradesApi = await fetch(`${baseApiUrl}/trades${nextPageUrl}`);
-  const trades = await fetch(`${baseApiUrl}/trades/with-offers`);
+  // const trades = await fetch(`${baseApiUrl}/trades/with-offers`);
+  const trades = await fetch(`${baseApiUrl}/SearchBulletins/with-offers`);
   // const trades = await fetchBulletinsWithOffers(baseApiUrl);
 
   return {
