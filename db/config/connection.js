@@ -13,6 +13,7 @@ sequelize = new Sequelize(process.env[config.use_env_variable], {
   port: process.env.DB_PORT,
   host: process.env.DB_HOST,
   dialect: "mysql",
+  dialectModule: require("mysql2"),
 });
 // } else {
 //   sequelize = new Sequelize(
