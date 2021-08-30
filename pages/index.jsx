@@ -175,6 +175,7 @@ const Landing = (props) => {
           fullWidth={false}
           variant="text"
           startIcon={<ScalableIcon icon={faGithubAlt} />}
+          href="https://github.com/sxtnkyl"
         >
           KS
         </C.Button>
@@ -182,6 +183,7 @@ const Landing = (props) => {
           fullWidth={false}
           variant="text"
           startIcon={<ScalableIcon icon={faGithub} />}
+          href="https://github.com/perez-rob"
         >
           RP
         </C.Button>
@@ -189,6 +191,7 @@ const Landing = (props) => {
           fullWidth={false}
           variant="text"
           startIcon={<ScalableIcon icon={faGitAlt} />}
+          href="https://github.com/ahuffma2"
         >
           AH
         </C.Button>
