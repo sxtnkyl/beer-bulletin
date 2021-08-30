@@ -34,6 +34,10 @@ const useStyles = C.makeStyles((theme) => ({
     alignSelf: "center",
     margin: "15px 0px",
   },
+  media: {
+    height: '350px',
+    width: 'auto'
+  },
   footer: {
     display: "flex",
     flexDirection: "row",
@@ -70,7 +74,19 @@ const Landing = (props) => {
           offer for your rare brew, or browse through the community.
         </C.Typography>
         <C.Typography variant="body1">Find your trade today!</C.Typography>
-        <iframe></iframe>
+   
+
+        {/* PLACE FOR OUR LOGO */}
+        {/* <C.Card
+          elevation={5}
+          style={{ height: "50px", width: "50px", margin: "30px 0px" }}>
+            <C.CardMedia
+              className = {t.media}
+              image={'images/BeerBarter.jpg'}
+            /> 
+        </C.Card>
+   */}
+   
         <ScalableIcon
           className={t.transitionIcon}
           icon={faLevelDownAlt}
@@ -98,7 +114,14 @@ const Landing = (props) => {
         <C.Card
           elevation={5}
           style={{ height: "350px", width: "100%", margin: "30px 0px" }}
-        ></C.Card>
+        >
+            {/* IMAGE */}
+            <C.CardMedia
+              className = {t.media}
+              image={'images/post.jpeg'}
+            />
+
+        </C.Card>
         <ScalableIcon icon={faLongArrowAltDown} width="52" height="52" />
         <ScalableIcon icon={faAddressCard} width="72" height="72" />
       </div>
@@ -114,7 +137,14 @@ const Landing = (props) => {
         <C.Card
           elevation={5}
           style={{ height: "350px", width: "100%", margin: "30px 0px" }}
-        ></C.Card>
+        >
+          {/* IMAGE */}
+          <C.CardMedia
+            className = {t.media}
+            image={'images/tallboy.jpeg'}
+          />
+
+        </C.Card>
         <ScalableIcon icon={faComments} width="72" height="72" />
       </div>
 
@@ -129,7 +159,14 @@ const Landing = (props) => {
         <C.Card
           elevation={5}
           style={{ height: "350px", width: "100%", margin: "30px 0px" }}
-        ></C.Card>
+        >
+           {/* IMAGE */}
+          <C.CardMedia
+            className = {t.media}
+            image={'images/foam.jpg'}
+          />
+        </C.Card>
+
         <ScalableIcon icon={faHandshake} width="72" height="72" />
       </div>
 
@@ -143,7 +180,14 @@ const Landing = (props) => {
         <C.Card
           elevation={5}
           style={{ height: "350px", width: "100%", margin: "30px 0px" }}
-        ></C.Card>
+        >
+           {/* IMAGE */}
+          <C.CardMedia
+            className = {t.media}
+            image={'images/clink.jpeg'}
+          />
+
+        </C.Card>
       </div>
 
       <div className={t.landingSection} id="section5">
