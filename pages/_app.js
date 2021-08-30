@@ -6,6 +6,7 @@ import theme from "../styles/theme";
 import Layout from "../components/Layout";
 import { getAppCookies, verifyToken, absoluteUrl } from "../middleware/utils";
 import "./login.css";
+require("dotenv").config();
 
 //_app only has access to React DOM tree
 //_document can access entire DOM
