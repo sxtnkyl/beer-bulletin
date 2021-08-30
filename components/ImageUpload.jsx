@@ -10,7 +10,17 @@ import PropTypes from "prop-types";
 
 //To Pull  apiData, baseApiUrl, token
 const ImageUpload = forwardRef(
-  ({ baseApiUrl, oldData, setSelectedUpload }, ref) => {
+  (
+    {
+      baseApiUrl,
+      oldData,
+      setSelectedUpload,
+      setToastStatus,
+      setStateFormMessage,
+      setLoading,
+    },
+    ref
+  ) => {
     const [fileInput, setFileInput] = useState("");
     const [imgPreview, setImgPreview] = useState("");
     const [selectedFile, setSelectedFile] = useState();
@@ -65,6 +75,16 @@ const ImageUpload = forwardRef(
               setFileInput("");
               setSelectedFile("");
               setImgPreview("");
+            })
+            .catch((error) => {
+              if (setToastStatus) setToastStatus("error");
+              if (setStateFormMessage)
+                setStateFormMessage({
+                  status: "error",
+                  error: "File too large for upload",
+                });
+              if (setLoading) setLoading(false);
+              setSelectedFile(null);
             });
           //  uploadFile(reader.result);
         };
@@ -99,7 +119,7 @@ const ImageUpload = forwardRef(
               height: "100px",
               width: "100px",
               alignSelf: "flex-start",
-              m: "30px",
+              marginLeft: "30px",
             }}
           />
         )}
@@ -114,6 +134,9 @@ ImageUpload.propTypes = {
   baseApiUrl: PropTypes.string,
   oldData: PropTypes.string,
   setSelectedUpload: PropTypes.func,
+  setToastStatus: PropTypes.func,
+  setStateFormMessage: PropTypes.func,
+  setLoading: PropTypes.func,
 };
 
 export default ImageUpload;

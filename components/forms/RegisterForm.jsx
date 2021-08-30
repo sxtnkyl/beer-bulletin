@@ -20,7 +20,7 @@ const useStyles = C.makeStyles(() => ({
 }));
 
 const emailRegEx =
-  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,2|3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,2|3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{1,}))$/;
 
 /* register schemas */
 const FORM_DATA_REGISTER = {
@@ -38,7 +38,7 @@ const FORM_DATA_REGISTER = {
   email: {
     value: "",
     label: "Email",
-    min: 10,
+    min: 8,
     max: 36,
     required: true,
     validator: {
@@ -101,9 +101,11 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
 
   function metaSubmit(e) {
     e.preventDefault();
+    setStateFormMessage({});
     setLoading(true);
     setToastStatus("loading");
     setOpenToast(true);
+    console.log("FUUUU");
 
     uploadEl.current.handleUpload(onSubmitHandler);
   }
@@ -159,7 +161,10 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
           }
         } else {
           setToastStatus("error");
-          setStateFormMessage({ status: "error", error: result.message });
+          setStateFormMessage({
+            status: "error",
+            error: result.message.slice(5),
+          });
         }
         setTimeout(() => setLoading(false), 850);
       } else {
@@ -261,6 +266,14 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
     if (isValid) {
       setStateFormValid(isValid);
     }
+    if (!input && !isValid) {
+      setToastStatus("error");
+      setStateFormMessage({
+        status: "error",
+        error: "Form Invalid: See field hints",
+      });
+      setLoading(false);
+    }
     setStateFormError({
       ...errors,
     });
@@ -330,11 +343,16 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
             {stateFormError.password && stateFormError.password.hint}
           </C.FormHelperText>
         </C.FormGroup>
-
+        <br />
         {/* Image Upload */}
-        <C.FormGroup row>
-          <ImageUpload ref={uploadEl} baseApiUrl={baseApiUrl} />
-        </C.FormGroup>
+
+        <ImageUpload
+          ref={uploadEl}
+          baseApiUrl={baseApiUrl}
+          setToastStatus={setToastStatus}
+          setStateFormMessage={setStateFormMessage}
+          setLoading={setLoading}
+        />
 
         <C.CardActions>
           <C.Button
