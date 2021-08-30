@@ -19,7 +19,7 @@ const useStyles = C.makeStyles((theme) => ({
   content: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-around",
+    justifyContent: "center",
   },
   bot: {
     // position: "absolute",
@@ -28,7 +28,15 @@ const useStyles = C.makeStyles((theme) => ({
     width: "100%",
   },
   seekOffer: {
-    color: "#CCD500",
+    backgroundColor: "#f1da00",
+    fontWeight: "900",
+    maxWidth: "fit-content",
+    padding: "5px 10px",
+    borderRadius: "15px",
+    marginBottom: "10px",
+  },
+  unstrecth: {
+    display: "block",
   },
 }));
 
@@ -43,6 +51,7 @@ const BulletinCard = (props) => {
     seeking,
     picture,
     loggedUser,
+    host,
   } = props;
   const classes = useStyles();
 
@@ -60,12 +69,23 @@ const BulletinCard = (props) => {
     <Link passHref href={`/SearchBulletins/${id}`}>
       <C.CardActionArea className={classes.stretch}>
         <C.CardContent className={classes.content}>
-          {/* {picture && (
-            <Image src={picture} alt={title} width={100} height={100} />
-          )} */}
+          {picture && (
+            <Image
+              className={classes.unstrecth}
+              src={picture}
+              alt={title}
+              width={100}
+              height={100}
+            />
+          )}
           <br />
           <C.Divider variant="fullWidth" />
+          <br />
           <C.Typography variant="body1">{content}</C.Typography>
+          <br />
+          <C.Typography align="right" variant="subtitle2">
+            - {host.username}
+          </C.Typography>
 
           <C.Divider variant="fullWidth" />
         </C.CardContent>
@@ -100,9 +120,13 @@ const BulletinCard = (props) => {
       <C.CardHeader
         title={
           <>
-            <C.Typography className={classes.seekOffer} variant="h5">
+            <C.Typography
+              className={classes.seekOffer}
+              color="textPrimary"
+              variant="h5"
+            >
               {seeking ? "Seeking " : "Offering "}
-            </C.Typography>{" "}
+            </C.Typography>
             <C.Typography variant="h4">{title}</C.Typography>
           </>
         }

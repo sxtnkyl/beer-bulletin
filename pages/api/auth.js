@@ -34,6 +34,7 @@ const handler = nextConnect()
     /* Check if exists */
     if (!user) {
       res.status(400).json({ status: "error", error: "User Not Found" });
+      return;
     }
     /* Define variables */
     const dataUser = user.toJSON();

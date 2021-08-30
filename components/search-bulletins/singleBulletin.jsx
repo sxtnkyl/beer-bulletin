@@ -19,6 +19,10 @@ const useStyles = C.makeStyles((theme) => ({
     flex: "1 1 auto",
     width: "100%",
   },
+  header: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
 }));
 
 const SingleBulletin = ({ bulletin, userHost }) => {
@@ -28,7 +32,7 @@ const SingleBulletin = ({ bulletin, userHost }) => {
 
   const infoBlock = (
     <C.CardContent className={classes.content}>
-      {/* {picture && <Image src={picture} alt={title} width={100} height={100} />} */}
+      {picture && <Image src={picture} alt={title} width={100} height={100} />}
       <C.Typography variant="h6">{title}</C.Typography>
       <C.Typography variant="body1">{content}</C.Typography>
     </C.CardContent>
@@ -36,15 +40,22 @@ const SingleBulletin = ({ bulletin, userHost }) => {
 
   const userBlock = (
     <C.CardContent className={classes.content}>
-      <C.Avatar
-        alt={username}
-        src={profile_pic}
-        style={{ height: "80px", width: "80px", alignSelf: "flex-end" }}
-      />
-      <C.Typography variant="h6">{username}</C.Typography>
-      <C.Typography variant="body2">
-        Number of completed trades: {num_trades}
-      </C.Typography>
+      <div className={classes.header}>
+        <div>
+          <C.Typography variant="h6">{username}</C.Typography>
+          <C.Typography variant="body2">
+            Number of completed trades: {num_trades}
+          </C.Typography>
+        </div>
+        <br />
+        <C.Avatar
+          alt={username}
+          src={profile_pic}
+          style={{ height: "80px", width: "80px", alignSelf: "flex-end" }}
+        />
+      </div>
+
+      {/* <C.Divider variant="middle" style={{ marginBottom: "15px" }} /> */}
     </C.CardContent>
   );
 

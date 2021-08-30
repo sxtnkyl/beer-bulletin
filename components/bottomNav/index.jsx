@@ -37,11 +37,13 @@ const useStyles = makeStyles((theme) => ({
 const BottomNav = ({ scroll, user, baseApiUrl }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [toastStatus, setToastStatus] = useState("loading");
 
   // these states lifted from CreatePostForm
   const [stateFormValid, setStateFormValid] = useState(true);
   const [loading, setLoading] = useState(false);
   const [openToast, setOpenToast] = useState(false);
+  const [stateFormMessage, setStateFormMessage] = useState({});
 
   const handleOpen = () => {
     setOpen(true);
@@ -130,6 +132,9 @@ const BottomNav = ({ scroll, user, baseApiUrl }) => {
             stateFormValid={stateFormValid}
             setStateFormValid={setStateFormValid}
             setOpenToast={setOpenToast}
+            setToastStatus={setToastStatus}
+            stateFormMessage={stateFormMessage}
+            setStateFormMessage={setStateFormMessage}
           />
         </C.DialogContent>
         <C.DialogActions>
@@ -150,11 +155,24 @@ const BottomNav = ({ scroll, user, baseApiUrl }) => {
       </C.Dialog>
       <C.Snackbar
         open={openToast}
-        autoHideDuration={3000}
+        autoHideDuration={4000}
         onClose={handleCloseToast}
       >
-        <Alert onClose={handleCloseToast} severity="success">
-          New Bulletin Posted
+        <Alert
+          onClose={handleClose}
+          severity={
+            toastStatus === "loading"
+              ? "info"
+              : toastStatus === "error"
+              ? "error"
+              : "success"
+          }
+        >
+          {toastStatus === "loading"
+            ? "Posting Bulletin..."
+            : toastStatus === "error"
+            ? stateFormMessage.error
+            : "New Bulletin Posted"}
         </Alert>
       </C.Snackbar>
     </>

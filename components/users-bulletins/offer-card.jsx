@@ -39,6 +39,7 @@ const OfferCard = (props) => {
     offer_money,
     offer_beer,
     offer_other,
+    endpoint,
     resolved,
     token,
     baseApiUrl,
@@ -139,9 +140,10 @@ const OfferCard = (props) => {
   const infoBlock = (
     <C.CardActionArea className={classes.stretch}>
       <C.CardContent className={classes.content}>
-        {/* {picture && (
+        {picture && (
           <Image src={picture} alt={title} width={100} height={100} />
-        )} */}
+        )}
+        <br />
         <C.Typography variant="body1">{content}</C.Typography>
         <C.Typography
           variant="h6"
@@ -165,6 +167,18 @@ const OfferCard = (props) => {
       >
         <C.Button size="small" variant="outlined" style={{ width: "auto" }}>
           View Bulletin
+        </C.Button>
+      </Link>
+      <Link
+        passHref
+        href={{
+          pathname: `/CurrentChats/[id]`,
+          query: { id: endpoint, partUserName: host.username },
+        }}
+        as={`/CurrentChats/${endpoint}`}
+      >
+        <C.Button size="small" variant="outlined" style={{ width: "auto" }}>
+          Chat
         </C.Button>
       </Link>
       <C.Button

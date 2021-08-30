@@ -14,6 +14,13 @@ const useStyles = C.makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "space-around",
   },
+  contentCenter: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-around",
+
+    alignItems: "center",
+  },
   bot: {
     flex: "1 1 auto",
     width: "100%",
@@ -26,20 +33,20 @@ const UserProfileCard = ({ data }) => {
   const classes = useStyles();
 
   const userBlock = (
-    <C.CardContent className={classes.content}>
+    <C.CardContent className={classes.contentCenter}>
       <C.Avatar
         alt={username}
         src={profile_pic}
+        align="center"
         style={{
           height: "80px",
           width: "80px",
-          alignSelf: "flex-start",
           b: "30px",
         }}
       />
-      <C.Typography variant="h6"></C.Typography>
-      <C.Typography variant="body2">
-        Number of completed trades: {num_trades}
+      <br />
+      <C.Typography variant="subtitle2">
+        Trades Posted: {num_trades}
       </C.Typography>
     </C.CardContent>
   );
@@ -49,13 +56,15 @@ const UserProfileCard = ({ data }) => {
       <C.Typography variant="h6">
         Name: {first_name} {last_name}
       </C.Typography>
-      <C.Typography variant="body2">{email}</C.Typography>
+      <C.Typography variant="subtitle2">{email}</C.Typography>
     </C.CardContent>
   );
 
   return (
     <GlassCard>
-      <C.CardHeader title={`${username}`} align="left" />
+      <C.Typography variant="h4" style={{ margin: "10px" }} align="left">
+        {username}
+      </C.Typography>
       <C.Divider variant="middle" />
       {userBlock}
       <C.Divider variant="middle" />
