@@ -5,8 +5,8 @@ import {
   getAppCookies,
   verifyToken,
 } from "../../middleware/utils";
-import BulletinCard from "../../components/users-bulletins/BulletinCard";
-import OfferCard from "../../components/users-bulletins/OfferCard";
+import BulletinCard from "../../components/usersBulletins/BulletinCard";
+import OfferCard from "../../components/usersBulletins/OfferCard";
 import ScalableIcon from "../../components/ScalableIcon";
 import { faAddressBook } from "@fortawesome/free-solid-svg-icons";
 import {

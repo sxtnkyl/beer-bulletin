@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import * as C from "@material-ui/core";
 
-import BulletinCard from "../../components/search-bulletins/bulletinCard";
+import BulletinCard from "../../components/searchBulletins/BulletinCard";
 import LoadingErrorMessage from "../../components/LoadingErrorMessage";
 import { absoluteUrl, getAppCookies } from "../../middleware/utils";
 
