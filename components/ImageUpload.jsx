@@ -11,9 +11,6 @@ import Image from "next/image";
 
 //To Pull  apiData, baseApiUrl, token
 const ImageUpload = forwardRef(
-<<<<<<< HEAD
-  ({ baseApiUrl, setProfileUrl, profileUrl }, ref) => {
-=======
   (
     {
       baseApiUrl,
@@ -25,7 +22,6 @@ const ImageUpload = forwardRef(
     },
     ref
   ) => {
->>>>>>> 885a313ee0131d3784b01e9e4b1b00ac2333f7d0
     const [fileInput, setFileInput] = useState("");
     const [imgPreview, setImgPreview] = useState("");
     const [selectedFile, setSelectedFile] = useState();
@@ -68,11 +64,6 @@ const ImageUpload = forwardRef(
             })
             .then((data) => {
               callbackFn(data.secure_url);
-<<<<<<< HEAD
-              setFileInput('');
-              setSelectedFile('');
-              setImgPreview('');
-=======
               setFileInput("");
               setSelectedFile("");
               setImgPreview("");
@@ -86,8 +77,8 @@ const ImageUpload = forwardRef(
                 });
               if (setLoading) setLoading(false);
               setSelectedFile(null);
->>>>>>> 885a313ee0131d3784b01e9e4b1b00ac2333f7d0
             });
+
           //  uploadFile(reader.result);
         };
         reader.onerror = () => {
@@ -98,27 +89,6 @@ const ImageUpload = forwardRef(
 
     return (
       <>
-<<<<<<< HEAD
-      <C.Button variant="contained" component="label">
-        Upload File
-        <input
-          className="fileInput mb-2"
-          onChange={handleFileInputChange}
-          type="file"
-          accept=".jpg, .png, .jpeg"
-          hidden
-        ></input>
-      </C.Button>
-      
-      {imgPreview&& (
-        <img
-        
-      src={imgPreview}
-      alt="chosen"
-      style={{ height: "100px", width: "100px", alignSelf: "flex-start", m: '30px'}}
-      />
-      )}
-=======
         <C.Button
           variant="contained"
           component="label"
@@ -146,7 +116,6 @@ const ImageUpload = forwardRef(
             }}
           />
         )}
->>>>>>> 885a313ee0131d3784b01e9e4b1b00ac2333f7d0
       </>
     );
   }
@@ -156,14 +125,11 @@ ImageUpload.displayName = "ImageUpload";
 
 ImageUpload.propTypes = {
   baseApiUrl: PropTypes.string,
-<<<<<<< HEAD
-=======
   oldData: PropTypes.string,
   setSelectedUpload: PropTypes.func,
   setToastStatus: PropTypes.func,
   setStateFormMessage: PropTypes.func,
   setLoading: PropTypes.func,
->>>>>>> 885a313ee0131d3784b01e9e4b1b00ac2333f7d0
 };
 
 export default ImageUpload;
