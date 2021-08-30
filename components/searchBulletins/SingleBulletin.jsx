@@ -1,6 +1,6 @@
 import React from "react";
 import * as C from "@material-ui/core";
-import GlassCard from "../glassCard";
+import GlassCard from "../GlassCard";
 import theme from "../../styles/theme";
 import Image from "next/image";
 

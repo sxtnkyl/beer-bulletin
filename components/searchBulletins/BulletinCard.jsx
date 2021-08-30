@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import * as C from "@material-ui/core";
 import { faBeer } from "@fortawesome/free-solid-svg-icons";
-import GlassCard from "../glassCard";
+import GlassCard from "../GlassCard";
 import ScalableIcon from "../ScalableIcon";
 import theme from "../../styles/theme";
 import Image from "next/image";
