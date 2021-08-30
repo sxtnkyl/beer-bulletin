@@ -8,7 +8,6 @@ const handler = nextConnect()
     const {
       query: { id, name },
     } = req;
-    const { id } = req.query;
     const tradeID = id;
     const trade = await models.trades.findOne({
       where: {
