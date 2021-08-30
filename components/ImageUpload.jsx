@@ -30,33 +30,24 @@ const ImageUpload = forwardRef(
       const file = e.target.files[0];
       previewImg(file);
       setSelectedFile(file);
-      if (setSelectedUpload) setSelectedUpload(true);
       setFileInput(e.target.value);
     };
 
     const previewImg = (file) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
 
-      reader.onloadend = () => {
-        setImgPreview(reader.result);
-      };
-    };
+        reader.onloadend = () => {
+            setImgPreview(reader.result);
+        }
+    }; 
 
     //Loads into FileReader and sends to uploadFile
     useImperativeHandle(ref, () => ({
       handleUpload(callbackFn) {
         // e.preventDefault();
         //If no file is selected
-        if (!selectedFile) {
-          if (oldData) {
-            callbackFn(oldData);
-            return;
-          } else {
-            callbackFn(null);
-            return;
-          }
-        }
+        if (!selectedFile) return;
 
         ///Compresses image to 64Encoded for space
         const reader = new FileReader();
