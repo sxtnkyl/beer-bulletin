@@ -7,8 +7,8 @@ const handler = nextConnect()
   .use(middleware)
   // Get method
   .get(async (req, res) => {
-    const { slug } = req.query;
-    const tradeID = slug;
+    const { id } = req.query;
+    const tradeID = id;
     const trade = await models.trades.findOne({
       where: {
         id: tradeID,

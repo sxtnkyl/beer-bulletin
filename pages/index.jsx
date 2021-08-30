@@ -58,7 +58,7 @@ const Landing = (props) => {
         </C.Typography>
         <Link
           passHref
-          href={{ pathname: `/Auth`, query: { slug: "register" } }}
+          href={{ pathname: `/Auth`, query: { id: "register" } }}
           as="/Auth/register"
         >
           <C.Button
@@ -181,7 +181,7 @@ const Landing = (props) => {
         </C.Typography>
         <Link
           passHref
-          href={{ pathname: `/Auth`, query: { slug: "register" } }}
+          href={{ pathname: `/Auth`, query: { id: "register" } }}
           as="/Auth/register"
         >
           <C.Button

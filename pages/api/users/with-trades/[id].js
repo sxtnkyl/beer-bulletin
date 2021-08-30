@@ -9,8 +9,8 @@ const handler = nextConnect()
     // const {
     //   query: { id, name },
     // } = req;
-    const { slug } = req.query;
-    const userId = slug;
+    const { id } = req.query;
+    const userId = id;
     const userData = await models.users.findOne({
       where: {
         id: userId,

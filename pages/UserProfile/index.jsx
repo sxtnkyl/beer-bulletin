@@ -107,7 +107,7 @@ export async function getServerSideProps(context) {
   const reqToken = token && verifyToken(token.replace("Bearer ", ""));
 
   //get user id from token- payload: id(userId)
-  //api/users/[slug]
+  //api/users/[id]
   const user = await fetchSingleUser(baseApiUrl, reqToken.id, token);
 
   return {

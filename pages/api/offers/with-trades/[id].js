@@ -5,8 +5,8 @@ import middleware from "../../../../middleware/auth";
 const handler = nextConnect()
   .use(middleware)
   .get(async (req, res) => {
-    const { slug } = req.query;
-    const offerID = slug;
+    const { id } = req.query;
+    const offerID = id;
     const offer = await models.offers.findOne({
       where: {
         id: offerID,
