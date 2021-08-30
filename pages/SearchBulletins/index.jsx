@@ -62,6 +62,8 @@ export async function getServerSideProps(context) {
   const trades = await fetch(`${baseApiUrl}/SearchBulletins/with-offers`);
   // const trades = await fetchBulletinsWithOffers(baseApiUrl);
 
+  console.log("PLEASE FIND ME:", trades);
+
   return {
     props: {
       origin,

@@ -5,6 +5,7 @@ import middleware from "../../../../middleware/auth";
 const handler = nextConnect()
   .use(middleware)
   .get(async (req, res) => {
+    console.log("STARTING THE API ROUTE");
     const trades = await models.trades.findAll({
       include: [
         {
@@ -33,7 +34,7 @@ const handler = nextConnect()
       ],
       order: [["id", "DESC"]],
     });
-
+    console.log("IN THE API ROUTE!", trades);
     res.statusCode = 200;
     res.json({
       status: "success",
