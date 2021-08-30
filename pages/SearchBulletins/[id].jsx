@@ -1,7 +1,7 @@
 //a single bulletin opened
 import * as C from "@material-ui/core";
 import OfferForm from "../../components/forms/OfferForm";
-import SingleBulletin from "../../components/search-bulletins/singleBulletin";
+import SingleBulletin from "../../components/search-bulletins/SingleBulletin";
 import { absoluteUrl, getAppCookies } from "../../middleware/utils";
 import { fetchSingleBulletin, fetchSingleUser } from "../../util/fetchers";
 import { useBulletinDetails, useGetSingleUser } from "../../util/hooks/useSWRs";
