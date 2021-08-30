@@ -45,6 +45,7 @@ const handler = nextConnect()
     const { slug } = req.query;
     const userId = slug;
     const userData = await models.users.update(req.body, {
+      individualHooks: true,
       where: {
         id: userId,
       },

@@ -1,5 +1,6 @@
-export const fetchBulletins = async (baseApiUrl) => {
-  let api = await fetch(`${baseApiUrl}/trades`);
+export const fetchBulletinsWithOffers = async (baseApiUrl) => {
+  console.log("im running");
+  let api = await fetch(`${baseApiUrl}/trades/with-offers`);
   let bulletins = api.json();
   return bulletins;
 };
@@ -42,4 +43,14 @@ export const fetchUserWithOffers = async (baseApiUrl, id, token) => {
   });
   let offers = api.json();
   return offers;
+};
+
+export const fetchCloudinary = (baseApiUrl, reader) => {
+  let api = fetch(`${baseApiUrl}/images/img_upload/`, {
+    method: "POST",
+    body: JSON.stringify({ data: reader.result }),
+    headers: { "Content-Type": "application/json" },
+  });
+  let img = api.json();
+  return img;
 };

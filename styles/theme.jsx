@@ -64,7 +64,7 @@ let theme = createTheme({
     },
     MuiBottomNavigationAction: {
       label: { color: "#fafafa" },
-      root: { "&$selected": { color: "#fafafa" } },
+      root: { minWidth: "40px", "&$selected": { color: "#fafafa" } },
     },
     MuiContainer: {
       root: {

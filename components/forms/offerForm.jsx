@@ -1,8 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as C from "@material-ui/core";
 import GlassCard from "../glassCard";
 import { faBeer } from "@fortawesome/free-solid-svg-icons";
 import ScalableIcon from "../ScalableIcon";
+import MuiAlert from "@material-ui/lab/Alert";
+import SliderBtn from "../buttons/SliderBtn";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const CashSlider = C.withStyles({
   root: {
@@ -46,45 +52,127 @@ const formState = {
   cashChecked: false,
   beerChecked: false,
   otherChecked: false,
-  cash: 20,
+  cash: 0,
   beer: "",
   other: "",
 };
 
 const OfferForm = ({ bulletin, baseApiUrl, user, userHost }) => {
+  console.log(bulletin);
   const classes = useStyles();
-  const { open } = bulletin.data;
+  const { open, offers } = bulletin.data;
   //cash, beer, other
   const [form, setForm] = useState(formState);
+  const [notValid, setNotValid] = useState(true);
+  const [openToast, setOpenToast] = useState(false);
+  console.log(offers);
+  const loggedUserOffer = offers.filter(
+    (offer) => offer.participant.id === user.id
+  );
+  let oldOffer;
+  if (loggedUserOffer.length) {
+    oldOffer = {
+      cashChecked: loggedUserOffer[0].offer_money ? true : false,
+      beerChecked: loggedUserOffer[0].offer_beer.length ? true : false,
+      otherChecked: loggedUserOffer[0].offer_other.length ? true : false,
+      cash: loggedUserOffer[0].offer_money,
+      beer: loggedUserOffer[0].offer_beer,
+      other: loggedUserOffer[0].offer_other,
+    };
+  }
+
+  useEffect(() => {
+    if (loggedUserOffer.length) {
+      setForm(oldOffer);
+      setNotValid(false);
+    }
+  }, []);
 
   const handleChange = (name) => (event, newValue) => {
-    setForm({ ...form, [name]: newValue });
+    switch (true) {
+      case name == "cashChecked" && newValue == false:
+        setForm({ ...form, [name]: newValue, cash: 0 });
+        break;
+      case name == "beerChecked" && newValue == false:
+        setForm({ ...form, [name]: newValue, beer: "" });
+        break;
+      case name == "otherChecked" && newValue == false:
+        setForm({ ...form, [name]: newValue, other: "" });
+        break;
+      default:
+        setForm({ ...form, [name]: newValue });
+    }
+  };
+
+  // used for updating offer to make sure something is changed
+  function deepEqual(x, y) {
+    const ok = Object.keys,
+      tx = typeof x,
+      ty = typeof y;
+    return x && y && tx === "object" && tx === ty
+      ? ok(x).length === ok(y).length &&
+          ok(x).every((key) => deepEqual(x[key], y[key]))
+      : x === y;
+  }
+
+  /// Special Validations
+  useEffect(() => {
+    if (form.cash == 0 && form.beer == "" && form.other == "") {
+      setNotValid(true);
+      return;
+    } else if (
+      form.cashChecked == false &&
+      form.beerChecked == false &&
+      form.otherChecked == false
+    ) {
+      setNotValid(true);
+      return;
+    }
+    if (loggedUserOffer.length) {
+      if (deepEqual(oldOffer, form)) {
+        setNotValid(true);
+        return;
+      }
+    }
+    setNotValid(false);
+    return;
+  }, [form]);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenToast(false);
   };
 
   const handleSubmit = async (e, form) => {
     e.preventDefault();
-    console.log("FORM", form);
 
     let data;
-    data = { ...data, offer_money: form.cash || "" };
-    data = { ...data, offer_beer: form.beer || "" };
-    data = { ...data, offer_other: form.other || "" };
-    data = { ...data, host_id: userHost.data.id || "" };
-    data = { ...data, participant_id: user.id || "" };
-    data = { ...data, trade_id: bulletin.data.id || "" };
+    data = { ...data, offer_money: form.cashChecked ? form.cash : 0 };
+    data = { ...data, offer_beer: form.beerChecked ? form.beer : "" };
+    data = { ...data, offer_other: form.otherChecked ? form.other : "" };
+    data = { ...data, host_id: userHost.data.id };
+    data = { ...data, participant_id: user.id };
+    data = { ...data, trade_id: bulletin.data.id };
 
-    console.log("POST DATA", data);
-
-    const offerApi = await fetch(`${baseApiUrl}/offers`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }).catch((error) => {
-      console.error("Error:", error);
-    });
+    const offerApi = await fetch(
+      `${baseApiUrl}/offers${
+        loggedUserOffer.length ? "/" + loggedUserOffer[0].id : ""
+      }`,
+      {
+        method: loggedUserOffer.length ? "PUT" : "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    )
+      .then(setOpenToast(true))
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   const slider = (
@@ -94,11 +182,15 @@ const OfferForm = ({ bulletin, baseApiUrl, user, userHost }) => {
         color="secondary"
         variant="contained"
         startIcon={open && <ScalableIcon icon={faBeer} />}
-        disabled={!open}
+        disabled={!open || notValid}
         style={{ width: "auto" }}
         onClick={(e) => handleSubmit(e, form)}
       >
-        {open ? "Make Offer" : "Deal Pending"}
+        {loggedUserOffer.length
+          ? "Update Offer"
+          : open
+          ? "Make Offer"
+          : "Deal Pending"}
       </C.Button>
     </C.CardActions>
   );
@@ -154,7 +246,7 @@ const OfferForm = ({ bulletin, baseApiUrl, user, userHost }) => {
                   <C.TextField
                     className={classes.formItem}
                     aria-label="Cash input"
-                    onChange={handleChange("cash")}
+                    onChange={(e) => setForm({ ...form, cash: e.target.value })}
                     value={form.cash}
                     label="$"
                     type="number"
@@ -197,6 +289,16 @@ const OfferForm = ({ bulletin, baseApiUrl, user, userHost }) => {
         </C.CardContent>
       </GlassCard>
       {slider}
+      {/* <SliderBtn /> */}
+      <C.Snackbar
+        open={openToast}
+        autoHideDuration={3000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity="success">
+          {loggedUserOffer.length ? "Offer Updated" : "New Offer Posted"}
+        </Alert>
+      </C.Snackbar>
     </>
   );
 };

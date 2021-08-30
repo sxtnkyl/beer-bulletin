@@ -20,13 +20,14 @@ const FORM_DATA_LOGIN = {
   email: {
     value: "",
     label: "Email",
-    min: 10,
+    min: 6,
     max: 36,
     required: true,
-    validator: {
-      regEx: emailRegEx,
-      error: "Please insert valid email",
-    },
+    validator: null,
+    // validator: {
+    //   regEx: emailRegEx,
+    //   error: "Please insert valid email",
+    // },
   },
   password: {
     value: "",
@@ -51,7 +52,7 @@ const LoginForm = ({ origin, referer, baseApiUrl }) => {
   };
 
   const [stateFormData, setStateFormData] = useState(FORM_DATA_LOGIN);
-  const [stateFormError, setStateFormError] = useState([]);
+  const [stateFormError, setStateFormError] = useState({});
   const [stateFormMessage, setStateFormMessage] = useState({});
   //extra handler for notValid state
   const [stateFormValid, setStateFormValid] = useState(false);
@@ -107,7 +108,7 @@ const LoginForm = ({ origin, referer, baseApiUrl }) => {
 
   function validationHandler(states, e) {
     const input = (e && e.target.name) || "";
-    const errors = [];
+    const errors = {};
     let isValid = true;
 
     if (input) {
@@ -215,10 +216,10 @@ const LoginForm = ({ origin, referer, baseApiUrl }) => {
       <C.FormGroup row>
         <C.TextField
           className={classes.formItem}
-          label="Email"
+          label="Username or Email"
           id="email"
           name="email"
-          placeholder="Email"
+          placeholder="Username or Email"
           onChange={onChangeHandler}
           readOnly={loading && true}
           value={stateFormData.email.value}

@@ -17,14 +17,14 @@ const CurrentChats = ({ offers, myOffers }) => {
   //USER AS PARTICIPANT
   const { status, data } = offers;
   const offerList = data.offers_made.map((offer, i) => (
-    <ChatCard key={i} {...offer} />
+    <ChatCard key={i} isMine={false} {...offer} />
   ));
 
   //USER AS HOST
   const { status: myOfferStatus, data: myOfferData } = myOffers;
   const myOfferList = myOfferData.user_trades.map((trade) =>
     trade.offers.map((offer, i) => (
-      <ChatCard key={i} host={offer.participant} {...offer} />
+      <ChatCard key={i} host={offer.participant} isMine={true} {...offer} />
     ))
   );
 
@@ -39,8 +39,20 @@ const CurrentChats = ({ offers, myOffers }) => {
 
   return (
     <C.Container>
+      <br />
+      <C.Typography variant="h3" align="center">
+        Chats for My Offers
+      </C.Typography>
+      <C.Divider variant="middle" />
+
       {status == "success" ? offerList : <LoadingErrorMessage />}
-      <h2>Chats for My Trades</h2>
+      <br />
+      <br />
+      <C.Typography variant="h3" align="center">
+        Chats for My Bulletins
+      </C.Typography>
+      <C.Divider variant="middle" />
+
       {myOfferStatus == "success" ? myOfferList : <LoadingErrorMessage />}
     </C.Container>
   );

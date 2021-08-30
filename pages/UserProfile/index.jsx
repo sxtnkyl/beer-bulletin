@@ -41,7 +41,6 @@ const UserProfile = (props) => {
   };
 
   const onRefresh = () => {
-    console.log("hewwo");
     router.replace(router.asPath);
   };
 

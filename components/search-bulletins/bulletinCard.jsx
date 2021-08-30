@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import * as C from "@material-ui/core";
 import { faBeer } from "@fortawesome/free-solid-svg-icons";
 import GlassCard from "../glassCard";
 import ScalableIcon from "../ScalableIcon";
 import theme from "../../styles/theme";
+import Image from "next/image";
 
 const useStyles = C.makeStyles((theme) => ({
   card: {
@@ -26,21 +27,47 @@ const useStyles = C.makeStyles((theme) => ({
     flex: "1 1 auto",
     width: "100%",
   },
+  seekOffer: {
+    color: "#CCD500",
+  },
 }));
 
 const BulletinCard = (props) => {
-  const { id, user_id, title, content, current_offers, open, loggedUser } =
-    props;
+  const {
+    id,
+    user_id,
+    title,
+    content,
+    offers,
+    open,
+    seeking,
+    picture,
+    loggedUser,
+  } = props;
   const classes = useStyles();
+
+  if (!loggedUser) loggedUser = { id: 0 };
+
+  const [loggedUserHasOffer, setLoggedUserHasOffer] = useState(false);
+
+  useEffect(() => {
+    offers.forEach((offer) => {
+      if (offer.participant.id === loggedUser.id) setLoggedUserHasOffer(true);
+    });
+  }, []);
 
   const infoBlock = (
     <Link passHref href={`/SearchBulletins/${id}`}>
       <C.CardActionArea className={classes.stretch}>
         <C.CardContent className={classes.content}>
-          {title}
-          <C.Divider variant="middle" />
-          {content}
-          <C.Divider variant="middle" />
+          {/* {picture && (
+            <Image src={picture} alt={title} width={100} height={100} />
+          )} */}
+          <br />
+          <C.Divider variant="fullWidth" />
+          <C.Typography variant="body1">{content}</C.Typography>
+
+          <C.Divider variant="fullWidth" />
         </C.CardContent>
       </C.CardActionArea>
     </Link>
@@ -56,7 +83,13 @@ const BulletinCard = (props) => {
           disabled={!open || !loggedUser || user_id === loggedUser.id}
           style={{ width: "auto" }}
         >
-          {open ? "Make Offer" : "Deal Pending"}
+          {user_id === loggedUser.id
+            ? "Your Trade"
+            : loggedUserHasOffer
+            ? "Edit Offer"
+            : open
+            ? "Make Offer"
+            : "Deal Pending"}
         </C.Button>
       </Link>
     </C.CardActions>
@@ -64,6 +97,18 @@ const BulletinCard = (props) => {
 
   return (
     <GlassCard className={classes.card}>
+      <C.CardHeader
+        title={
+          <>
+            <C.Typography className={classes.seekOffer} variant="h5">
+              {seeking ? "Seeking " : "Offering "}
+            </C.Typography>{" "}
+            <C.Typography variant="h4">{title}</C.Typography>
+          </>
+        }
+        subheader={`Current Offers: `}
+        align="left"
+      />
       {infoBlock}
       {slider}
     </GlassCard>

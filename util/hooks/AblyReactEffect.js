@@ -3,10 +3,10 @@ import { useEffect } from "react";
 
 const baseURL = process.env.VERCEL_URL || "http://localhost:3000";
 
+// consider adding echoMessages: false
 const ably = new Ably.Realtime.Promise({
   authUrl: `${baseURL}/api/createTokenRequest`,
 });
-console.log("REQUEST");
 
 export function useChannel(channelName, callbackOnMessage) {
   const channel = ably.channels.get(channelName);

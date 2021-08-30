@@ -9,7 +9,7 @@ import useFramerScroll from "../util/hooks/useFramerScroll";
 import theme from "../styles/theme";
 //https://nextjs.org/docs/basic-features/layouts
 
-const Layout = ({ children, user }) => {
+const Layout = ({ children, user, baseApiUrl, origin }) => {
   const router = useRouter();
   const checkheader = !router.pathname.includes("Auth") && !user && true;
 
@@ -50,7 +50,7 @@ const Layout = ({ children, user }) => {
       >
         {children}
       </C.Container>
-      <BottomNav scroll={scrollTrigger} />
+      <BottomNav scroll={scrollTrigger} user={user} baseApiUrl={baseApiUrl} />
     </>
   );
 };

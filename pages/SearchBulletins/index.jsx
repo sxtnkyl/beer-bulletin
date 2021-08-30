@@ -6,17 +6,20 @@ import BulletinCard from "../../components/search-bulletins/bulletinCard";
 import LoadingErrorMessage from "../../components/LoadingErrorMessage";
 import { absoluteUrl, getAppCookies } from "../../middleware/utils";
 
-import { useBulletins } from "../../util/hooks/useSWRs";
-import { fetchBulletins } from "../../util/fetchers";
+import { useBulletinsWithOffers } from "../../util/hooks/useSWRs";
+import { fetchBulletinsWithOffers } from "../../util/fetchers";
 
 const SearchBulletins = ({ trades, user, baseApiUrl }) => {
-  const { bulletins, isLoading, isError } = useBulletins(
+  console.log(trades);
+  const { bulletins, isLoading, isError } = useBulletinsWithOffers(
     baseApiUrl,
-    fetchBulletins,
+    fetchBulletinsWithOffers,
     { initialData: trades }
   );
+  console.log(bulletins);
+
   const makeTradesList = bulletins.data.map((trade, i) => (
-    <BulletinCard key={i} loggedUser={user} {...trade} />
+    <BulletinCard key={i} loggedUser={user ? user : { id: 0 }} {...trade} />
   ));
 
   async function loadMoreClick(e) {
@@ -54,10 +57,9 @@ export async function getServerSideProps(context) {
   // const nextPageUrl = !isNaN(nextPage) ? `?nextPage=${nextPage}` : '';
   const baseApiUrl = `${origin}/api`;
 
-  // const tradesApi = await fetch(`${baseApiUrl}/trades${nextPageUrl}`
-  // });
-  // const api = await fetch(`${baseApiUrl}/trades`);
-  const trades = await fetchBulletins(baseApiUrl);
+  // const tradesApi = await fetch(`${baseApiUrl}/trades${nextPageUrl}`);
+  // const trades = await fetch(`${baseApiUrl}/trades/with-offers`);
+  const trades = await fetchBulletinsWithOffers(baseApiUrl);
 
   return {
     props: {

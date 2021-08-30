@@ -1,6 +1,11 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: [`${process.env.S3_UPLOAD_BUCKET}.s3.amazonaws.com`],
+    domains: ["res.cloudinary.com"],
   },
+  api: {
+    bodyParser: {
+      sizeLimit: '2mb',
+    },
+  }
 };

@@ -1,7 +1,9 @@
 import useSWR from "swr";
+import { fetchCloudinary } from "../fetchers";
 
 /* SearchBulletins */
-export function useBulletins(baseApiUrl, fetcher, options) {
+export function useBulletinsWithOffers(baseApiUrl, fetcher, options) {
+  console.log("runnin HOOK");
   const { data, error } = useSWR(baseApiUrl, fetcher, options);
   return {
     bulletins: data,
@@ -71,3 +73,16 @@ export function useGetUserOffers(
     isError: error,
   };
 }
+
+// export function useCloudinary(baseApiUrl, reader) {
+//   const { data, mutate, error } = useSWR(
+//     `${baseApiUrl}/images/img_upload/`,
+//     fetchCloudinary(baseApiUrl, reader)
+//   );
+//   return {
+//     img: data,
+//     mutate,
+//     isLoading: !error && !data,
+//     isError: error,
+//   };
+// }

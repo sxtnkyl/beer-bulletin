@@ -5,6 +5,7 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import GlassCard from "../glassCard";
 import ScalableIcon from "../ScalableIcon";
 import theme from "../../styles/theme";
+import Image from "next/image";
 
 const useStyles = C.makeStyles((theme) => ({
   stretch: {
@@ -42,7 +43,7 @@ const OfferCard = (props) => {
     token,
     baseApiUrl,
   } = props;
-  const { title, content } = trade;
+  const { title, content, picture } = trade;
   const classes = useStyles();
 
   const [edit, setEdit] = useState(false);
@@ -138,6 +139,9 @@ const OfferCard = (props) => {
   const infoBlock = (
     <C.CardActionArea className={classes.stretch}>
       <C.CardContent className={classes.content}>
+        {/* {picture && (
+          <Image src={picture} alt={title} width={100} height={100} />
+        )} */}
         <C.Typography variant="body1">{content}</C.Typography>
         <C.Typography
           variant="h6"
