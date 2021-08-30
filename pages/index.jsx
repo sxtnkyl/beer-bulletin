@@ -35,8 +35,8 @@ const useStyles = C.makeStyles((theme) => ({
     margin: "15px 0px",
   },
   media: {
-    height: '350px',
-    width: 'auto'
+    height: "350px",
+    width: "auto",
   },
   footer: {
     display: "flex",
@@ -70,11 +70,10 @@ const Landing = (props) => {
           </C.Button>
         </Link>
         <C.Typography variant="body1">
-          Use our platform to search for beers you can't find, see what others
-          offer for your rare brew, or browse through the community.
+          Use our platform to search for beers you can&apos;t find, see what
+          others offer for your rare brew, or browse through the community.
         </C.Typography>
         <C.Typography variant="body1">Find your trade today!</C.Typography>
-   
 
         {/* PLACE FOR OUR LOGO */}
         {/* <C.Card
@@ -86,7 +85,7 @@ const Landing = (props) => {
             /> 
         </C.Card>
    */}
-   
+
         <ScalableIcon
           className={t.transitionIcon}
           icon={faLevelDownAlt}
@@ -115,12 +114,8 @@ const Landing = (props) => {
           elevation={5}
           style={{ height: "350px", width: "100%", margin: "30px 0px" }}
         >
-            {/* IMAGE */}
-            <C.CardMedia
-              className = {t.media}
-              image={'images/post.jpeg'}
-            />
-
+          {/* IMAGE */}
+          <C.CardMedia className={t.media} image={"images/post.jpeg"} />
         </C.Card>
         <ScalableIcon icon={faLongArrowAltDown} width="52" height="52" />
         <ScalableIcon icon={faAddressCard} width="72" height="72" />
@@ -132,18 +127,14 @@ const Landing = (props) => {
         </C.Typography>
         <C.Typography variant="body1">
           View all of the offers you have received on a post, or suggest a trade
-          for another user's post.
+          for another user&apos;s post.
         </C.Typography>
         <C.Card
           elevation={5}
           style={{ height: "350px", width: "100%", margin: "30px 0px" }}
         >
           {/* IMAGE */}
-          <C.CardMedia
-            className = {t.media}
-            image={'images/tallboy.jpeg'}
-          />
-
+          <C.CardMedia className={t.media} image={"images/tallboy.jpeg"} />
         </C.Card>
         <ScalableIcon icon={faComments} width="72" height="72" />
       </div>
@@ -153,18 +144,15 @@ const Landing = (props) => {
           Strike a deal!
         </C.Typography>
         <C.Typography variant="body1">
-          If a post's user likes your offer, negotiate a trade in a one-on-one
-          chat. Either party can cancel the chat at anytime.
+          If a post&apos;s user likes your offer, negotiate a trade in a
+          one-on-one chat. Either party can cancel the chat at anytime.
         </C.Typography>
         <C.Card
           elevation={5}
           style={{ height: "350px", width: "100%", margin: "30px 0px" }}
         >
-           {/* IMAGE */}
-          <C.CardMedia
-            className = {t.media}
-            image={'images/foam.jpg'}
-          />
+          {/* IMAGE */}
+          <C.CardMedia className={t.media} image={"images/foam.jpg"} />
         </C.Card>
 
         <ScalableIcon icon={faHandshake} width="72" height="72" />
@@ -181,12 +169,8 @@ const Landing = (props) => {
           elevation={5}
           style={{ height: "350px", width: "100%", margin: "30px 0px" }}
         >
-           {/* IMAGE */}
-          <C.CardMedia
-            className = {t.media}
-            image={'images/clink.jpeg'}
-          />
-
+          {/* IMAGE */}
+          <C.CardMedia className={t.media} image={"images/clink.jpeg"} />
         </C.Card>
       </div>
 
@@ -209,8 +193,8 @@ const Landing = (props) => {
           </C.Button>
         </Link>
         <C.Typography variant="body1">
-          Join the community and see what what you'll find. Better yet, what
-          others can offer you!
+          Join the community and see what what you&apos;ll find. Better yet,
+          what others can offer you!
         </C.Typography>
       </div>
 
