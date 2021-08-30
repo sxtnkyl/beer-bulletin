@@ -5,7 +5,8 @@
     "title": "Darkness Stout",
     "content": "Heavy as hell, fine as wine...",
     "seeking": false,
-    "open": true
+    "open": true,
+    "picture": "https://res.cloudinary.com/beerbulliten/image/upload/v1630284036/lzgkisloxxwkxbymynye.jpg"
   },
   {
     "id": 2,
@@ -13,7 +14,8 @@
     "title": "Fruity IPA",
     "content": "Hints of orange and pomegranate, strong but mildly hoppy ",
     "seeking": false,
-    "open": true
+    "open": true,
+    "picture": "https://res.cloudinary.com/beerbulliten/image/upload/v1630284049/axjkvslvnqz3prjaurlt.jpg"
   },
   {
     "id": 3,
@@ -22,7 +24,8 @@
     "content": "Seriously a fine beer, waay better than Yuengling...",
     "current_offers": "",
     "seeking": false,
-    "open": true
+    "open": true,
+    "picture": "https://res.cloudinary.com/beerbulliten/image/upload/v1630284070/gswae3zaoxmkykrlv1pn.jpg"
   },
   {
     "id": 4,
@@ -30,7 +33,8 @@
     "title": "Good Summer Ale",
     "content": "Excellent summer ale with a refreshing finish",
     "seeking": false,
-    "open": true
+    "open": true,
+    "picture": "https://res.cloudinary.com/beerbulliten/image/upload/v1630284083/dthwn6xr8csybfvdfhjt.jpg"
   },
   {
     "id": 5,
@@ -46,6 +50,7 @@
     "title": "Ultra Rare Leggo Stout",
     "content": "...willing to make it worth your while",
     "seeking": true,
-    "open": true
+    "open": true,
+    "picture": "https://res.cloudinary.com/beerbulliten/image/upload/v1630284097/h60duubsmkr7iwkpmlsl.png"
   }
 ]

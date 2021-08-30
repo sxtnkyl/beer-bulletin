@@ -5,6 +5,7 @@ import { faBeer } from "@fortawesome/free-solid-svg-icons";
 import GlassCard from "../glassCard";
 import ScalableIcon from "../ScalableIcon";
 import theme from "../../styles/theme";
+import Image from "next/image";
 
 const useStyles = C.makeStyles((theme) => ({
   card: {
@@ -26,10 +27,23 @@ const useStyles = C.makeStyles((theme) => ({
     flex: "1 1 auto",
     width: "100%",
   },
+  seekOffer: {
+    color: "#CCD500",
+  },
 }));
 
 const BulletinCard = (props) => {
-  const { id, user_id, title, content, offers, open, loggedUser } = props;
+  const {
+    id,
+    user_id,
+    title,
+    content,
+    offers,
+    open,
+    seeking,
+    picture,
+    loggedUser,
+  } = props;
   const classes = useStyles();
 
   if (!loggedUser) loggedUser = { id: 0 };
@@ -46,11 +60,14 @@ const BulletinCard = (props) => {
     <Link passHref href={`/SearchBulletins/${id}`}>
       <C.CardActionArea className={classes.stretch}>
         <C.CardContent className={classes.content}>
-          {title}
-          <C.Divider variant="middle" />
-          {content}
-          <C.Divider variant="middle" />
-          Current Offers: {offers.length}
+          {picture && (
+            <Image src={picture} alt={title} width={100} height={100} />
+          )}
+          <br />
+          <C.Divider variant="fullWidth" />
+          <C.Typography variant="body1">{content}</C.Typography>
+
+          <C.Divider variant="fullWidth" />
         </C.CardContent>
       </C.CardActionArea>
     </Link>
@@ -80,6 +97,18 @@ const BulletinCard = (props) => {
 
   return (
     <GlassCard className={classes.card}>
+      <C.CardHeader
+        title={
+          <>
+            <C.Typography className={classes.seekOffer} variant="h5">
+              {seeking ? "Seeking " : "Offering "}
+            </C.Typography>{" "}
+            <C.Typography variant="h4">{title}</C.Typography>
+          </>
+        }
+        subheader={`Current Offers: ${offers.length}`}
+        align="left"
+      />
       {infoBlock}
       {slider}
     </GlassCard>
