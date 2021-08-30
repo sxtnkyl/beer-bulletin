@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useChannel } from "../../util/hooks/AblyReactEffect";
 import styles from "./AblyChatComponent.module.css";
+import { Typography } from "@material-ui/core";
 
 const AblyChatComponent = (props) => {
   let inputBox = useRef();
@@ -106,29 +107,35 @@ const AblyChatComponent = (props) => {
   }, []);
 
   return (
-    <div className={styles.chatHolder}>
-      <div className={styles.chatText}>
-        {msgLoading ? <h4>Messages Loading</h4> : messages}
-        <div ref={messageEnd}></div>
+    <>
+      <br />
+      <Typography variant="h3" align="center">
+        Chat with {props.query.partUserName}
+      </Typography>
+      <div className={styles.chatHolder}>
+        <div className={styles.chatText}>
+          {msgLoading ? <h4>Messages Loading</h4> : messages}
+          <div ref={messageEnd}></div>
+        </div>
+        <form onSubmit={handleFormSubmission} className={styles.form}>
+          <textarea
+            ref={inputBox}
+            value={messageText}
+            placeholder="Type a message..."
+            onChange={(e) => setMessageText(e.target.value)}
+            onKeyPress={handleKeyPress}
+            className={styles.textarea}
+          ></textarea>
+          <button
+            type="submit"
+            className={styles.button}
+            disabled={messageTextIsEmpty}
+          >
+            Send
+          </button>
+        </form>
       </div>
-      <form onSubmit={handleFormSubmission} className={styles.form}>
-        <textarea
-          ref={inputBox}
-          value={messageText}
-          placeholder="Type a message..."
-          onChange={(e) => setMessageText(e.target.value)}
-          onKeyPress={handleKeyPress}
-          className={styles.textarea}
-        ></textarea>
-        <button
-          type="submit"
-          className={styles.button}
-          disabled={messageTextIsEmpty}
-        >
-          Send
-        </button>
-      </form>
-    </div>
+    </>
   );
 };
 
