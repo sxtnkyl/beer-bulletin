@@ -25,28 +25,35 @@ const handler = nextConnect()
     });
   })
   .post(async (req, res) => {
-    const { body } = req;
-    const { user_id, title, content, open, seeking, picture } = body;
-    const newTrade = await models.trades.create({
-      user_id,
-      title,
-      content,
-      seeking,
-      open,
-      picture,
-    });
+    try {
+      const { body } = req;
+      const { user_id, title, content, open, seeking, picture } = body;
+      const newTrade = await models.trades.create({
+        user_id,
+        title,
+        content,
+        seeking,
+        open,
+        picture,
+      });
 
-    if (!newTrade) {
-      return res.status(500).json({
+      if (!newTrade) {
+        return res.status(500).json({
+          status: "failed",
+          message: `Database error, please try again later.`,
+        });
+      }
+      return res.status(200).json({
+        status: "success",
+        message: `New Trade created with ID = ${newTrade.dataValues.id}`,
+        data: newTrade,
+      });
+    } catch (error) {
+      return res.status(400).send({
         status: "failed",
-        message: `Database error, please try again later.`,
+        message: error.errors[0].message,
       });
     }
-    return res.status(200).json({
-      status: "success",
-      message: `New Trade created with ID = ${newTrade.dataValues.id}`,
-      data: newTrade,
-    });
   });
 
 export default handler;

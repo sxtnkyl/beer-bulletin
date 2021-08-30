@@ -7,6 +7,7 @@ import React, {
 import * as C from "@material-ui/core";
 import { ContactsOutlined } from "@material-ui/icons";
 import PropTypes from "prop-types";
+import Image from "next/image";
 
 //To Pull  apiData, baseApiUrl, token
 const ImageUpload = forwardRef(
@@ -101,7 +102,7 @@ const ImageUpload = forwardRef(
           component="label"
           style={{ maxWidth: "160px" }}
         >
-          Upload File
+          Upload Picture
           <input
             className="fileInput mb-2"
             onChange={handleFileInputChange}
@@ -112,12 +113,12 @@ const ImageUpload = forwardRef(
         </C.Button>
 
         {imgPreview && (
-          <img
+          <Image
             src={imgPreview}
             alt="chosen"
+            width={100}
+            height={100}
             style={{
-              height: "100px",
-              width: "100px",
               alignSelf: "flex-start",
               marginLeft: "30px",
             }}
