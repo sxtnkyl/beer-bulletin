@@ -21,15 +21,15 @@ module.exports = {
     staticFolder: '/public',
   },
   // webpack(config, options) {
-  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    config.plugins.push(new webpack.IgnorePlugin(/^pg-native$/));
-    config.node = {
-      ...(config.node || {}),
-      net: 'empty',
-      tls: 'empty',
-      dns: 'empty',
-      fs: 'empty',
-    };
-    return config;
-  },
+//   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+//     config.plugins.push(new webpack.IgnorePlugin(/^pg-native$/));
+//     config.node = {
+//       ...(config.node || {}),
+//       net: 'empty',
+//       tls: 'empty',
+//       dns: 'empty',
+//       fs: 'empty',
+//     };
+//     return config;
+//   },
 };
