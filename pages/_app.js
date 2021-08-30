@@ -43,8 +43,10 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
     query: { amp },
     asPath,
   } = ctx;
+  console.log("req", req);
 
   const { origin } = absoluteUrl(req);
+  console.log("origin", origin);
   const baseApiUrl = `${origin}/api`;
 
   const { token } = getAppCookies(req);
