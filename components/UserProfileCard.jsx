@@ -1,6 +1,6 @@
 import React from "react";
 import * as C from "@material-ui/core";
-import GlassCard from "../components/glassCard";
+import GlassCard from "../components/GlassCard";
 import theme from "../styles/theme";
 
 const useStyles = C.makeStyles((theme) => ({
