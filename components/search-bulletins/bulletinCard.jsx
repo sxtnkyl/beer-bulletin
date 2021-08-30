@@ -100,7 +100,7 @@ const BulletinCard = (props) => {
           color="secondary"
           variant="contained"
           startIcon={open && <ScalableIcon icon={faBeer} />}
-          disabled={!open || user_id === loggedUser.id}
+          disabled={!open || !loggedUser || user_id === loggedUser.id}
           style={{ width: "auto" }}
         >
           {user_id === loggedUser.id
@@ -130,7 +130,7 @@ const BulletinCard = (props) => {
             <C.Typography variant="h4">{title}</C.Typography>
           </>
         }
-        subheader={`Current Offers: ${offers.length}`}
+        subheader={`Current Offers: `}
         align="left"
       />
       {infoBlock}

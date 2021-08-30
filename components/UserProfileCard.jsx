@@ -27,9 +27,9 @@ const useStyles = C.makeStyles((theme) => ({
   },
 }));
 
-const UserProfileCard = ({ user }) => {
+const UserProfileCard = ({ data }) => {
   const { username, email, first_name, last_name, profile_pic, num_trades } =
-    user.data;
+    data;
   const classes = useStyles();
 
   const userBlock = (

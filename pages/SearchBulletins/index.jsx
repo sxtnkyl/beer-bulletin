@@ -6,10 +6,19 @@ import BulletinCard from "../../components/search-bulletins/bulletinCard";
 import LoadingErrorMessage from "../../components/LoadingErrorMessage";
 import { absoluteUrl, getAppCookies } from "../../middleware/utils";
 
-const SearchBulletins = ({ trades, user }) => {
-  const { status, data, total } = trades;
+import { useBulletinsWithOffers } from "../../util/hooks/useSWRs";
+import { fetchBulletinsWithOffers } from "../../util/fetchers";
 
-  const makeTradesList = data.map((trade, i) => (
+const SearchBulletins = ({ trades, user, baseApiUrl }) => {
+  console.log(trades);
+  const { bulletins, isLoading, isError } = useBulletinsWithOffers(
+    baseApiUrl,
+    fetchBulletinsWithOffers,
+    { initialData: trades }
+  );
+  console.log(bulletins);
+
+  const makeTradesList = bulletins.data.map((trade, i) => (
     <BulletinCard key={i} loggedUser={user ? user : { id: 0 }} {...trade} />
   ));
 
@@ -24,7 +33,13 @@ const SearchBulletins = ({ trades, user }) => {
 
   return (
     <C.Container>
-      {status == "success" ? makeTradesList : <LoadingErrorMessage />}
+      {isLoading ? (
+        "Put Mui Skeleton here..."
+      ) : isError ? (
+        <LoadingErrorMessage err={isError} />
+      ) : (
+        makeTradesList
+      )}
     </C.Container>
   );
 };
@@ -42,17 +57,16 @@ export async function getServerSideProps(context) {
   // const nextPageUrl = !isNaN(nextPage) ? `?nextPage=${nextPage}` : '';
   const baseApiUrl = `${origin}/api`;
 
-  // const tradesApi = await fetch(`${baseApiUrl}/trades${nextPageUrl}`
-  // });
-  const api = await fetch(`${baseApiUrl}/trades/with-offers`);
-
-  const trades = await api.json();
+  // const tradesApi = await fetch(`${baseApiUrl}/trades${nextPageUrl}`);
+  // const trades = await fetch(`${baseApiUrl}/trades/with-offers`);
+  const trades = await fetchBulletinsWithOffers(baseApiUrl);
 
   return {
     props: {
       origin,
       referer,
       token,
+      baseApiUrl,
       trades,
     },
   };

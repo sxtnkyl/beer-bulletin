@@ -58,13 +58,14 @@ const formState = {
 };
 
 const OfferForm = ({ bulletin, baseApiUrl, user, userHost }) => {
+  console.log(bulletin);
   const classes = useStyles();
   const { open, offers } = bulletin.data;
   //cash, beer, other
   const [form, setForm] = useState(formState);
   const [notValid, setNotValid] = useState(true);
   const [openToast, setOpenToast] = useState(false);
-
+  console.log(offers);
   const loggedUserOffer = offers.filter(
     (offer) => offer.participant.id === user.id
   );
