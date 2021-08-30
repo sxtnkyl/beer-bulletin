@@ -8,8 +8,7 @@ const handler = nextConnect()
     const {
       query: { id, name },
     } = req;
-    const { slug } = req.query;
-    const tradeID = slug;
+    const tradeID = id;
     const trade = await models.trades.findOne({
       where: {
         id: tradeID,
@@ -25,8 +24,8 @@ const handler = nextConnect()
     return res.json({ status: "success", data: trade });
   })
   .put(async (req, res) => {
-    const { slug } = req.query;
-    const tradeID = slug;
+    const { id } = req.query;
+    const tradeID = id;
     const tradeData = await models.trades.update(req.body, {
       where: {
         id: tradeID,
@@ -45,8 +44,8 @@ const handler = nextConnect()
     });
   })
   .delete(async (req, res) => {
-    const { slug } = req.query;
-    const tradeID = slug;
+    const { id } = req.query;
+    const tradeID = id;
     const tradeData = await models.trades.destroy({
       where: {
         id: tradeID,
