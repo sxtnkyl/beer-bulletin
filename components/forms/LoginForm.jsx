@@ -71,7 +71,6 @@ const LoginForm = ({ origin, referer, baseApiUrl }) => {
 
     // validate onChange
     validationHandler(stateFormData, e);
-    console.log(stateFormError);
   }
 
   async function onSubmitHandler(e) {

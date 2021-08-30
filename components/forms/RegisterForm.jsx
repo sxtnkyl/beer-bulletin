@@ -105,7 +105,6 @@ const RegisterForm = ({ origin, referer, baseApiUrl }) => {
     setLoading(true);
     setToastStatus("loading");
     setOpenToast(true);
-    console.log("FUUUU");
 
     uploadEl.current.handleUpload(onSubmitHandler);
   }
