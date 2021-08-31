@@ -21,7 +21,7 @@ const AblyChatComponent = (props) => {
     authUrl: `${props.baseApiUrl}/createTokenRequest`,
   });
 
-  const [channel, ably] = useChannel(ably, channelName, (message) => {
+  const channel = useChannel(ably, channelName, (message) => {
     // console.log("MESSAGE", message);
     const history = receivedMessages;
     setMessages([...history, message]);
