@@ -6,14 +6,6 @@
 
 ## Getting Started
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-```
-
  ## Installation 
   In the directory and CLI of your choice run
   ```
