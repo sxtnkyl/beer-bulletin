@@ -6,15 +6,26 @@ require("dotenv").config();
 let sequelize;
 
 // if (config.use_env_variable) {
-sequelize = new Sequelize(process.env[config.use_env_variable], {
-  username: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT,
-  host: process.env.DB_HOST,
-  dialect: "mysql",
-  dialectModule: require("mysql2"),
-});
+sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.PASSWORD,
+  {
+    username: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT,
+    host: process.env.DB_HOST,
+    dialect: "mysql",
+    dialectModule: require("mysql2"),
+    pool: {
+      max: 5,
+      min: 0,
+      acuire: 30000,
+      idle: 10000,
+    },
+  }
+);
 // } else {
 //   sequelize = new Sequelize(
 //     process.env.DB_NAME,
