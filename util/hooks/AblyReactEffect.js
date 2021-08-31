@@ -1,14 +1,6 @@
-import Ably from "ably/promises";
 import { useEffect } from "react";
 
-const baseURL = "https://beer-bulletin.vercel.app/";
-
-// consider adding echoMessages: false
-const ably = new Ably.Realtime.Promise({
-  authUrl: `${baseURL}/api/createTokenRequest`,
-});
-
-export function useChannel(channelName, callbackOnMessage) {
+export function useChannel(ably, channelName, callbackOnMessage) {
   const channel = ably.channels.get(channelName);
 
   const onMount = () => {

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useChannel } from "../../util/hooks/AblyReactEffect";
 import styles from "./AblyChatComponent.module.css";
 import { Typography } from "@material-ui/core";
+import Ably from "ably/promises";
 
 const AblyChatComponent = (props) => {
   let inputBox = useRef();
@@ -16,7 +17,11 @@ const AblyChatComponent = (props) => {
   const channelName = "channel" + props.asPath.slice(14).split("?")[0];
   const userID = props.user.id;
 
-  const [channel, ably] = useChannel(channelName, (message) => {
+  const ably = new Ably.Realtime.Promise({
+    authUrl: `${props.baseApiUrl}/createTokenRequest`,
+  });
+
+  const [channel, ably] = useChannel(ably, channelName, (message) => {
     // console.log("MESSAGE", message);
     const history = receivedMessages;
     setMessages([...history, message]);
