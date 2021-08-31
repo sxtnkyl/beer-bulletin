@@ -107,10 +107,11 @@ const BulletinCard = (props) => {
 
   const infoBlock = (
     <C.CardActionArea className={classes.stretch}>
-      <C.CardContent className={classes.content}>
         {picture && (
           <Image src={picture} alt={title} width={100} height={100} />
         )}
+      <C.CardContent className={classes.content}>
+
         <C.Typography variant="h6">
           Currently {seeking ? "Seeking..." : "Offering..."}
         </C.Typography>
