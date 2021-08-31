@@ -17,12 +17,10 @@ const AblyChatComponent = (props) => {
   const channelName = "channel" + props.asPath.slice(14).split("?")[0];
   const userID = props.user.id;
 
-  const ably = new Ably.Realtime.Promise({
-    authUrl: `${props.baseApiUrl}/createTokenRequest`,
-  });
+  // const channel = ably.channels.get(channelName);
 
-  const channel = useChannel(ably, channelName, (message) => {
-    // console.log("MESSAGE", message);
+  const [channel, ably] = useChannel(channelName, (message) => {
+    console.log("MESSAGE", message);
     const history = receivedMessages;
     setMessages([...history, message]);
   });
