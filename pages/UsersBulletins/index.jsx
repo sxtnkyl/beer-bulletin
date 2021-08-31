@@ -127,7 +127,7 @@ export async function getServerSideProps(context) {
   // });
 
   const { id } = token && verifyToken(token.replace("Bearer ", ""));
-
+  console.log("ID: ", id);
   const bulletins = await fetchUserWithBulletins(baseApiUrl, id, token);
   const offers = await fetchUserWithOffers(baseApiUrl, id, token);
   console.log(bulletins, offers);

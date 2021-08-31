@@ -236,7 +236,7 @@ const UserInfoForm = ({
     const isValid = validationHandler(stateFormData);
     if (isValid) {
       setLoading(!loading);
-
+      console.log("calling user form update");
       const userApi = await fetch(`${baseApiUrl}/users/${id}`, {
         method: "PUT",
         headers: {

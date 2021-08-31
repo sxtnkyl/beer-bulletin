@@ -14,6 +14,7 @@ const restricted = ["/api/trades/[id]"];
  * @return {object} object if true, response message if false and continue
  */
 export default middleware.use(async (req, res, next) => {
+  console.log("HITTING THE MIDDLEWARE");
   let authHeader = req.headers.authorization || "";
 
   let user = {};

@@ -42,6 +42,7 @@ const handler = nextConnect()
     return res.json({ status: "success", data: user });
   })
   .put(async (req, res) => {
+    console.log("UPDATING USER INFO");
     const { id } = req.query;
     const userId = id;
     const userData = await models.users.update(req.body, {

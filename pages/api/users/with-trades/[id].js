@@ -62,10 +62,10 @@ const handler = nextConnect()
         message: `No user found with ID = ${userId}`,
       });
     }
-    const user = userData.get({ plain: true });
-    user.num_trades = user.user_trades.length;
+    // const user = userData.get({ plain: true });
+    // user.num_trades = user.user_trades.length;
     res.statusCode = 200;
-    return res.json({ status: "success", data: user });
+    return res.json({ status: "success", data: userData });
   });
 
 export default handler;
