@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 // consider adding echoMessages: false
 const ably = new Ably.Realtime.Promise({
-  authUrl: `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/createTokenRequest`,
+  authUrl: `/api/createTokenRequest`,
 });
 
 export function useChannel(channelName, callbackOnMessage) {
