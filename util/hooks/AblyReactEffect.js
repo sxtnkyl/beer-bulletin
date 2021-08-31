@@ -1,7 +1,7 @@
 import Ably from "ably/promises";
 import { useEffect } from "react";
 
-const baseURL = process.env.VERCEL_URL || "http://localhost:3000";
+const baseURL = "https://beer-bulletin.vercel.app/";
 
 // consider adding echoMessages: false
 const ably = new Ably.Realtime.Promise({

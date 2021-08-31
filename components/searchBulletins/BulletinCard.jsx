@@ -15,11 +15,12 @@ const useStyles = C.makeStyles((theme) => ({
     display: "flex",
     flex: "1 1 auto",
     alignItems: "stretch",
+    textAlign: "center",
   },
   content: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
+    // display: "flex",
+    // flexDirection: "column",
+    // justifyContent: "center",
   },
   bot: {
     // position: "absolute",
@@ -34,9 +35,6 @@ const useStyles = C.makeStyles((theme) => ({
     padding: "5px 10px",
     borderRadius: "15px",
     marginBottom: "10px",
-  },
-  unstrecth: {
-    display: "block",
   },
 }));
 
@@ -70,13 +68,7 @@ const BulletinCard = (props) => {
       <C.CardActionArea className={classes.stretch}>
         <C.CardContent className={classes.content}>
           {picture && (
-            <Image
-              className={classes.unstrecth}
-              src={picture}
-              alt={title}
-              width={100}
-              height={100}
-            />
+            <Image src={picture} alt={title} width={100} height={100} />
           )}
           <br />
           <C.Divider variant="fullWidth" />

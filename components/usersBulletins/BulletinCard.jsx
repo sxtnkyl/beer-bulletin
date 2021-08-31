@@ -15,9 +15,9 @@ const useStyles = C.makeStyles((theme) => ({
     textAlign: "center",
   },
   content: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-around",
+    // display: "flex",
+    // flexDirection: "column",
+    // justifyContent: "space-around",
   },
   bot: {
     // position: "absolute",
@@ -107,11 +107,10 @@ const BulletinCard = (props) => {
 
   const infoBlock = (
     <C.CardActionArea className={classes.stretch}>
+      <C.CardContent className={classes.content}>
         {picture && (
           <Image src={picture} alt={title} width={100} height={100} />
         )}
-      <C.CardContent className={classes.content}>
-
         <C.Typography variant="h6">
           Currently {seeking ? "Seeking..." : "Offering..."}
         </C.Typography>
