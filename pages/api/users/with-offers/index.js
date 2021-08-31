@@ -20,10 +20,7 @@ const handler = nextConnect()
         "id",
         "username",
         "email",
-        [
-          fn("CONCAT", col("User.first_name"), " ", col("User.last_name")),
-          "name",
-        ],
+        [fn("CONCAT", col("first_name"), " ", col("last_name")), "name"],
         [fn("COUNT", col("user_trades.id")), "num_trades"],
         "profile_pic",
       ],
