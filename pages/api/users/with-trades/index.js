@@ -14,7 +14,7 @@ const handler = nextConnect()
         "username",
         "email",
         [
-          fn("CONCAT", col("User.first_name"), " ", col("User.last_name")),
+          fn("CONCAT", col("user.first_name"), " ", col("user.last_name")),
           "name",
         ],
         "profile_pic",

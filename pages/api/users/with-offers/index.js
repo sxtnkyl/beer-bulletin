@@ -20,7 +20,10 @@ const handler = nextConnect()
         "id",
         "username",
         "email",
-        [fn("CONCAT", col("first_name"), " ", col("last_name")), "name"],
+        [
+          fn("CONCAT", col("user.first_name"), " ", col("user.last_name")),
+          "name",
+        ],
         [fn("COUNT", col("user_trades.id")), "num_trades"],
         "profile_pic",
       ],
@@ -56,7 +59,7 @@ const handler = nextConnect()
           ],
         },
       ],
-      group: ["User.id", "offers_made.id"],
+      group: ["user.id", "offers_made.id"],
       order: [
         // Will escape title and validate DESC against a list of valid direction parameters
         ["id", "DESC"],

@@ -61,7 +61,7 @@ const handler = nextConnect()
           ],
         },
       ],
-      group: ["User.id", "offers_made.id"],
+      group: ["user.id", "offers_made.id"],
     });
     if (!user) {
       return res.status(400).json({
