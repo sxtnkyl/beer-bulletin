@@ -1,4 +1,8 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Beer Bulletin  
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+  
+  Your one stop shop to trade local beers to get the brews you love. Looking to sell your new micro-brew? Post a listing! Looking for that rare beer that's missing in your collection, someone might just have what you're after! Join Beer Bulletin and get started today. 
+
 
 ## Getting Started
 
@@ -10,7 +14,19 @@ npm run dev
 yarn dev
 ```
 
-Then, Fill out all fields in .envExample, and rename the file to .env
+ ## Installation 
+  In the directory and CLI of your choice run
+  ```
+  git clone git@github.com:sxtnkyl/beer-bulletin.git
+  ```
+
+  Then navigate to .envExample in the BeerBulletin database and fill out each line accordingly
+  beer_bulletin being the name of the database. 
+  You will need to create a Cloudinary and Ably account and supply those API keys yourself.
+  Ignore the S3 keys.
+
+  Chats are Stored via MongoDB so if you wish to have that functionality you will need to supply a key as well as a hosted atlas.
+  
 # Recommended Fields
 ```
 DB_USER='root'
@@ -29,27 +45,35 @@ CREATE DATABASE beer_bulletin;
 ```
 Make sure this name matches DB_name in env.
 
-
+  Then navigate to your root directory and run 
+  ```
+  npm i
+  npm run dev
+  ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+  If all your keys in your .env are correct you should be able to enter
+  ```
+  localhost:3000
+  ```
+  and you will be able to run the software locally. You can specify other ports as well all of those are determined in Connection.js
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  --------
+  ## Contact Us
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+[Kyle Sexton](https://github.com/sxtnkyl)
 
-## Deploy on Vercel
+[Bob Perez](https://github.com/perez-rob)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+[Austin Huffman](https://github.com/Ahuffma2)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+  
+
