@@ -3,9 +3,6 @@
   
   Your one stop shop to trade local beers to get the brews you love. Looking to sell your new micro-brew? Post a listing! Looking for that rare beer that's missing in your collection, someone might just have what you're after! Join Beer Bulletin and get started today. 
 
-
-## Getting Started
-
  ## Installation 
   In the directory and CLI of your choice run
   ```
