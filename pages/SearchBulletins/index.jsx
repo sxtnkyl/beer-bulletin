@@ -11,12 +11,12 @@ import { fetchBulletinsWithOffers } from "../../util/fetchers";
 
 const SearchBulletins = ({ trades, user, baseApiUrl }) => {
   console.log(trades);
-  // const { bulletins, isLoading, isError } = useBulletinsWithOffers(
-  //   baseApiUrl,
-  //   fetchBulletinsWithOffers,
-  //   { initialData: trades }
-  // );
-  // console.log(bulletins);
+  const { bulletins, isLoading, isError } = useBulletinsWithOffers(
+    baseApiUrl,
+    fetchBulletinsWithOffers,
+    { initialData: trades }
+  );
+  console.log(bulletins);
 
   const makeTradesList = trades.data.map((trade, i) => (
     <BulletinCard key={i} loggedUser={user ? user : { id: 0 }} {...trade} />
@@ -59,8 +59,8 @@ export async function getServerSideProps(context) {
 
   // const tradesApi = await fetch(`${baseApiUrl}/trades${nextPageUrl}`);
   // const trades = await fetch(`${baseApiUrl}/trades/with-offers`);
-  const trades = await fetch(`${baseApiUrl}/SearchBulletins/with-offers`);
-  // const trades = await fetchBulletinsWithOffers(baseApiUrl);
+  // const trades = await fetch(`${baseApiUrl}/SearchBulletins/with-offers`);
+  const trades = await fetchBulletinsWithOffers(baseApiUrl);
 
   console.log("PLEASE FIND ME:", trades);
 
