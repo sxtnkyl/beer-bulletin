@@ -70,6 +70,7 @@ const handler = nextConnect()
       });
     }
     res.statusCode = 200;
+    console.log(user);
     return res.json({ status: "success", data: user });
   });
 

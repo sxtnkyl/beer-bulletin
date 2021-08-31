@@ -130,7 +130,7 @@ export async function getServerSideProps(context) {
 
   const bulletins = await fetchUserWithBulletins(baseApiUrl, id, token);
   const offers = await fetchUserWithOffers(baseApiUrl, id, token);
-
+  console.log(bulletins, offers);
   return {
     props: {
       origin,
