@@ -24,6 +24,7 @@ DB_PORT=3306
 DB_NAME=beer_bulletin
 JWT_KEY=""
 DB_HOST=localhost
+...
 ```
 
 Then, to seed the DB, create a DB in your SQL manager of choice with the same name that you placed above in DB_Name,
