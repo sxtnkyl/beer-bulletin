@@ -21,6 +21,16 @@ Ignore the S3 keys.
 
 Chats are Stored via MongoDB so if you wish to have that functionality you will need to supply a key as well as a hosted atlas.
 
+## Features
+
+- Login features with profile pic upload feature via Cloudinary and JWT token authentication
+- Ability to Make/Post trades and make offers on other people's trades
+- Chat live via Ably with users who ave made offers on your trade or vice versa
+- play a game of 3d Beer Pong with your chat partner to break the ice (game made with Three.js and Ammo.js)
+- user/trade/offer data saved in DigitalOcean MySQL DB
+- chat history saved in MongoDB Atlas
+- deployed serverlessly on Vercel
+
 ## Package/Library flowchart
 
 ![flowchartPDF](./BeerBulletin.jpeg)
