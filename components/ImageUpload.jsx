@@ -63,7 +63,7 @@ const ImageUpload = forwardRef(
         reader.readAsDataURL(selectedFile);
 
         reader.onloadend = () => {
-          fetch(`${baseApiUrl}/images/img_upload/`, {
+          fetch(`${baseApiUrl}/images/img_upload`, {
             method: "POST",
             body: JSON.stringify({ data: reader.result }),
             headers: { "Content-Type": "application/json" },
